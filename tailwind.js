@@ -45,6 +45,8 @@ View the full documentation at https://tailwindcss.com.
 let colors = {
   transparent: "transparent",
 
+  "transparent-black": "rgba(0,0,0,0.2)",
+
   black: "#22292f",
   "grey-darkest": "#3d4852",
   "grey-darker": "#606f7b",
@@ -58,7 +60,7 @@ let colors = {
   // "red-darkest": "#3b0d0c",
   // "red-darker": "#621b18",
   // "red-dark": "#cc1f1a",
-  // red: "#e3342f",
+  red: "#e3342f",
   // "red-light": "#ef5753",
   // "red-lighter": "#f9acaa",
   // "red-lightest": "#fcebea",
@@ -117,7 +119,7 @@ let colors = {
   purple: "#9561e2",
   "purple-light": "#a779e9",
   // "purple-lighter": "#d6bbfc",
-  "purple-lightest": "#f3ebff",
+  "purple-lightest": "#f3ebff"
 
   // "pink-darkest": "#451225",
   // "pink-darker": "#6f213f",
@@ -164,7 +166,7 @@ module.exports = {
   */
 
   screens: {
-    xs: "480px",
+    xs: "480px"
     // sm: "576px",
     // md: "768px",
     // lg: "992px",
