@@ -18,10 +18,10 @@ export default {
 <style scoped>
 
 input, label {
-  transition: 0.4s;
-  -moz-transition: 0.4s;
-  -o-transition: 0.4s;
-  -webkit-transition: 0.4s;
+  transition: 0.2s;
+  -moz-transition: 0.2s;
+  -o-transition: 0.2s;
+  -webkit-transition: 0.2s;
 }
 
 input:placeholder-shown + label {

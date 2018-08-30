@@ -1,29 +1,13 @@
 <template>
   <!-- login pane -->
-  <div class="login">
+  <div class="login xs:bg-grey-lightest">
     <div class="mx-auto container min-h-screen flex justify-center items-center">
-      <div class="box md:border md:shadow-md md:rounded">
+      <div class="box xs:border xs:shadow-md xs:rounded bg-white">
         <div class="px-20 pt-16 pb-12 text-center">
           <!-- Member Login -->
           <h1>Member Login</h1>
         </div>
         <div class="px-10 pb-10">
-          <!-- <div class="login-field-email flex flex-col-reverse mb-8">
-            <input type="text" 
-              id="email" 
-              placeholder="Email"
-              class="py-3  w-full border-b-2 border-blue focus:border-b-2 focus:outline-none"
-            >
-            <label for="email">Email</label>
-          </div>
-          <div class="login-field-password flex flex-col-reverse">
-            <input type="password" 
-              id="password" 
-              placeholder="Password"
-              class="py-3  w-full border-b-2 border-blue focus:border-b-2 focus:outline-none"
-            >
-            <label for="password">Password</label>
-          </div> -->
           <float-label-input class="mb-6" title="Email" inputName="email"></float-label-input>
           <float-label-input  title="Password" inputName="password"></float-label-input>
         </div>
