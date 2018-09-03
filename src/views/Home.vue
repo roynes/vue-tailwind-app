@@ -6,15 +6,15 @@
 </template>
 
 <script>
-import { UserService } from "../services";
+import { AuthService } from "../services";
 
 export default {
   name: "Home",
   methods: {
     logout() {
-      UserService.logout()
+      AuthService.logout()
         .then(() => this.$router.push("/login"))
-        .catch(err => console.log(err.response));
+        .catch(err => {});
     }
   }
 };

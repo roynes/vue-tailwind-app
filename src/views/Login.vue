@@ -45,8 +45,6 @@ import FloatLabelInput from "../components/FloatLabelInput.vue";
 import { AuthService } from "../services";
 import { Form } from "../utilities";
 
-let salt = process.env.VUE_APP_SALT;
-
 export default {
   name: "Login",
   data() {
@@ -56,14 +54,12 @@ export default {
   },
   methods: {
     login() {
-      UserService.login(this.form.email, this.form.password)
+      AuthService.login(this.form.email, this.form.password)
         .then(resp => {
           this.form.reset();
           this.$router.push("/");
         })
-        .catch(err => {
-          console.log(err.response);
-        });
+        .catch(err => {});
     }
   },
   computed: {

@@ -32,11 +32,9 @@ let login = (email, password) => {
  * @returns {Promise}
  */
 let logout = () => {
-  return axios
-    .post(`${baseUri}/logout`)
-    .then(resp => {
-      delete axios.defaults.headers.common["Authorization"];
-    });
+  return axios.post(`${baseUri}/logout`).then(resp => {
+    delete axios.defaults.headers.common["Authorization"];
+  });
 };
 
 export const AuthService = {
