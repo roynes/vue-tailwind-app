@@ -2,7 +2,7 @@
   <!-- login pane -->
   <div class="login xs:bg-grey-lightest">
     <div class="mx-auto container min-h-screen flex justify-center items-center">
-      <div class="box xs:border xs:shadow-md xs:rounded bg-white">
+      <div class=" xs:border xs:shadow-md xs:rounded bg-white">
         <div class="px-20 pt-16 pb-8 text-center">
           <!-- Member Login -->
           <h1>Member Login</h1>
@@ -11,13 +11,13 @@
           <float-label-input class="pb-6" 
             title="Email" 
             inputName="email"
-            v-model="email"
+            v-model="form.email"
             validate="required|email"
           ></float-label-input>
           <float-label-input  
             title="Password" 
             inputName="password"
-            v-model="password"
+            v-model="form.password"
             type="password"
           ></float-label-input>
         </div>
@@ -26,8 +26,8 @@
             type="button"  
             class="py-3 px-3 border  no-underline text-grey-lightest rounded"
             @click="login()"
-            :disabled="fieldsEmpty"
-            :class="[fieldsEmpty ? 'bg-grey-dark border-grey-dark' : 'bg-blue border-blue']"
+            :disabled="fieldHasErrors"
+            :class="[fieldHasErrors ? 'bg-grey-dark border-grey-dark' : 'bg-blue border-blue']"
           >
             Submit
           </button>
@@ -42,37 +42,33 @@
 
 <script>
 import FloatLabelInput from "../components/FloatLabelInput.vue";
+import { AuthService } from "../services";
+import { Form } from "../utilities";
 
-let baseUri = process.env.VUE_APP_BASE_URI;
+let salt = process.env.VUE_APP_SALT;
 
 export default {
   name: "Login",
   data() {
     return {
-      email: "",
-      password: ""
+      form: new Form({ email: "", password: "" })
     };
   },
   methods: {
     login() {
-
-      Axios.post("http://api.test/api/login", {
-        email: this.email,
-        password: this.password
-      })
+      UserService.login(this.form.email, this.form.password)
         .then(resp => {
-          this.$router.push({
-            name: 'home'
-          })
+          this.form.reset();
+          this.$router.push("/");
         })
         .catch(err => {
-          console.log(err.response.data);
+          console.log(err.response);
         });
     }
   },
   computed: {
-    fieldsEmpty() {
-      return this.email === "" || this.password === "";
+    fieldHasErrors() {
+      return this.errors.items.length >= 1;
     }
   },
   components: {
@@ -80,12 +76,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.box {
-  @media screen and (min-width: 1200px) {
-    width: 400px !important;
-    height: 500px !important;
-  }
-}
-</style>

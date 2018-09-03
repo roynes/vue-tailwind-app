@@ -5,26 +5,22 @@
         :id="inputName" 
         :name="inputName"
         class="py-3  w-full border-b-2 focus:border-b-2 focus:outline-none"
-        :class="[ hasErrors ? 'border-red' : 'border-blue' ]" 
+        :class="[ errors.has(scopeFieldName) ? 'border-red' : 'border-blue' ]" 
         placeholder=" "
         :value="value"
         @input="$emit('input', $event.target.value)"
         v-validate.continues="validate"
+        :data-vv-scope="inputName"
       >
       <label :for="inputName" class="w-full py-1">{{ title }}</label>
     </div>
-    <div>
-      <span class="text-red text-xs font-light">{{ errors.first(inputName) }}</span>
+    <div v-for="(error, index) in errors.all(inputName)" :key="index">
+      <span class="text-red text-xs font-light">{{ error }}</span>
     </div>
   </div>
 </template>
 
 <script>
-import Vue from "vue";
-import VeeValidate from "vee-validate";
-
-Vue.use(VeeValidate);
-
 export default {
   name: "FloatLabelInput",
   props: {
@@ -50,17 +46,8 @@ export default {
     }
   },
   computed: {
-    hasErrors() {
-      // For unknown reasons Vue instantiates with an empty fields first
-      // maybe because of vee validate or with vue itself
-
-      if (this.fields.hasOwnProperty(this.inputName)) {
-        let field = this.fields[this.inputName];
-
-        return field.dirty === true && field.valid === false;
-      }
-
-      return false;
+    scopeFieldName() {
+      return `${this.inputName}.${this.inputName}`;
     }
   }
 };
