@@ -6,16 +6,19 @@
 </template>
 
 <script>
-import { AuthService } from "../services";
+import { AuthConstants as AUTH_CONSTANT } from "../storage";
+import { mapActions } from 'vuex';
 
 export default {
   name: "Home",
   methods: {
-    logout() {
-      AuthService.logout()
-        .then(() => this.$router.push("/login"))
-        .catch(err => {});
-    }
+    ...mapActions('auth', {
+      logout(dispatch) {
+        dispatch(AUTH_CONSTANT.UNAUTHENTICATE).then(() => {
+          this.$router.push('/login');
+        })
+      }
+    })
   }
 };
 </script>
