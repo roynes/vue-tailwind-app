@@ -69,9 +69,9 @@ let colors = {
   // "orange-darker": "#613b1f",
   "orange-dark": "#de751f",
   orange: "#f6993f",
-  // "orange-light": "#faad63",
-  // "orange-lighter": "#fcd9b6",
-  // "orange-lightest": "#fff5eb",
+  "orange-light": "#faad63",
+  "orange-lighter": "#fcd9b6",
+  "orange-lightest": "#fff5eb",
 
   // "yellow-darkest": "#453411",
   // "yellow-darker": "#684f1d",
@@ -638,10 +638,13 @@ module.exports = {
     "8": "2rem",
     "10": "2.5rem",
     "12": "3rem",
+    "13": "3.25rem",
+    "14": "3.5rem",
+    "15": "3.75rem",
     "16": "4rem",
     "20": "5rem",
     "24": "6rem",
-    "32": "8rem"
+    "32": "8rem",
   },
 
   /*
@@ -672,6 +675,9 @@ module.exports = {
     "8": "2rem",
     "10": "2.5rem",
     "12": "3rem",
+    "13": "3.25rem",
+    "14": "3.5rem",
+    "15": "3.75rem",
     "16": "4rem",
     "20": "5rem",
     "24": "6rem",
@@ -756,7 +762,8 @@ module.exports = {
     "20": 20,
     "30": 30,
     "40": 40,
-    "50": 50
+    "50": 50,
+    "top": 100
   },
 
   /*
@@ -864,10 +871,10 @@ module.exports = {
     negativeMargin: ["responsive"],
     opacity: ["responsive"],
     outline: ["focus"],
-    overflow: ["responsive"],
+    overflow: ["responsive", "hover"],
     padding: ["responsive"],
     pointerEvents: ["responsive"],
-    position: false,
+    position: ["responsive"],
     resize: ["responsive"],
     shadows: ["responsive", "hover", "focus"],
     svgFill: [],
@@ -883,7 +890,7 @@ module.exports = {
     visibility: ["responsive"],
     whitespace: ["responsive"],
     width: ["responsive"],
-    zIndex: false
+    zIndex: ['responsive']
   },
 
   /*

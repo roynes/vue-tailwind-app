@@ -1,5 +1,5 @@
 import * as constants from "../helpers";
-import { SET_CUR_USER } from "./user"
+import { SET_CUR_USER } from "./user";
 
 export const UPDATE_TOKEN = "UPDATE_TOKEN";
 export const UPDATE_EXP = "UPDATE_EXP";
@@ -31,7 +31,8 @@ const actions = {
         .then(resp => {
           commitMutation(commit, resp.data);
 
-          axios.defaults.headers.common["Authorization"] = 'Bearer '+ state.token;
+          axios.defaults.headers.common["Authorization"] =
+            "Bearer " + state.token;
 
           resolve(resp);
         })
@@ -46,7 +47,7 @@ const actions = {
         .post(constants.baseUri + "/logout")
         .then(resp => {
           delete axios.defaults.headers.common["Authorization"];
-          
+
           commitMutation(commit);
           resolve(resp);
         })
@@ -62,10 +63,10 @@ const actions = {
 };
 
 let commitMutation = (commit, data = {}) => {
-  commit(UPDATE_TOKEN, data.token || '');
+  commit(UPDATE_TOKEN, data.token || "");
   commit(UPDATE_EXP, data.expires_in || 0);
   commit(`user/${SET_CUR_USER}`, data.user || {}, { root: true });
-}
+};
 
 export default {
   namespaced: true,

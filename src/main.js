@@ -17,8 +17,8 @@ axios.interceptors.response.use(undefined, err => {
   if (err.response.status === 401) {
     store.commit(`auth/${AuthConstants.UPDATE_EXP}`);
     store.commit(`auth/${AuthConstants.UPDATE_TOKEN}`);
-    
-    router.push('/login');
+
+    router.push("/login");
   }
 });
 

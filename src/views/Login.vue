@@ -43,8 +43,11 @@
 <script>
 import FloatLabelInput from "../components/FloatLabelInput.vue";
 import { Form } from "../utilities";
-import { AuthConstants as AUTH_CONSTANT, UserConstants as USER_CONSTANTS } from "../storage";
-import { mapActions, mapMutations } from 'vuex';
+import {
+  AuthConstants as AUTH_CONSTANT,
+  UserConstants as USER_CONSTANTS
+} from "../storage";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
   name: "Login",
@@ -54,7 +57,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations('auth', {
+    ...mapMutations("auth", {
       updateToken(commit, token = "") {
         commit(AUTH_CONSTANT.UPDATE_TOKEN);
       },
@@ -63,18 +66,20 @@ export default {
         commit(USER_CONSTANTS.SET_CUR_USER);
       }
     }),
-    ...mapActions('auth',{
+    ...mapActions("auth", {
       login(dispatch) {
         dispatch(AUTH_CONSTANT.AUTHENTICATE, {
           email: this.form.email,
           password: this.form.password
-        }).then(() => {
-          this.form.reset();
-          this.$router.push("/");
-        }).catch(err => {
-          this.updateToken();
-          this.$router.push('/login');
         })
+          .then(() => {
+            this.form.reset();
+            this.$router.push("/");
+          })
+          .catch(err => {
+            this.updateToken();
+            this.$router.push("/login");
+          });
       }
     })
   },

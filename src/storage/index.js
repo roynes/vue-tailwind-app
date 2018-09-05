@@ -1,7 +1,7 @@
 import Vuex from "vuex";
 import Vue from "vue";
 import AuthModule, * as AuthConstants from "./auth";
-import UserModule, * as UserConstants from "./user"
+import UserModule, * as UserConstants from "./user";
 
 Vue.use(Vuex);
 

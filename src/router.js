@@ -37,17 +37,11 @@ let router = new VueRouter({
 router.beforeEach((to, from, next) => {
   let authenticated = !!store.state.auth.token;
 
-  if (
-    to.matched.some(record => record.meta.needsAuth) 
-    && !authenticated
-  ) {
+  if (to.matched.some(record => record.meta.needsAuth) && !authenticated) {
     next("/login");
-  } else if (
-    to.matched.some(rec => rec.meta.guestOnly) 
-    && authenticated
-  ) {
-    next({ 
-      name: "home" 
+  } else if (to.matched.some(rec => rec.meta.guestOnly) && authenticated) {
+    next({
+      name: "home"
     });
   } else {
     next();
