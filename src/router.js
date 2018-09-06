@@ -1,8 +1,8 @@
 import VueRouter from "vue-router";
 import Vue from "vue";
 
-import Home from "./views/Home.vue";
 import Login from "./views/Login.vue";
+import AdminDashboard from "./views/AdminDashboard.vue";
 
 import store from "./storage";
 Vue.use(VueRouter);
@@ -19,9 +19,9 @@ let router = new VueRouter({
       }
     },
     {
-      path: "/",
+      path: "/dashboard",
       name: "home",
-      component: Home,
+      component: AdminDashboard,
       meta: {
         needsAuth: true
       }
@@ -34,18 +34,18 @@ let router = new VueRouter({
   ]
 });
 
-// router.beforeEach((to, from, next) => {
-//   let authenticated = !!store.state.auth.token;
+router.beforeEach((to, from, next) => {
+  let authenticated = !!store.state.auth.token;
 
-//   if (to.matched.some(record => record.meta.needsAuth) && !authenticated) {
-//     next("/login");
-//   } else if (to.matched.some(rec => rec.meta.guestOnly) && authenticated) {
-//     next({
-//       name: "home"
-//     });
-//   } else {
-//     next();
-//   }
-// });
+  if (to.matched.some(record => record.meta.needsAuth) && !authenticated) {
+    next("/login");
+  } else if (to.matched.some(rec => rec.meta.guestOnly) && authenticated) {
+    next({
+      name: "home"
+    });
+  } else {
+    next();
+  }
+});
 
 export default router;

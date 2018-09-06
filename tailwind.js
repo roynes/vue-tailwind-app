@@ -166,11 +166,11 @@ module.exports = {
   */
 
   screens: {
-    xs: "480px"
-    // sm: "576px",
-    // md: "768px",
-    // lg: "992px",
-    // xl: "1200px"
+    xs: "480px",
+    sm: "576px",
+    md: "768px",
+    lg: "992px",
+    xl: "1200px"
   },
 
   /*
@@ -483,8 +483,8 @@ module.exports = {
     "2/5": "40%",
     "3/5": "60%",
     "4/5": "80%",
-    "1/6": "16.66667%",
-    "5/6": "83.33333%",
+    "2/9": "22.3%",
+    "7/9": "77.7%",
     full: "100%",
     screen: "100vw"
   },
@@ -643,6 +643,7 @@ module.exports = {
     "15": "3.75rem",
     "16": "4rem",
     "20": "5rem",
+    "22": "5.5rem",
     "24": "6rem",
     "32": "8rem",
   },
@@ -845,13 +846,13 @@ module.exports = {
   modules: {
     appearance: ["responsive"],
     backgroundAttachment: ["responsive"],
-    backgroundColors: ["responsive", "hover", "focus"],
+    backgroundColors: ["responsive", "hover", "focus", "group-hover"],
     backgroundPosition: ["responsive"],
     backgroundRepeat: ["responsive"],
     backgroundSize: ["responsive"],
     borderCollapse: [],
     borderColors: ["responsive", "hover", "focus"],
-    borderRadius: ["responsive"],
+    borderRadius: ["responsive", "focus"],
     borderStyle: ["responsive", "hover", "focus", "active"],
     borderWidths: ["responsive"],
     cursor: ["responsive"],
@@ -863,7 +864,7 @@ module.exports = {
     height: ["responsive"],
     leading: ["responsive"],
     lists: ["responsive"],
-    margin: ["responsive"],
+    margin: ["responsive", "group-hover"],
     maxHeight: ["responsive"],
     maxWidth: ["responsive"],
     minHeight: ["responsive"],
@@ -872,7 +873,7 @@ module.exports = {
     opacity: ["responsive"],
     outline: ["focus"],
     overflow: ["responsive", "hover"],
-    padding: ["responsive"],
+    padding: ["responsive", "group-hover"],
     pointerEvents: ["responsive"],
     position: ["responsive"],
     resize: ["responsive"],
@@ -881,7 +882,7 @@ module.exports = {
     svgStroke: [],
     tableLayout: ["responsive"],
     textAlign: ["responsive"],
-    textColors: ["responsive", "hover", "focus"],
+    textColors: ["responsive", "hover", "focus", "group-hover"],
     textSizes: ["responsive"],
     textStyle: ["responsive", "hover", "focus"],
     tracking: false,
@@ -924,7 +925,11 @@ module.exports = {
     require("./plugins/position-top")({
       remsRange: [16],
       variants: ['responsive']
-    })
+    }),
+    // require("./plugins/position-right")({
+    //   remsRange: [10],
+    //   variants: ['responsive']
+    // })
   ],
 
   /*

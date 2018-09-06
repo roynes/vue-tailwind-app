@@ -1,6 +1,8 @@
 <template>
-  <div class="side-bar col-span-2 hover:overflow-y-scroll overflow-y-auto">
-    <slot></slot>
+  <div class="w-full" v-show="toggle">
+    <div class="w-full h-full relative overflow-y-auto py-8">
+      <slot></slot>
+    </div>
   </div>
 </template>
 
@@ -8,9 +10,25 @@
 export default {
   name: "Sidebar",
   props: {
-    marginTop: {
-      type : String,
-      default: "100"
+    borderTop: {
+      type: String,
+      default: "0px"
+    },
+    borderBottom: {
+      type: String,
+      default: "0px"
+    },
+    borderRight: {
+      type: String,
+      default: "0px"
+    },
+    borderLeft: {
+      type: String,
+      default: "0px"
+    },
+    toggle: {
+      type: Boolean,
+      default: true
     }
   }
 };

@@ -1,6 +1,6 @@
 <template>
   <!-- login pane -->
-  <div class="login xs:bg-grey-lightest">
+  <div class="login bg-grey-lighter">
     <div class="mx-auto container min-h-screen flex justify-center items-center">
       <div class=" xs:border xs:shadow-md xs:rounded bg-white">
         <div class="px-20 pt-16 pb-8 text-center">
@@ -74,7 +74,7 @@ export default {
         })
           .then(() => {
             this.form.reset();
-            this.$router.push("/");
+            this.$router.push("/dashboard");
           })
           .catch(err => {
             this.updateToken();
