@@ -4,7 +4,7 @@
       <!-- toolbar -->
       <toolbar class="bg-orange-lighter pin-t" ref="toolbarTop">
         <div class="px-6 w-2/5 flex items-center">
-          <a href="#" class="text-black pr-6 flex items-center no-underline py-1">
+          <a href="#" class="text-black pr-6 flex items-center no-underline py-1" @click="toggleSideBar">
             <i class="fas fa-bars fa-lg no-underline antialiased"></i>
           </a>
           <a href="#" class="no-underline font-semibold text-xl text-grey-darkest hover:text-grey-dark py-1 flex items-center">
@@ -20,14 +20,14 @@
       <!-- end of toolbar -->
       <!-- side bar and content -->
       <div class="w-full max-w-3xl mx-auto px-6 flex">
-        <div class="w-1/4 px-6 z-90 static">
-          <div class="w-full relative" style="top:4rem">
+        <div class="w-1/4 px-6 z-90 static" v-show="showSideBar">
+          <div class="w-full top-16 py-10 border-t-0 border-r-2 sticky relative">
             <!-- Side bar here -->
-            <div>
-              Continue Here <====== 
-              
-            </div>
-            <div>Added temporary top position to 4rem</div>
+            <nav class="">
+              <div>Dashboard</div>
+              <div>Groups</div>
+              <div>Clients</div>
+            </nav>
           </div>
         </div>
         <div class="min-h-screen"></div>
@@ -52,6 +52,7 @@ export default {
     return {
       toolbarHeight: "",
       sideBarAndContentHeight: "",
+      showSideBar: true
     }
   },
   methods: {
@@ -61,7 +62,10 @@ export default {
           this.$router.push("/login");
         });
       }
-    })
+    }),
+    toggleSideBar(){
+      return this.showSideBar = !this.showSideBar
+    }
   },
   components: {
     Toolbar,

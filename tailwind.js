@@ -920,6 +920,10 @@ module.exports = {
         8: "2rem"
       },
       variants: ["responsive"]
+    }),
+    require("./plugins/position-top")({
+      remsRange: [16],
+      variants: ['responsive']
     })
   ],
 
