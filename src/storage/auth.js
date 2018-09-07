@@ -1,5 +1,5 @@
 import * as constants from "../helpers";
-import { SET_CUR_USER } from "./user";
+import { GET_CUR_USER, SET_CUR_USER } from "./user";
 
 export const UPDATE_TOKEN = "UPDATE_TOKEN";
 export const UPDATE_EXP = "UPDATE_EXP";
@@ -24,15 +24,14 @@ const mutations = {
 };
 
 const actions = {
-  [AUTHENTICATE]: ({ commit, state }, credentials) => {
+  [AUTHENTICATE]: ({ commit, dispatch }, credentials) => {
     return new Promise((resolve, reject) => {
       axios
         .post(constants.baseUri + "/login", credentials)
         .then(resp => {
           commitMutation(commit, resp.data);
-
-          axios.defaults.headers.common["Authorization"] =
-            "Bearer " + state.token;
+          
+          axios.defaults.headers.common["Authorization"] = "Bearer " + state.token;
 
           resolve(resp);
         })
@@ -46,9 +45,11 @@ const actions = {
       axios
         .post(constants.baseUri + "/logout")
         .then(resp => {
+          commitMutation(commit);
+          commit(`user/${SET_CUR_USER}`, null, { root: true });
+
           delete axios.defaults.headers.common["Authorization"];
 
-          commitMutation(commit);
           resolve(resp);
         })
         .catch(error => {
@@ -65,7 +66,6 @@ const actions = {
 let commitMutation = (commit, data = {}) => {
   commit(UPDATE_TOKEN, data.token || "");
   commit(UPDATE_EXP, data.expires_in || 0);
-  commit(`user/${SET_CUR_USER}`, data.user || {}, { root: true });
 };
 
 export default {

@@ -1,6 +1,6 @@
 <template>
   <!-- login pane -->
-  <div class="login bg-grey-lighter">
+  <div class="login bg-grey-lightest">
     <div class="mx-auto container min-h-screen flex justify-center items-center">
       <div class=" xs:border xs:shadow-md xs:rounded bg-white">
         <div class="px-20 pt-16 pb-8 text-center">
@@ -47,7 +47,7 @@ import {
   AuthConstants as AUTH_CONSTANT,
   UserConstants as USER_CONSTANTS
 } from "../storage";
-import { mapActions, mapMutations } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
   name: "Login",
@@ -71,22 +71,44 @@ export default {
         dispatch(AUTH_CONSTANT.AUTHENTICATE, {
           email: this.form.email,
           password: this.form.password
-        })
-          .then(() => {
-            this.form.reset();
-            this.$router.push("/dashboard");
-          })
-          .catch(err => {
-            this.updateToken();
-            this.$router.push("/login");
-          });
+        }).then(() => {
+          this.getCurUser()
+            .then(() => {
+              this.form.reset();
+              this.$router.push({
+                name: 'home',
+                params: {
+                  account: this.currentUser.account.type
+                }
+              })
+            });
+        }).catch(err => {
+          console.log(err)
+          this.updateToken();
+          this.$router.push("/login");
+        });
+      }
+    }),
+    ...mapActions("user", {
+      getCurUser(dispatch) {
+        let jwtToken = this.token;
+        let payload = atob(this.token.split('.')[1]);
+        let subject = JSON.parse(payload).sub;
+
+        return dispatch(USER_CONSTANTS.GET_CUR_USER, subject);
       }
     })
   },
   computed: {
     fieldHasErrors() {
       return this.errors.items.length >= 1;
-    }
+    },
+    ...mapState("auth", {
+      token: state => state.token
+    }),
+    ...mapState("user", {
+      currentUser: state => state.cur_user
+    })
   },
   components: {
     FloatLabelInput

@@ -2,7 +2,7 @@ import VueRouter from "vue-router";
 import Vue from "vue";
 
 import Login from "./views/Login.vue";
-import AdminDashboard from "./views/AdminDashboard.vue";
+import Dashboard from "./views/Dashboard.vue";
 
 import store from "./storage";
 Vue.use(VueRouter);
@@ -19,9 +19,9 @@ let router = new VueRouter({
       }
     },
     {
-      path: "/dashboard",
+      path: "/:account/dashboard",
       name: "home",
-      component: AdminDashboard,
+      component: Dashboard,
       meta: {
         needsAuth: true
       }

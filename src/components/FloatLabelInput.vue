@@ -11,6 +11,7 @@
         @input="$emit('input', $event.target.value)"
         v-validate.continues="validate"
         :data-vv-scope="inputName"
+        data-vv-delay="180"
       >
       <label :for="inputName" class="w-full py-1">{{ title }}</label>
     </div>

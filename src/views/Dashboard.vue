@@ -1,0 +1,106 @@
+<template>
+  <Dashboard>
+    <div slot="toolbar-contents" class="text-grey-darker flex items-center justify-end ml-4 cursor-pointer focus:rounded-full ">
+      <img src="https://avatars1.githubusercontent.com/u/12960236?s=460&v=4" alt="PP" class="h-10 rounded-full" @click="toggleUserNav">
+    </div>
+    <nav slot="sidebar-contents">
+      <div class="flex items-center hover:text-grey-darker hover:bg-orange-lighter py-4 pl-6 mr-1 mb-4">
+        <p class="lg:text-lg font-semibold">Dashboard</p>
+      </div>
+      <div class="ml-6 my-3">
+        <p class="lg:text-lg font-semibold">Subdomains</p>
+      </div>
+      <div class="flex items-center hover:text-grey-darker hover:bg-orange-lighter py-4 pl-6 mr-1">
+        <i class="fas fa-object-ungroup lg:fa-lg pr-3"></i>
+        <p class="lg:text-lg">Groups</p>
+      </div>
+      <div class="flex items-center hover:text-grey-darker hover:bg-orange-lighter py-4 pl-6 mr-1">
+        <i class="fas fa-object-ungroup lg:fa-lg pr-3"></i>
+        <p class="lg:text-lg">Clients</p>
+      </div>
+    </nav>
+    <div slot="main-contents">
+      <div class="flex items-center mb-4">
+        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">1</p>
+        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">2</p>
+        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">3</p>
+      </div>
+      <div class="flex items-center mb-4">
+        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">1</p>
+        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">2</p>
+        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">3</p>
+      </div>
+      <div class="flex items-center mb-4">
+        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">1</p>
+      </div>
+      <div class="flex items-center mb-4">
+        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">1</p>
+        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">3</p>
+      </div>
+      <div class="flex items-center mb-4">
+        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">1</p>
+        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">3</p>
+      </div>
+      <div class="flex items-center mb-4">
+        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">1</p>
+      </div>
+      <div class="flex items-center mb-4">
+        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">1</p>
+        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">3</p>
+      </div>
+    </div>
+    <div slot="fixed-contents">
+      <div class="fixed top-16 xl:card-pin-right-3xl lg:card-pin-right-2xl md:card-pin-right-tablet mt-1" v-show="showUserNav">
+        <div class="pr-6">
+          <div class="w-48 flex flex-col items-center m-1 py-3 px-3 border shadow bg-white">
+            <div 
+              class="py-2 w-full hover:bg-orange-lightest border-none flex items-center" 
+              @click="logout"
+            >
+              <i class="fas fa-sign-out-alt px-3"></i>
+              <p>Logout</p>
+            </div>
+            <div 
+              class="py-2 w-full hover:bg-orange-lightest border-none flex items-center"
+            >
+              <i class="fas fa-cog px-3"></i>
+              <p>Settings</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Dashboard>
+</template>
+
+<script>
+import { AuthConstants as AUTH_CONSTANT } from "../storage";
+import { mapActions } from "vuex";
+
+import Dashboard from "../components/Dashboard.vue";
+
+export default {
+  name: 'AdminDashboard',
+  data() {
+    return {
+      showUserNav: false,
+    }
+  },
+  components: {
+    Dashboard
+  },
+  methods: {
+    ...mapActions("auth", {
+      logout(dispatch) {
+        dispatch(AUTH_CONSTANT.UNAUTHENTICATE).then(() => {
+          this.$router.push("/login");
+        });
+      }
+    }),
+    toggleUserNav() {
+      this.showUserNav = !this.showUserNav;
+    }
+  }
+}
+</script>
+

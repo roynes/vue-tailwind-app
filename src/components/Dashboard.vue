@@ -12,7 +12,7 @@
             <img :src="companyLogo" class="h-10" v-show="!! companyLogo">
           </div>
         </div>
-        <div class="lg:px-6 md:px-0 lg:w-4/5 md:w-7/9 flex items-center justify-end">
+        <div class="lg:px-6 md:px-0 lg:w-4/5 md:w-7/9">
           <!-- // ! Don't remove the samples so as to debug later -->
           <!-- <div class="text-grey-darker items-center ml-4 cursor-pointer focus:rounded-full">
             <img src="https://avatars1.githubusercontent.com/u/12960236?s=460&v=4" alt="PP" class="h-10 rounded-full" @click="toggleUserNav">
@@ -132,7 +132,7 @@ export default {
   data: () => {
     return {
       showSideBar: true,
-      showUserNav: false,
+      // showUserNav: false,
     }
   },
   props: {
@@ -142,13 +142,13 @@ export default {
     }
   },
   methods: {
-    ...mapActions("auth", {
-      logout(dispatch) {
-        dispatch(AUTH_CONSTANT.UNAUTHENTICATE).then(() => {
-          this.$router.push("/login");
-        });
-      }
-    }),
+    // ...mapActions("auth", {
+    //   logout(dispatch) {
+    //     dispatch(AUTH_CONSTANT.UNAUTHENTICATE).then(() => {
+    //       this.$router.push("/login");
+    //     });
+    //   }
+    // }),
     toggleSideBar() {
       this.showSideBar = !this.showSideBar;
     },
