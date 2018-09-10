@@ -16,6 +16,8 @@ const mutations = {
   [UPDATE_TOKEN]: (state, token = "") => {
     constants.setToken(token);
     state.token = token;
+    axios.defaults.headers.common["Authorization"] = "Bearer " + state.token;
+    console.log('updated token');
   },
   [UPDATE_EXP]: (state, expiry = 0) => {
     constants.setTokenExpiry(expiry);
@@ -24,14 +26,12 @@ const mutations = {
 };
 
 const actions = {
-  [AUTHENTICATE]: ({ commit, dispatch }, credentials) => {
+  [AUTHENTICATE]: ({ commit }, credentials) => {
     return new Promise((resolve, reject) => {
       axios
         .post(constants.baseUri + "/login", credentials)
         .then(resp => {
           commitMutation(commit, resp.data);
-          
-          axios.defaults.headers.common["Authorization"] = "Bearer " + state.token;
 
           resolve(resp);
         })

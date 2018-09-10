@@ -521,6 +521,7 @@ module.exports = {
     "32": "8rem",
     "48": "12rem",
     "64": "16rem",
+    "168": "42rem",
     full: "100%",
     screen: "100vh"
   },
@@ -852,7 +853,7 @@ module.exports = {
     backgroundSize: ["responsive"],
     borderCollapse: [],
     borderColors: ["responsive", "hover", "focus"],
-    borderRadius: ["responsive", "focus"],
+    borderRadius: ["responsive", "focus", "hover"],
     borderStyle: ["responsive", "hover", "focus", "active"],
     borderWidths: ["responsive"],
     cursor: ["responsive"],
@@ -917,6 +918,7 @@ module.exports = {
       grids: [2, 3, 5, 6, 8, 10, 12],
       gaps: {
         0: "0",
+        2: "0.5rem",
         4: "1rem",
         8: "2rem"
       },

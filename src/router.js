@@ -3,8 +3,12 @@ import Vue from "vue";
 
 import Login from "./views/Login.vue";
 import Dashboard from "./views/Dashboard.vue";
+import AdminDashboard from "./views/Admin/AdminDashboard.vue";
+import GroupDashboard from "./views/Admin/GroupDashboard.vue";
+import ClientDashboard from "./views/Admin/ClientDashboard.vue";
 
 import store from "./storage";
+
 Vue.use(VueRouter);
 
 let router = new VueRouter({
@@ -20,17 +24,45 @@ let router = new VueRouter({
     },
     {
       path: "/:account/dashboard",
-      name: "home",
       component: Dashboard,
       meta: {
         needsAuth: true
-      }
+      },
+      children: [,
+        {
+          path: '',
+          redirect: {
+            name: 'AdminHome'
+          }
+        },
+        {
+          path: 'main',
+          name: 'AdminHome',
+          component: AdminDashboard
+        },
+        {
+          path: 'group',
+          name: 'GroupHome',
+          component: GroupDashboard
+        },
+        {
+          path: 'client',
+          name: 'ClientHome',
+          component: ClientDashboard
+        },
+      ]
     },
     {
       path: "/sample",
       name: "sample",
       component: () => import("./components/FloatLabelInput.vue")
-    }
+    },
+    // {
+    //   path: "*",
+    //   redirect: {
+    //     name: "home"
+    //   }
+    // },
   ]
 });
 

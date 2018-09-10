@@ -76,7 +76,7 @@ export default {
             .then(() => {
               this.form.reset();
               this.$router.push({
-                name: 'home',
+                path: '/:account/dashboard',
                 params: {
                   account: this.currentUser.account.type
                 }

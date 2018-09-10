@@ -4,50 +4,42 @@
       <img src="https://avatars1.githubusercontent.com/u/12960236?s=460&v=4" alt="PP" class="h-10 rounded-full" @click="toggleUserNav">
     </div>
     <nav slot="sidebar-contents">
-      <div class="flex items-center hover:text-grey-darker hover:bg-orange-lighter py-4 pl-6 mr-1 mb-4">
-        <p class="lg:text-lg font-semibold">Dashboard</p>
+      <div>
+        <router-link 
+          :to="{ name:'AdminHome' }" 
+          class="flex items-center hover:text-grey-darker hover:bg-orange-lighter py-4 pl-6 mr-1 mb-4 no-underline text-black"
+          append
+          ref="dashboard"
+        >
+          <p class="lg:text-lg font-semibold">Dashboard</p>
+        </router-link>
       </div>
       <div class="ml-6 my-3">
         <p class="lg:text-lg font-semibold">Subdomains</p>
       </div>
-      <div class="flex items-center hover:text-grey-darker hover:bg-orange-lighter py-4 pl-6 mr-1">
-        <i class="fas fa-object-ungroup lg:fa-lg pr-3"></i>
-        <p class="lg:text-lg">Groups</p>
+      <div class="mb-2">
+        <router-link 
+          :to="{ name:'GroupHome' }" 
+          class="flex items-center hover:text-grey-darker hover:bg-orange-lighter py-4 pl-6 mr-1 no-underline text-black"
+          append
+        >
+          <i class="fas fa-object-ungroup lg:fa-lg pr-3"></i>
+          <p class="lg:text-lg">Groups</p>
+        </router-link>
       </div>
-      <div class="flex items-center hover:text-grey-darker hover:bg-orange-lighter py-4 pl-6 mr-1">
-        <i class="fas fa-object-ungroup lg:fa-lg pr-3"></i>
-        <p class="lg:text-lg">Clients</p>
+      <div class="mb-2">
+        <router-link 
+          :to="{ name:'ClientHome' }" 
+          class="flex items-center hover:text-grey-darker hover:bg-orange-lighter py-4 pl-6 mr-1 no-underline text-black"
+          append
+        >
+          <i class="fas fa-object-ungroup lg:fa-lg pr-3"></i>
+          <p class="lg:text-lg">Clients</p>
+        </router-link>
       </div>
     </nav>
     <div slot="main-contents">
-      <div class="flex items-center mb-4">
-        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">1</p>
-        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">2</p>
-        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">3</p>
-      </div>
-      <div class="flex items-center mb-4">
-        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">1</p>
-        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">2</p>
-        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">3</p>
-      </div>
-      <div class="flex items-center mb-4">
-        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">1</p>
-      </div>
-      <div class="flex items-center mb-4">
-        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">1</p>
-        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">3</p>
-      </div>
-      <div class="flex items-center mb-4">
-        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">1</p>
-        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">3</p>
-      </div>
-      <div class="flex items-center mb-4">
-        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">1</p>
-      </div>
-      <div class="flex items-center mb-4">
-        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">1</p>
-        <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">3</p>
-      </div>
+      <router-view></router-view>
     </div>
     <div slot="fixed-contents">
       <div class="fixed top-16 xl:card-pin-right-3xl lg:card-pin-right-2xl md:card-pin-right-tablet mt-1" v-show="showUserNav">
@@ -80,7 +72,7 @@ import { mapActions } from "vuex";
 import Dashboard from "../components/Dashboard.vue";
 
 export default {
-  name: 'AdminDashboard',
+  name: 'DashBoard',
   data() {
     return {
       showUserNav: false,
@@ -104,3 +96,10 @@ export default {
 }
 </script>
 
+<style lang="scss" scoped>
+@tailwind utilities;
+
+.router-link-active {
+  @apply bg-orange-light;
+}
+</style>
