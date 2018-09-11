@@ -131,9 +131,9 @@ export default {
   name: "Home",
   data: () => {
     return {
-      showSideBar: true,
+      showSideBar: true
       // showUserNav: false,
-    }
+    };
   },
   props: {
     companyLogo: {
@@ -151,7 +151,7 @@ export default {
     // }),
     toggleSideBar() {
       this.showSideBar = !this.showSideBar;
-    },
+    }
     // toggleUserNav() {
     //   this.showUserNav = !this.showUserNav;
     // }
@@ -159,9 +159,9 @@ export default {
   computed: {
     adjustContentWidth() {
       return {
-        'lg:w-4/5 md:w-7/9': this.showSideBar,
-        'w-full': !this.showSideBar
-      }
+        "lg:w-4/5 md:w-7/9": this.showSideBar,
+        "w-full": !this.showSideBar
+      };
     }
   },
   components: {
@@ -173,32 +173,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
- @tailwind utilities;
+@tailwind utilities;
 
 .-h-screen-16 {
-  height:calc(100vh - 4rem);
-  height:-webkit-calc(100vh - 4rem);
-  height:-moz-calc(100vh - 4rem);
+  height: calc(100vh - 4rem);
+  height: -webkit-calc(100vh - 4rem);
+  height: -moz-calc(100vh - 4rem);
 }
 
 @responsive {
   .card-pin-right-3xl {
-    right:calc(calc(100vw - 80rem) / 2);
-    right:-webkit-calc(calc(100vw - 80rem) / 2);
-    right:-moz-calc(calc(100vw - 80rem) / 2);
+    right: calc(calc(100vw - 80rem) / 2);
+    right: -webkit-calc(calc(100vw - 80rem) / 2);
+    right: -moz-calc(calc(100vw - 80rem) / 2);
   }
-  
+
   .card-pin-right-2xl {
-    right:calc(calc(100vw - 64rem) / 2);
-    right:-webkit-calc(calc(100vw - 64rem) / 2);
-    right:-moz-calc(calc(100vw - 64rem) / 2);
+    right: calc(calc(100vw - 64rem) / 2);
+    right: -webkit-calc(calc(100vw - 64rem) / 2);
+    right: -moz-calc(calc(100vw - 64rem) / 2);
   }
 
   .card-pin-right-tablet {
-    right:calc(calc(100vw - 48.5rem) / 2);
-    right:-webkit-calc(calc(100vw - 48.5rem) / 2);
-    right:-moz-calc(calc(100vw - 48.5rem) / 2);
+    right: calc(calc(100vw - 48.5rem) / 2);
+    right: -webkit-calc(calc(100vw - 48.5rem) / 2);
+    right: -moz-calc(calc(100vw - 48.5rem) / 2);
   }
 }
 </style>
-

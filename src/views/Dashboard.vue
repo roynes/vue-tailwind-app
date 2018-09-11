@@ -72,11 +72,11 @@ import { mapActions } from "vuex";
 import Dashboard from "../components/Dashboard.vue";
 
 export default {
-  name: 'DashBoard',
+  name: "DashBoard",
   data() {
     return {
-      showUserNav: false,
-    }
+      showUserNav: false
+    };
   },
   components: {
     Dashboard
@@ -93,7 +93,7 @@ export default {
       this.showUserNav = !this.showUserNav;
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

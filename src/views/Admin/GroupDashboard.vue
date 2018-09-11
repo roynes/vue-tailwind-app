@@ -223,7 +223,7 @@
 </template>
 
 <script>
-import { baseUri } from '../../helpers';
+import { baseUri } from "../../helpers";
 
 export default {
   data() {
@@ -241,16 +241,15 @@ export default {
       totalPages: 1,
       pageNumToShow: [],
       total: 1
-    }
+    };
   },
   methods: {
-    fetchNextPage() {
-
-    }
+    fetchNextPage() {}
   },
   mounted() {
-    axios.get(`${baseUri}/groups`)
-      .then((resp) => {
+    axios
+      .get(`${baseUri}/groups`)
+      .then(resp => {
         let data = resp.data.groups;
 
         this.groups = data.data;
@@ -265,14 +264,14 @@ export default {
         this.perPage = data.per_page;
 
         this.total = data.total;
-        this.totalPages = Math.ceil(this.total / this.perPage)
-        
-        for(let i = 0; i <= 3; i++) {
-          if((this.curPage + i) <= this.totalPages) {
-            this.pageNumToShow.push({in: i, val: this.curPage + i});
+        this.totalPages = Math.ceil(this.total / this.perPage);
+
+        for (let i = 0; i <= 3; i++) {
+          if (this.curPage + i <= this.totalPages) {
+            this.pageNumToShow.push({ in: i, val: this.curPage + i });
           }
 
-          if(this.curPage == this.totalPages) {
+          if (this.curPage == this.totalPages) {
             break;
           }
         }
@@ -280,8 +279,7 @@ export default {
         console.log(data);
         console.log(this);
       })
-      .catch( err => console.log(err.response));
+      .catch(err => console.log(err.response));
   }
-}
+};
 </script>
-

@@ -28,35 +28,36 @@ let router = new VueRouter({
       meta: {
         needsAuth: true
       },
-      children: [,
+      children: [
+        ,
         {
-          path: '',
+          path: "",
           redirect: {
-            name: 'AdminHome'
+            name: "AdminHome"
           }
         },
         {
-          path: 'main',
-          name: 'AdminHome',
+          path: "main",
+          name: "AdminHome",
           component: AdminDashboard
         },
         {
-          path: 'group',
-          name: 'GroupHome',
+          path: "group",
+          name: "GroupHome",
           component: GroupDashboard
         },
         {
-          path: 'client',
-          name: 'ClientHome',
+          path: "client",
+          name: "ClientHome",
           component: ClientDashboard
-        },
+        }
       ]
     },
     {
       path: "/sample",
       name: "sample",
       component: () => import("./components/FloatLabelInput.vue")
-    },
+    }
     // {
     //   path: "*",
     //   redirect: {

@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     ...mapMutations("auth", {
-      updateToken(commit, token = "") {
+      updateToken(commit) {
         commit(AUTH_CONSTANT.UPDATE_TOKEN);
       },
 
@@ -71,28 +71,28 @@ export default {
         dispatch(AUTH_CONSTANT.AUTHENTICATE, {
           email: this.form.email,
           password: this.form.password
-        }).then(() => {
-          this.getCurUser()
-            .then(() => {
+        })
+          .then(() => {
+            this.getCurUser().then(() => {
               this.form.reset();
               this.$router.push({
-                path: '/:account/dashboard',
+                path: "/:account/dashboard",
                 params: {
                   account: this.currentUser.account.type
                 }
-              })
+              });
             });
-        }).catch(err => {
-          console.log(err)
-          this.updateToken();
-          this.$router.push("/login");
-        });
+          })
+          .catch(err => {
+            console.log(err);
+            this.updateToken();
+            this.$router.push("/login");
+          });
       }
     }),
     ...mapActions("user", {
       getCurUser(dispatch) {
-        let jwtToken = this.token;
-        let payload = atob(this.token.split('.')[1]);
+        let payload = atob(this.token.split(".")[1]);
         let subject = JSON.parse(payload).sub;
 
         return dispatch(USER_CONSTANTS.GET_CUR_USER, subject);

@@ -646,7 +646,7 @@ module.exports = {
     "20": "5rem",
     "22": "5.5rem",
     "24": "6rem",
-    "32": "8rem",
+    "32": "8rem"
   },
 
   /*
@@ -765,7 +765,7 @@ module.exports = {
     "30": 30,
     "40": 40,
     "50": 50,
-    "top": 100
+    top: 100
   },
 
   /*
@@ -892,7 +892,7 @@ module.exports = {
     visibility: ["responsive"],
     whitespace: ["responsive"],
     width: ["responsive"],
-    zIndex: ['responsive']
+    zIndex: ["responsive"]
   },
 
   /*
@@ -926,8 +926,8 @@ module.exports = {
     }),
     require("./plugins/position-top")({
       remsRange: [16],
-      variants: ['responsive']
-    }),
+      variants: ["responsive"]
+    })
     // require("./plugins/position-right")({
     //   remsRange: [10],
     //   variants: ['responsive']

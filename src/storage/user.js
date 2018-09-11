@@ -17,17 +17,18 @@ const mutations = {
 const actions = {
   [GET_CUR_USER]({ commit }, userId) {
     return new Promise((resolve, reject) => {
-      axios.get(`${constants.baseUri}/user/${userId}?with=account`)
-        .then((resp) => {
+      axios
+        .get(`${constants.baseUri}/user/${userId}?with=account`)
+        .then(resp => {
           commit(SET_CUR_USER, resp.data);
           resolve(resp);
         })
-        .catch((err) => {
+        .catch(err => {
           reject(err);
         });
     });
   }
-}
+};
 
 export default {
   namespaced: true,
