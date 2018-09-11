@@ -58,12 +58,6 @@ let router = new VueRouter({
       name: "sample",
       component: () => import("./components/FloatLabelInput.vue")
     }
-    // {
-    //   path: "*",
-    //   redirect: {
-    //     name: "home"
-    //   }
-    // },
   ]
 });
 

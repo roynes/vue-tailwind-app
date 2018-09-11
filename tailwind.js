@@ -875,7 +875,7 @@ module.exports = {
     opacity: ["responsive"],
     outline: ["focus"],
     overflow: ["responsive", "hover"],
-    padding: ["responsive", "group-hover"],
+    padding: ["responsive", "group-hover", "hover"],
     pointerEvents: ["responsive"],
     position: ["responsive"],
     resize: ["responsive"],
@@ -928,7 +928,8 @@ module.exports = {
     require("./plugins/position-top")({
       remsRange: [16],
       variants: ["responsive"]
-    })
+    }),
+    require("glhd-tailwindcss-transitions")()
     // require("./plugins/position-right")({
     //   remsRange: [10],
     //   variants: ['responsive']
