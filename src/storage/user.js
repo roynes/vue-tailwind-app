@@ -5,12 +5,12 @@ export const SET_CUR_USER = "SET_CUR_USER";
 export const GET_CUR_USER = "GET_CUR_USER";
 
 const state = {
-  cur_user: {}
+  cur_user: constants.user
 };
 
 const mutations = {
   [SET_CUR_USER](state, user = {}) {
-    state.cur_user = user;
+    constants.setUser(user);
   }
 };
 

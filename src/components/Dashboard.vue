@@ -25,7 +25,7 @@
       <!-- end of toolbar -->
       
       <!-- side bar and content -->
-      <div class="w-full xl:max-w-3xl lg:max-w-2xl mx-auto lg:px-6 md:pl-4 md:pr-2 flex">
+      <div class="w-full xl:max-w-3xl lg:max-w-2xl mx-auto lg:px-6 md:px-2 flex">
         <!-- Side bar -->
         <div class="lg:w-1/5 md:w-2/9 md:pr-3 lg:pr-6 z-90 static" v-show="showSideBar">
           <Sidebar class="top-16 relative sticky -h-screen-16">
@@ -171,33 +171,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-@tailwind utilities;
-
-.-h-screen-16 {
-  height: calc(100vh - 4rem);
-  height: -webkit-calc(100vh - 4rem);
-  height: -moz-calc(100vh - 4rem);
-}
-
-@responsive {
-  .card-pin-right-3xl {
-    right: calc(calc(100vw - 80rem) / 2);
-    right: -webkit-calc(calc(100vw - 80rem) / 2);
-    right: -moz-calc(calc(100vw - 80rem) / 2);
-  }
-
-  .card-pin-right-2xl {
-    right: calc(calc(100vw - 64rem) / 2);
-    right: -webkit-calc(calc(100vw - 64rem) / 2);
-    right: -moz-calc(calc(100vw - 64rem) / 2);
-  }
-
-  .card-pin-right-tablet {
-    right: calc(calc(100vw - 48.5rem) / 2);
-    right: -webkit-calc(calc(100vw - 48.5rem) / 2);
-    right: -moz-calc(calc(100vw - 48.5rem) / 2);
-  }
-}
-</style>

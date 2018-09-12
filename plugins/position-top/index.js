@@ -1,6 +1,6 @@
 const _ = require('lodash')
 
-module.exports = function ({ remsRange = _.range(1, 12), variants = ['responsive']}) {
+module.exports = function ({ remsRange = _.range(1, 32), variants = ['responsive']}) {
   return function ({ e, addUtilities, addComponents }) {
     addUtilities([
       ...remsRange.map(theRange => ({

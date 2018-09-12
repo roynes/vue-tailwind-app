@@ -8,6 +8,11 @@
         <div class="ml-4">
           <h1>Clients</h1>
         </div>
+        <div class="flex items-center justify-end w-full px-6">
+          <div class="hover:rounded-full hover:bg-purple hover:text-white hover:shadow-md transition">
+            <i class="fas fa-plus fa p-2"></i>
+          </div>
+        </div>
       </div>
       <div class="w-full grid grid-columns-12 flex py-2 items-center font-semibold grid-gap-2">
         <div class="col-span-1 text-center">#</div>
@@ -17,30 +22,34 @@
         <div class="col-span-2 text-center">Actions</div>
       </div>
 
-      <div v-for="client in clients" 
-        :key="client.id" 
-        class="w-full grid grid-columns-12 flex h-16 items-center font-light grid-gap-2 mb-4"
-      >
-        <div class="col-span-1 text-center">1</div>
-        <div class="col-span-3 break-word overflow-y-auto h-16 flex items-center">
-          {{client.name}}
-        </div>
-        <div class="col-span-3 break-word overflow-y-auto h-16 flex items-center">
-          {{client.settings.email}}
-        </div>
-        <div class="col-span-3 break-word overflow-y-auto h-16 flex items-center">
-          {{client.settings.address}}
-        </div>
-        <div class="col-span-2 flex overflow-y-auto items-center justify-around px-1">
-          <a href="#" class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
-            <i class="fas fa-sign-in-alt cursor-pointer"></i>
-          </a>
-          <a href="#" class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
-            <i class="fas fa-edit cursor-pointer"></i>
-          </a>
-          <a href="#" class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
-            <i class="fas fa-trash-alt cursor-pointer"></i>
-          </a>
+      <div class="mx-1">
+        <div v-for="(client, index) in clients" 
+          :key="index" 
+          class="w-full grid grid-columns-12 flex h-16 items-center font-light grid-gap-2 mb-4 hover:bg-grey-light hover:rounded hover:shadow hover:font-medium"
+        >
+          <div class="col-span-1 text-center">
+            {{ curPage == 1 ? index + 1 : from + index }}
+          </div>
+          <div class="col-span-3 break-word overflow-y-auto h-16 flex items-center">
+            {{client.name}}
+          </div>
+          <div class="col-span-3 break-word overflow-y-auto h-16 flex items-center">
+            {{client.settings.email}}
+          </div>
+          <div class="col-span-3 break-word overflow-y-auto h-16 flex items-center">
+            {{client.settings.address}}
+          </div>
+          <div class="col-span-2 flex overflow-y-auto items-center justify-around px-1">
+            <a href="#" class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
+              <i class="group fas fa-sign-in-alt cursor-pointer"></i>
+            </a>
+            <a href="#" class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
+              <i class="group fas fa-edit cursor-pointer"></i>
+            </a>
+            <a href="#" class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
+              <i class="group fas fa-trash-alt cursor-pointer"></i>
+            </a>
+          </div>
         </div>
       </div>
 
@@ -106,6 +115,7 @@ export default {
       pageNumToShow: [],
       total: 1,
       to: 1,
+      from: 1,
     };
   },
   methods: {
@@ -122,6 +132,8 @@ export default {
           })) {
             this.showPageNumber();
           }
+
+          console.log(data);
         })
         .catch(err => console.log(err.response));
     },
@@ -140,6 +152,7 @@ export default {
       this.total = data.total;
       this.totalPages = Math.ceil(this.total / this.perPage);
 
+      this.from = data.from;
       this.to = data.to;
     },
     showPageNumber() {

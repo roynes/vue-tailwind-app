@@ -60,3 +60,29 @@
   * @import "utilities/background-patterns";
   * @import "utilities/skew-transforms";
   */
+
+  .-h-screen-16 {
+    height: calc(100vh - 4rem);
+    height: -webkit-calc(100vh - 4rem);
+    height: -moz-calc(100vh - 4rem);
+  }
+  
+  @responsive {
+    .card-pin-right-3xl {
+      right: calc(calc(100vw - 80rem) / 2);
+      right: -webkit-calc(calc(100vw - 80rem) / 2);
+      right: -moz-calc(calc(100vw - 80rem) / 2);
+    }
+  
+    .card-pin-right-2xl {
+      right: calc(calc(100vw - 64rem) / 2);
+      right: -webkit-calc(calc(100vw - 64rem) / 2);
+      right: -moz-calc(calc(100vw - 64rem) / 2);
+    }
+  
+    .card-pin-right-tablet {
+      right: calc(calc(100vw - 48.5rem) / 2);
+      right: -webkit-calc(calc(100vw - 48.5rem) / 2);
+      right: -moz-calc(calc(100vw - 48.5rem) / 2);
+    }
+  }

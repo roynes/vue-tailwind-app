@@ -862,7 +862,7 @@ module.exports = {
     flexbox: ["responsive"],
     float: ["responsive"],
     fonts: ["responsive"],
-    fontWeights: ["responsive", "hover", "focus"],
+    fontWeights: ["responsive", "hover", "focus", "group-hover"],
     height: ["responsive"],
     leading: ["responsive"],
     lists: ["responsive"],
@@ -890,7 +890,7 @@ module.exports = {
     tracking: false,
     userSelect: ["responsive"],
     verticalAlign: ["responsive"],
-    visibility: ["responsive"],
+    visibility: ["responsive", "group-hover", "hover"],
     whitespace: ["responsive"],
     width: ["responsive"],
     zIndex: ["responsive"]
@@ -926,7 +926,7 @@ module.exports = {
       variants: ["responsive"]
     }),
     require("./plugins/position-top")({
-      remsRange: [16],
+      remsRange: [2,16],
       variants: ["responsive"]
     }),
     require("glhd-tailwindcss-transitions")()

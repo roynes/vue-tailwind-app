@@ -11,3 +11,9 @@ export function unsetToken() {
 export function setTokenExpiry(expiryDate = 30) {
   localStorage.setItem(Default.tokenExpAlias, expiryDate);
 }
+
+export function setUser(user = {}) {
+  let t = JSON.stringify(user);
+  
+  localStorage.setItem(Default.userAlias, t);
+}

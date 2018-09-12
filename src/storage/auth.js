@@ -17,7 +17,6 @@ const mutations = {
     constants.setToken(token);
     state.token = token;
     axios.defaults.headers.common["Authorization"] = "Bearer " + state.token;
-    console.log("updated token");
   },
   [UPDATE_EXP]: (state, expiry = 0) => {
     constants.setTokenExpiry(expiry);
