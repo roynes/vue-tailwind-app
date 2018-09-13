@@ -79,10 +79,7 @@ export default {
 
               this.form.reset();
               this.$router.push({
-                name: "AdminHome",
-                params: {
-                  account: this.currentUser.account.type
-                }
+                name: "main"
               });
             });
           })

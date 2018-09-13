@@ -38,24 +38,50 @@ let router = new VueRouter({
       children: [
         {
           path: "",
-          redirect: {
-            name: "AdminHome"
+          name: "main",
+          // todo: continue here <--------
+          beforeEnter(to, from, next) {
+            let authenticated = !! store.state.auth.token;
+
+            console.log('beforeEnter Guard', store.state.user.roles);
+
+            if(authenticated) {
+              if(store.state.user.roles.includes('super-admin')) {
+                next({
+                  name: 'AdminHome',
+                  params: {
+                    account: store.state.user.cur_user.account.type
+                  }
+                })
+              } else {
+                next();
+              }
+            }
           }
         },
         {
           path: "main",
           name: "AdminHome",
-          component: AdminDashboard
+          component: AdminDashboard,
+          meta: {
+            role: 'super-admin'
+          }
         },
         {
           path: "group",
           name: "GroupHome",
-          component: GroupListDashboard
+          component: GroupListDashboard,
+          meta: {
+            role: 'super-admin'
+          }
         },
         {
           path: "client",
           name: "ClientHome",
-          component: ClientListDashboard
+          component: ClientListDashboard,
+          meta: {
+            role: 'super-admin'
+          }
         }
       ]
     },

@@ -7,7 +7,7 @@ export const GET_CUR_USER = "GET_CUR_USER";
 const state = {
   cur_user: constants.user,
   permissions: constants.permission.split(','),
-  roles: constants.permission.split(','),
+  roles: constants.role.split(','),
 };
 
 const mutations = {
