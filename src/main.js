@@ -19,6 +19,8 @@ if (token !== "") {
 }
 
 axios.interceptors.response.use(undefined, err => {
+  console.log("Error response intercepted");
+
   if (err.response.status === 401) {
     store.commit(`auth/${AuthConstants.UPDATE_EXP}`);
     store.commit(`auth/${AuthConstants.UPDATE_TOKEN}`);

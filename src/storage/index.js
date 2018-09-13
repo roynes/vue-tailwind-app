@@ -6,7 +6,7 @@ import UserModule, * as UserConstants from "./user";
 Vue.use(Vuex);
 
 let store = new Vuex.Store({
-  strict: true,
+  strict: false,
   modules: {
     auth: AuthModule,
     user: UserModule

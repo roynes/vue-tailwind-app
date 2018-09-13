@@ -73,10 +73,13 @@ export default {
           password: this.form.password
         })
           .then(() => {
-            this.getCurUser().then(() => {
+            this.getCurUser().then((resp) => {
+              console.log("successfully fetched user")
+              console.log(resp.data);
+
               this.form.reset();
               this.$router.push({
-                path: "/:account/dashboard",
+                name: "AdminHome",
                 params: {
                   account: this.currentUser.account.type
                 }
