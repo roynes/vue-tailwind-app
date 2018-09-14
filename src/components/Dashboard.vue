@@ -7,16 +7,12 @@
           <div class="text-black lg:pr-6 md:pr-2 flex items-center no-underline py-1" @click="toggleSideBar">
             <i class="fas fa-bars fa-lg no-underline antialiased"></i>
           </div>
-          <div class="no-underline font-semibold text-xl text-grey-darkest hover:text-grey-dark py-1 flex items-center justify-center">
-            <img src="@/assets/logo.png" class="h-10" alt="CL" v-show="!! !companyLogo">
-            <img :src="companyLogo" class="h-10" v-show="!! companyLogo">
-          </div>
+          <router-link :to="{name:'main'}" class="no-underline font-semibold text-xl text-grey-darkest hover:text-grey-dark py-1 flex items-center justify-center">
+            <img :src="companyLogo" class="h-10" v-if="!! companyLogo">
+            <img src="@/assets/logo.png" class="h-10" alt="CL" v-else-if="!! !companyLogo">
+          </router-link>
         </div>
         <div class="lg:px-6 md:px-0 lg:w-4/5 md:w-7/9">
-          <!-- // ! Don't remove the samples so as to debug later -->
-          <!-- <div class="text-grey-darker items-center ml-4 cursor-pointer focus:rounded-full">
-            <img src="https://avatars1.githubusercontent.com/u/12960236?s=460&v=4" alt="PP" class="h-10 rounded-full" @click="toggleUserNav">
-          </div> -->
           <slot name="toolbar-contents">
             <!-- contents here -->
           </slot>
@@ -29,21 +25,6 @@
         <!-- Side bar -->
         <div class="lg:w-1/5 md:w-2/9 md:pr-3 lg:pr-6 z-90 static" v-show="showSideBar">
           <Sidebar class="top-16 relative sticky -h-screen-16">
-            <!-- // ! Don't remove the samples so as to debug later -->
-            <!-- <div class="flex items-center hover:text-grey-darker hover:bg-orange-lighter py-4 pl-6 mr-1 mb-4">
-              <p class="lg:text-lg font-semibold">Dashboard</p>
-            </div>
-            <div class="ml-6 my-3">
-              <p class="lg:text-lg font-semibold">Subdomains</p>
-            </div>
-            <div class="flex items-center hover:text-grey-darker hover:bg-orange-lighter py-4 pl-6 mr-1">
-              <i class="fas fa-object-ungroup lg:fa-lg pr-3"></i>
-              <p class="lg:text-lg">Groups</p>
-            </div>
-            <div class="flex items-center hover:text-grey-darker hover:bg-orange-lighter py-4 pl-6 mr-1">
-              <i class="fas fa-object-ungroup lg:fa-lg pr-3"></i>
-              <p class="lg:text-lg">Clients</p>
-            </div> -->
             <slot name="sidebar-contents"></slot>
           </Sidebar>
         </div>
@@ -55,35 +36,7 @@
               <slot name="main-contents">
                 <!-- contents here -->
               </slot>
-              <!-- // ! Don't remove the samples so as to debug later -->
-              <!-- <div class="flex items-center mb-4">
-                <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">1</p>
-                <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">2</p>
-                <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">3</p>
-              </div>
-              <div class="flex items-center mb-4">
-                <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">1</p>
-                <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">2</p>
-                <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">3</p>
-              </div>
-              <div class="flex items-center mb-4">
-                <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">1</p>
-              </div>
-              <div class="flex items-center mb-4">
-                <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">1</p>
-                <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">3</p>
-              </div>
-              <div class="flex items-center mb-4">
-                <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">1</p>
-                <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">3</p>
-              </div>
-              <div class="flex items-center mb-4">
-                <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">1</p>
-              </div>
-              <div class="flex items-center mb-4">
-                <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">1</p>
-                <p class="flex-1 text-center px-20 py-20 mx-2 bg-orange-lighter">3</p>
-              </div> -->
+              
             </div>
           </Container>
         </div>
@@ -93,27 +46,6 @@
       <slot name="fixed-contents">
         <!-- contents here -->
       </slot>
-      <!-- // ! Don't remove the samples so as to debug later -->
-      <!-- sample fixed user nav card -->
-      <!-- <div class="fixed top-16 xl:card-pin-right-3xl lg:card-pin-right-2xl md:card-pin-right-tablet mt-1" v-show="showUserNav">
-        <div class="pr-6">
-          <div class="w-48 flex flex-col items-center m-1 py-3 px-3 border shadow bg-white">
-            <div 
-              class="py-2 w-full hover:bg-orange-lightest border-none flex items-center" 
-              @click="logout"
-            >
-              <i class="fas fa-sign-out-alt px-3"></i>
-              <p>Logout</p>
-            </div>
-            <div 
-              class="py-2 w-full hover:bg-orange-lightest border-none flex items-center"
-            >
-              <i class="fas fa-cog px-3"></i>
-              <p>Settings</p>
-            </div>
-          </div>
-        </div>
-      </div> -->
 
     </div>
   </div>
@@ -132,7 +64,6 @@ export default {
   data: () => {
     return {
       showSideBar: true
-      // showUserNav: false,
     };
   },
   props: {
@@ -142,19 +73,9 @@ export default {
     }
   },
   methods: {
-    // ...mapActions("auth", {
-    //   logout(dispatch) {
-    //     dispatch(AUTH_CONSTANT.UNAUTHENTICATE).then(() => {
-    //       this.$router.push("/login");
-    //     });
-    //   }
-    // }),
     toggleSideBar() {
       this.showSideBar = !this.showSideBar;
     }
-    // toggleUserNav() {
-    //   this.showUserNav = !this.showUserNav;
-    // }
   },
   computed: {
     adjustContentWidth() {

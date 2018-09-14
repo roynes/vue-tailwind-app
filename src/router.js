@@ -2,11 +2,12 @@ import VueRouter from "vue-router";
 import Vue from "vue";
 
 import Login from "./pages/Login.vue";
+import AccountMain from "./pages/AccountMain.vue";
 import Dashboard from "./pages/Dashboard.vue";
-import AdminDashboard from "./pages/Admin/AdminDashboard.vue";
-import GroupListDashboard from "./pages/Admin/GroupListDashboard.vue";
-import ClientListDashboard from "./pages/Admin/ClientListDashboard.vue";
-import Error404 from "./pages/Error404.vue";
+
+import { GroupListDashboard, ClientListDashboard } from "@/pages/Admin";
+
+import { Error404 } from "@/pages/Error";
 
 import store from "./storage";
 
@@ -15,9 +16,14 @@ Vue.use(VueRouter);
 let router = new VueRouter({
   routes: [
     {
-      path: "",
-      redirect: {
-        name: "login"
+      path: "/",
+      beforeEnter(to, from, next) {
+        let authenticated = !! store.state.auth.token;
+
+        console.log('beforeEnter');
+
+        if(authenticated) next({ name: "main", params: { account : store.state.user.cur_user.account.type }  })
+        else next({name: "login"})
       }
     },
     {
@@ -31,7 +37,7 @@ let router = new VueRouter({
     },
     {
       path: "/:account/dashboard",
-      component: Dashboard,
+      component: AccountMain,
       meta: {
         needsAuth: true
       },
@@ -39,55 +45,35 @@ let router = new VueRouter({
         {
           path: "",
           name: "main",
-          // todo: continue here <--------
-          beforeEnter(to, from, next) {
-            let authenticated = !! store.state.auth.token;
-
-            console.log('beforeEnter Guard', store.state.user.roles);
-
-            if(authenticated) {
-              if(store.state.user.roles.includes('super-admin')) {
-                next({
-                  name: 'AdminHome',
-                  params: {
-                    account: store.state.user.cur_user.account.type
-                  }
-                })
-              } else {
-                next();
-              }
-            }
-          }
-        },
-        {
-          path: "main",
-          name: "AdminHome",
-          component: AdminDashboard,
+          component: Dashboard,
           meta: {
-            role: 'super-admin'
-          }
+            needsAuth: true
+          },
         },
         {
-          path: "group",
-          name: "GroupHome",
+          path: "group-list",
+          name: "GroupList",
           component: GroupListDashboard,
           meta: {
-            role: 'super-admin'
-          }
+            needsAuth: true
+          },
         },
         {
-          path: "client",
-          name: "ClientHome",
+          path: "client-list",
+          name: "ClientList",
           component: ClientListDashboard,
           meta: {
-            role: 'super-admin'
-          }
+            needsAuth: true
+          },
         }
+        // Todo: Add Routes for Group And Client
+        // Todo: Design Components for Group and client
+        // Todo: Implement directly Login as
       ]
     },
     {
-      path: "/sample",
-      name: "sample",
+      path: "/test",
+      name: "test",
       component: () => import("./components/FloatLabelInput.vue")
     },
     {
@@ -101,20 +87,18 @@ let router = new VueRouter({
 router.beforeEach((to, from, next) => {
   let authenticated = !!store.state.auth.token;
 
-  console.log("from", from.path, from.params, from.query);
-  console.log("to", to.path, to.params, to.query);
-
-  console.log("condition 1", to.matched.some(record => record.meta.needsAuth) && !authenticated);
-  console.log("condition 2", to.matched.some(rec => rec.meta.guestOnly) && authenticated)
-
   if (to.matched.some(record => record.meta.needsAuth) && !authenticated) {
     next("/login");
   } else if (to.matched.some(rec => rec.meta.guestOnly) && authenticated) {
     next({
-      name: "AdminHome",
+      name: "main",
       params: {
         account: store.state.user.cur_user.account.type
       }
+    });
+  } else if(!to.matched.length ) {
+    next({
+      name: "err404"
     });
   } else {
     next();

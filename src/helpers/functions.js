@@ -26,3 +26,12 @@ export function setPermissions(permissions = []) {
 export function setRoles(roles = []) {
   localStorage.setItem(Default.roleAlias, roles.toString());
 }
+
+export function toCamelCase(val = "", toPascalCase = false) {
+  return val.replace(
+    /(?:^\w|[A-Z]|\b\w)/g, 
+    (letter, index) => {
+      return !toPascalCase && index == 0 ? letter.toLowerCase() : letter.toUpperCase()
+    })
+    .replace(/[-\s]/g, "");
+}

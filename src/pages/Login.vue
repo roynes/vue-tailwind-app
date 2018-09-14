@@ -79,7 +79,10 @@ export default {
 
               this.form.reset();
               this.$router.push({
-                name: "main"
+                name: "main",
+                params: {
+                  account: this.user.account.type
+                }
               });
             });
           })
@@ -107,7 +110,7 @@ export default {
       token: state => state.token
     }),
     ...mapState("user", {
-      currentUser: state => state.cur_user
+      user: state => state.cur_user
     })
   },
   components: {

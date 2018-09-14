@@ -16,3 +16,5 @@ export const permission = localStorage.getItem(permissionAlias)|| "";
 export const roleAlias = btoa(`role`);
 export const role = localStorage.getItem(roleAlias) || "";
 
+export const SUPER_ADMIN = 'super-admin';
+

@@ -1,7 +1,7 @@
 <template>
   <div class="main-contents">
     <div class="flex items-center mb-4 w-full text-white">
-      <router-link :to="{ name: 'ClientHome' }" tag="div" class="flex-1 h-48 m-2 flex border rounded-lg bg-blue-dark hover:bg-blue-light shadow-md cursor-pointer">
+      <router-link :to="{ name: 'ClientList' }" tag="div" class="flex-1 h-48 m-2 flex border rounded-lg bg-blue-dark hover:bg-blue-light shadow-md cursor-pointer">
         <div class="w-1/2 h-full text-center text-5xl flex items-center justify-center ">
           <i class="fas fa-users fa-2x"></i>
         </div>
@@ -11,7 +11,7 @@
         </div>
       </router-link>
       
-      <router-link :to="{ name: 'GroupHome' }" tag="div" class="flex-1 h-48 m-2 flex border rounded-lg bg-blue-dark hover:bg-blue-light shadow-md cursor-pointer">
+      <router-link :to="{ name: 'GroupList' }" tag="div" class="flex-1 h-48 m-2 flex border rounded-lg bg-blue-dark hover:bg-blue-light shadow-md cursor-pointer">
         <div class="w-1/2 h-full text-center text-5xl flex items-center justify-center ">
           <i class="fas fa-users fa-2x"></i>
         </div>
