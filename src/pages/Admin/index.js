@@ -1,9 +1,11 @@
 import SuperAdminDashboard from "./SuperAdminDashboard.vue";
-import ClientListDashboard from "./ClientListDashboard.vue";
-import GroupListDashboard from "./GroupListDashboard.vue";
+import SuperAdminClientsList from "./SuperAdminClientsList.vue";
+import SuperAdminGroupsList from "./SuperAdminGroupsList.vue";
+import SuperAdminUsersList from "./SuperAdminUsersList.vue";
 
 export {
   SuperAdminDashboard,
-  ClientListDashboard,
-  GroupListDashboard
+  SuperAdminClientsList,
+  SuperAdminGroupsList,
+  SuperAdminUsersList,
 }

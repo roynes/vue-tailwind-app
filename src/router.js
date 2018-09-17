@@ -1,15 +1,10 @@
-import VueRouter from "vue-router";
-import Vue from "vue";
-
-import Login from "./pages/Login.vue";
+import { GroupsList, Dashboard, ClientsList, UsersList } from "@/pages/Layout";
 import AccountMain from "./pages/AccountMain.vue";
-import Dashboard from "./pages/Dashboard.vue";
-
-import { GroupListDashboard, ClientListDashboard } from "@/pages/Admin";
-
 import { Error404 } from "@/pages/Error";
-
+import Login from "./pages/Login.vue";
+import VueRouter from "vue-router";
 import store from "./storage";
+import Vue from "vue";
 
 Vue.use(VueRouter);
 
@@ -53,7 +48,7 @@ let router = new VueRouter({
         {
           path: "group-list",
           name: "GroupList",
-          component: GroupListDashboard,
+          component: GroupsList,
           meta: {
             needsAuth: true
           },
@@ -61,11 +56,20 @@ let router = new VueRouter({
         {
           path: "client-list",
           name: "ClientList",
-          component: ClientListDashboard,
+          component: ClientsList,
+          meta: {
+            needsAuth: true
+          },
+        },
+        {
+          path: "users-list",
+          name: "UsersList",
+          component: UsersList,
           meta: {
             needsAuth: true
           },
         }
+
         // Todo: Add Routes for Group And Client
         // Todo: Design Components for Group and client
         // Todo: Implement directly Login as

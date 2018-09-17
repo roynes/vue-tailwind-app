@@ -1,16 +1,17 @@
 <template>
-  <component :is="componentName">
-
-  </component>
+  <component :is="componentName"></component>
 </template>
 
 <script>
 import { SuperAdminDashboard } from "@/pages/Admin";
-import * as constants from "../helpers";
+import { GroupAdminDashboard } from "@/pages/Group";
+
+import * as constants from "../../helpers";
 
 export default {
   components: {
-    SuperAdminDashboard
+    SuperAdminDashboard,
+    GroupAdminDashboard
   },
   data() {
     return {
