@@ -5,13 +5,15 @@
 <script>
 import { SuperAdminDashboard } from "@/pages/Admin";
 import { GroupAdminDashboard } from "@/pages/Group";
+import { ClientAdminDashboard } from "@/pages/Client";
 
 import * as constants from "../../helpers";
 
 export default {
   components: {
     SuperAdminDashboard,
-    GroupAdminDashboard
+    GroupAdminDashboard,
+    ClientAdminDashboard
   },
   data() {
     return {

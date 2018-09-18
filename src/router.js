@@ -1,5 +1,5 @@
 import { GroupsList, Dashboard, ClientsList, UsersList } from "@/pages/Layout";
-import AccountMain from "./pages/AccountMain.vue";
+import Main from "./pages/Main.vue";
 import { Error404 } from "@/pages/Error";
 import Login from "./pages/Login.vue";
 import VueRouter from "vue-router";
@@ -32,7 +32,7 @@ let router = new VueRouter({
     },
     {
       path: "/:account/dashboard",
-      component: AccountMain,
+      component: Main,
       meta: {
         needsAuth: true
       },

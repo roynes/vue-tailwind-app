@@ -1,9 +1,9 @@
 import GroupAdminDashboard from "./GroupAdminDashboard.vue";
-import GroupAdminGroupsList from "./GroupAdminGroupsList.vue";
+import GroupAdminUsersList from "./GroupAdminUsersList.vue";
 import GroupAdminClientsList from "./GroupAdminClientsList.vue";
 
 export {
   GroupAdminDashboard,
-  GroupAdminGroupsList,
+  GroupAdminUsersList,
   GroupAdminClientsList
 };

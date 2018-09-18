@@ -25,10 +25,10 @@
         {{group.name}}
       </div>
       <div class="col-span-3 break-word overflow-y-auto h-16 flex items-center">
-        {{group.settings.email}}
+        {{JSON.parse(group.settings).email}}
       </div>
       <div class="col-span-3 break-word overflow-y-auto h-16 flex items-center">
-        {{group.settings.address}}
+        {{JSON.parse(group.settings).address}}
       </div>
       <div class="col-span-2 flex overflow-y-auto items-center justify-around px-1">
         <a href="#" class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">

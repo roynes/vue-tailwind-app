@@ -1,7 +1,7 @@
 <template>
   <Table>
     <i class="fas fa-users fa-3x" slot="icon"></i>
-    <h1 slot="title">Clients</h1>
+    <h1 slot="title">Users</h1>
     <template slot="title-option">
       <div class="hover:rounded-full hover:bg-purple hover:text-white hover:shadow-md transition">
         <i class="fas fa-plus fa p-2"></i>
@@ -11,10 +11,10 @@
       <div class="col-span-1 text-center">#</div>
       <div class="col-span-3">Name</div>
       <div class="col-span-3">Email</div>
-      <div class="col-span-3">Location</div>
+      <div class="col-span-3">Type</div>
       <div class="col-span-2 text-center">Actions</div>
     </template>
-    <div slot="contents" v-for="(client, index) in clients" 
+    <div slot="contents" v-for="(user, index) in users" 
       :key="index" 
       class="w-full grid grid-columns-12 flex h-16 items-center font-light grid-gap-2 mb-4 hover:bg-grey-light hover:rounded hover:shadow hover:font-medium"
     >
@@ -22,13 +22,13 @@
         {{ curPage == 1 ? index + 1 : from + index }}
       </div>
       <div class="col-span-3 break-word overflow-y-auto h-16 flex items-center">
-        {{client.name}}
+        {{user.name}}
       </div>
       <div class="col-span-3 break-word overflow-y-auto h-16 flex items-center">
-        {{JSON.parse(client.settings).email}}
+        {{user.email}}
       </div>
       <div class="col-span-3 break-word overflow-y-auto h-16 flex items-center">
-        {{JSON.parse(client.settings).address}}
+        {{user.type}}
       </div>
       <div class="col-span-2 flex overflow-y-auto items-center justify-around px-1">
         <a href="#" class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
@@ -93,7 +93,7 @@ export default {
   },
   data() {
     return {
-      clients: {},
+      users: {},
       first: 1,
       curPage: 1,
       last: 1,
@@ -109,9 +109,9 @@ export default {
   methods: {
     fetchPage(num) {
       axios
-        .get(`${baseUri}/clients?page=${num}`)
+        .get(`${baseUri}/users?page=${num}&scope=exceptUser:${this.$store.state.user.cur_user.id},filterGroup:${this.$store.state.user.cur_user.account.group_id}&with=user`)
         .then(resp => {
-          let data = resp.data;
+          let data = resp.data.users;
 
           this.assignData(data);
 
@@ -126,17 +126,18 @@ export default {
         .catch(err => console.log(err.response));
     },
     assignData(data) {
-      this.clients = data.data;
-      
+      this.users = data.data;
+
       this.curPage = data.meta.current_page;
+      this.from = data.meta.from;
       this.last = data.meta.last_page;
       this.perPage = data.meta.per_page;
-      this.total = data.meta.total;
-      this.from = data.meta.from;
       this.to = data.meta.to;
+      this.total = data.meta.total;
 
-      this.totalPages = Math.ceil(this.total / this.perPage);
       this.prev = this.curPage < 1 ? 1 : this.curPage - 1;
+      this.totalPages = Math.ceil(this.total / this.perPage);
+
     },
     showPageNumber() {
       this.pageNumToShow = [];
@@ -154,15 +155,14 @@ export default {
   },
   mounted() {
     axios
-      .get(`${baseUri}/clients`)
+      .get(`${baseUri}/users?scope=exceptUser:${this.$store.state.user.cur_user.id},filterGroup:${this.$store.state.user.cur_user.account.group_id}&with=user`)
       .then(resp => {
         let data = resp.data;
 
         this.assignData(data);
         this.showPageNumber();
 
-        console.log(data);
-        console.log(this);
+        console.log(this.users);
       })
       .catch(err => console.log(err.response));
   }

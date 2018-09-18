@@ -25,10 +25,10 @@
         {{client.name}}
       </div>
       <div class="col-span-3 break-word overflow-y-auto h-16 flex items-center">
-        {{client.settings.email}}
+        {{JSON.parse(client.settings).email}}
       </div>
       <div class="col-span-3 break-word overflow-y-auto h-16 flex items-center">
-        {{client.settings.address}}
+        {{JSON.parse(client.settings).address}}
       </div>
       <div class="col-span-2 flex overflow-y-auto items-center justify-around px-1">
         <a href="#" class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
@@ -99,10 +99,6 @@ export default {
       last: 1,
       next: 2,
       prev: 1,
-      nextPageUrl: "",
-      lastPageUrl: "",
-      firstPageUrl: "",
-      prevPageUrl: "",
       totalPages: 1,
       pageNumToShow: [],
       total: 1,
@@ -115,7 +111,7 @@ export default {
       axios
         .get(`${baseUri}/clients?page=${num}`)
         .then(resp => {
-          let data = resp.data.clients;
+          let data = resp.data;
 
           this.assignData(data);
 
@@ -131,21 +127,16 @@ export default {
     },
     assignData(data) {
       this.clients = data.data;
-      this.curPage = data.current_page;
-      this.last = data.last_page;
+
+      this.curPage = data.meta.current_page;
+      this.last = data.meta.last_page;
+      this.perPage = data.meta.per_page;
+      this.total = data.meta.total;
+      this.from = data.meta.from;
+      this.to = data.meta.to;
+
       this.prev = this.curPage < 1 ? 1 : this.curPage - 1;
-
-      this.nextPageUrl = data.next_page_url;
-      this.lastPageUrl = data.last_page_url;
-      this.firstPageUrl = data.first_page_url;
-      this.prevPageUrl = data.prev_page_url;
-      this.perPage = data.per_page;
-
-      this.total = data.total;
       this.totalPages = Math.ceil(this.total / this.perPage);
-
-      this.from = data.from;
-      this.to = data.to;
     },
     showPageNumber() {
       this.pageNumToShow = [];
@@ -165,7 +156,7 @@ export default {
     axios
       .get(`${baseUri}/clients`)
       .then(resp => {
-        let data = resp.data.clients;
+        let data = resp.data;
 
         this.assignData(data);
         this.showPageNumber();

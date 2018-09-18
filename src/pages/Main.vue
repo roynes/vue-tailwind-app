@@ -51,7 +51,48 @@
       </div>
 
       <div v-else-if="roles.includes(CONSTANT_ROLES.GROUP_ADMIN)">
+        <div class="ml-6 my-3">
+          <p class="lg:text-lg font-semibold">Subdomains</p>
+        </div>
 
+        <div class="mb-2">
+          <router-link 
+            :to="{ name:'ClientList' }" 
+            class="flex items-center hover:text-grey-darker hover:bg-orange-lighter py-4 pl-6 mr-1 no-underline text-black"
+            append
+          >
+            <i class="fas fa-object-ungroup lg:fa-lg pr-3"></i>
+            <p class="lg:text-lg">Clients</p>
+          </router-link>
+        </div>
+
+        <div class="mb-2">
+          <router-link 
+            :to="{ name:'UsersList' }" 
+            class="flex items-center hover:text-grey-darker hover:bg-orange-lighter py-4 pl-6 mr-1 no-underline text-black"
+            append
+          >
+            <i class="fas fa-object-ungroup lg:fa-lg pr-3"></i>
+            <p class="lg:text-lg">Users</p>
+          </router-link>
+        </div>
+      </div>
+
+      <div v-else-if="roles.includes(CONSTANT_ROLES.CLIENT_ADMIN)">
+        <div class="ml-6 my-3">
+          <p class="lg:text-lg font-semibold">Subdomain</p>
+        </div>
+
+        <div class="mb-2">
+          <router-link 
+            :to="{ name:'UsersList' }" 
+            class="flex items-center hover:text-grey-darker hover:bg-orange-lighter py-4 pl-6 mr-1 no-underline text-black"
+            append
+          >
+            <i class="fas fa-object-ungroup lg:fa-lg pr-3"></i>
+            <p class="lg:text-lg">Users</p>
+          </router-link>
+        </div>
       </div>
     </nav>
     <div slot="main-contents">
