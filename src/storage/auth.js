@@ -54,6 +54,7 @@ const actions = {
       axios
         .post(constants.baseUri + "/logout")
         .then(resp => {
+          //Todo: Debug starts here <<<<==================
           console.log('logged out called');
           console.log(!! constants.loginAsToken);
 
