@@ -27,6 +27,6 @@
 
 <script>
 export default {
-  name: 'GroupAdminDashboard'
-}
+  name: "GroupAdminDashboard"
+};
 </script>

@@ -13,12 +13,16 @@ let router = new VueRouter({
     {
       path: "/",
       beforeEnter(to, from, next) {
-        let authenticated = !! store.state.auth.token;
+        let authenticated = !!store.state.auth.token;
 
-        console.log('beforeEnter');
+        console.log("beforeEnter");
 
-        if(authenticated) next({ name: "main", params: { account : store.state.user.cur_user.account.type }  })
-        else next({name: "login"})
+        if (authenticated)
+          next({
+            name: "main",
+            params: { account: store.state.user.cur_user.account.type }
+          });
+        else next({ name: "login" });
       }
     },
     {
@@ -43,7 +47,7 @@ let router = new VueRouter({
           component: Dashboard,
           meta: {
             needsAuth: true
-          },
+          }
         },
         {
           path: "group-list",
@@ -51,7 +55,7 @@ let router = new VueRouter({
           component: GroupsList,
           meta: {
             needsAuth: true
-          },
+          }
         },
         {
           path: "client-list",
@@ -59,7 +63,7 @@ let router = new VueRouter({
           component: ClientsList,
           meta: {
             needsAuth: true
-          },
+          }
         },
         {
           path: "users-list",
@@ -67,7 +71,7 @@ let router = new VueRouter({
           component: UsersList,
           meta: {
             needsAuth: true
-          },
+          }
         }
 
         // Todo: Add Routes for Group And Client
@@ -100,7 +104,7 @@ router.beforeEach((to, from, next) => {
         account: store.state.user.cur_user.account.type
       }
     });
-  } else if(!to.matched.length ) {
+  } else if (!to.matched.length) {
     next({
       name: "err404"
     });

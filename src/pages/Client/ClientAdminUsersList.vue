@@ -31,13 +31,10 @@
         {{user.type}}
       </div>
       <div class="col-span-2 flex overflow-y-auto items-center justify-around px-1">
-        <a href="#" class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
-          <i class="group fas fa-sign-in-alt cursor-pointer"></i>
-        </a>
-        <a href="#" class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
+        <a class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
           <i class="group fas fa-edit cursor-pointer"></i>
         </a>
-        <a href="#" class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
+        <a class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
           <i class="group fas fa-trash-alt cursor-pointer"></i>
         </a>
       </div>
@@ -103,13 +100,19 @@ export default {
       pageNumToShow: [],
       total: 1,
       to: 1,
-      from: 1,
+      from: 1
     };
   },
   methods: {
     fetchPage(num) {
       axios
-        .get(`${baseUri}/users?page=${num}&scope=exceptUser:${this.$store.state.user.cur_user.id},filterGroup:${this.$store.state.user.cur_user.account.group_id}&with=user`)
+        .get(
+          `${baseUri}/users?page=${num}&scope=exceptUser:${
+            this.$store.state.user.cur_user.id
+          },filterGroup:${
+            this.$store.state.user.cur_user.account.group_id
+          }&with=user`
+        )
         .then(resp => {
           let data = resp.data.users;
 
@@ -137,7 +140,6 @@ export default {
 
       this.prev = this.curPage < 1 ? 1 : this.curPage - 1;
       this.totalPages = Math.ceil(this.total / this.perPage);
-
     },
     showPageNumber() {
       this.pageNumToShow = [];
@@ -155,7 +157,13 @@ export default {
   },
   mounted() {
     axios
-      .get(`${baseUri}/users?scope=exceptUser:${this.$store.state.user.cur_user.id},filterClient:${this.$store.state.user.cur_user.account.client_id}&with=user`)
+      .get(
+        `${baseUri}/users?scope=exceptUser:${
+          this.$store.state.user.cur_user.id
+        },filterClient:${
+          this.$store.state.user.cur_user.account.client_id
+        }&with=user`
+      )
       .then(resp => {
         let data = resp.data;
 

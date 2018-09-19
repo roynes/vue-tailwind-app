@@ -10,14 +10,14 @@
 </template>
 
 <script>
-import { Roles as ROLE } from "../helpers"
+import { Roles as ROLE } from "../helpers";
 import { Error401 } from "@/pages/Error";
 
 export default {
   data() {
     return {
-      roles: [],
-    }
+      roles: []
+    };
   },
   components: {
     Error401
@@ -25,5 +25,5 @@ export default {
   mounted() {
     this.roles = this.$store.state.user.roles;
   }
-}
+};
 </script>

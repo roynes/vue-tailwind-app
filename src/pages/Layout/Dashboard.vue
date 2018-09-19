@@ -18,13 +18,11 @@ export default {
   data() {
     return {
       componentName: ""
-    }
+    };
   },
   mounted() {
-    let role = this.$store.state.user.roles[0];;
+    let role = this.$store.state.user.roles[0];
     this.componentName = constants.toCamelCase(`${role}-dashboard`, true);
   }
-}
+};
 </script>
-
-

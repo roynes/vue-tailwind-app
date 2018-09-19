@@ -32,9 +32,9 @@
 const header = {
   title: String,
   class: String
-}
+};
 
 export default {
   name: "Table"
-}
+};
 </script>

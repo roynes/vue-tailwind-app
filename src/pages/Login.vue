@@ -73,8 +73,8 @@ export default {
           password: this.form.password
         })
           .then(() => {
-            this.getCurUser().then((resp) => {
-              console.log("successfully fetched user")
+            this.getCurUser().then(resp => {
+              console.log("successfully fetched user");
               console.log(resp.data);
 
               this.form.reset();

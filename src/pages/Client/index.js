@@ -1,7 +1,4 @@
 import ClientAdminDashboard from "./ClientAdminDashboard.vue";
 import ClientAdminUsersList from "./ClientAdminUsersList.vue";
 
-export {
-  ClientAdminDashboard,
-  ClientAdminUsersList
-}
+export { ClientAdminDashboard, ClientAdminUsersList };

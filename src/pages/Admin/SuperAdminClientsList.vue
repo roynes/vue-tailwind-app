@@ -31,13 +31,13 @@
         {{JSON.parse(client.settings).address}}
       </div>
       <div class="col-span-2 flex overflow-y-auto items-center justify-around px-1">
-        <a href="#" class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
+        <a class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
           <i class="group fas fa-sign-in-alt cursor-pointer"></i>
         </a>
-        <a href="#" class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
+        <a class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
           <i class="group fas fa-edit cursor-pointer"></i>
         </a>
-        <a href="#" class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
+        <a class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
           <i class="group fas fa-trash-alt cursor-pointer"></i>
         </a>
       </div>
@@ -103,7 +103,7 @@ export default {
       pageNumToShow: [],
       total: 1,
       to: 1,
-      from: 1,
+      from: 1
     };
   },
   methods: {

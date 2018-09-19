@@ -4,6 +4,14 @@ export function setToken(token = "") {
   localStorage.setItem(Default.tokenAlias, token);
 }
 
+export function setLoginAsToken(token = "") {
+  localStorage.setItem(Default.loginAstokenAlias, token);
+}
+
+export function unsetLoginAsToken() {
+  localStorage.removeItem(Default.loginAstokenAlias);
+}
+
 export function unsetToken() {
   localStorage.removeItem(Default.tokenAlias);
 }
@@ -14,7 +22,7 @@ export function setTokenExpiry(expiryDate = 30) {
 
 export function setUser(user = {}) {
   let t = JSON.stringify(user);
-  console.log('parsed user', JSON.parse(t));
+  console.log("parsed user", JSON.parse(t));
 
   localStorage.setItem(Default.userAlias, t);
 }
@@ -28,10 +36,11 @@ export function setRoles(roles = []) {
 }
 
 export function toCamelCase(val = "", toPascalCase = false) {
-  return val.replace(
-    /(?:^\w|[A-Z]|\b\w)/g, 
-    (letter, index) => {
-      return !toPascalCase && index == 0 ? letter.toLowerCase() : letter.toUpperCase()
+  return val
+    .replace(/(?:^\w|[A-Z]|\b\w)/g, (letter, index) => {
+      return !toPascalCase && index == 0
+        ? letter.toLowerCase()
+        : letter.toUpperCase();
     })
     .replace(/[-\s]/g, "");
 }

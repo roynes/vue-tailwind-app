@@ -31,13 +31,15 @@
         {{JSON.parse(group.settings).address}}
       </div>
       <div class="col-span-2 flex overflow-y-auto items-center justify-around px-1">
-        <a href="#" class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
+        <a class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast"
+          @click="loginAs(group.id)"
+        >
           <i class="group fas fa-sign-in-alt cursor-pointer"></i>
         </a>
-        <a href="#" class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
+        <a class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
           <i class="group fas fa-edit cursor-pointer"></i>
         </a>
-        <a href="#" class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
+        <a class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
           <i class="group fas fa-trash-alt cursor-pointer"></i>
         </a>
       </div>
@@ -85,8 +87,11 @@
 </template>
 
 <script>
-import { baseUri } from "../../helpers";
+import { baseUri, Roles } from "../../helpers";
 import Table from "@/components/Table";
+import { AUTHENTICATE_AS } from '../../storage/auth';
+import { mapActions, mapState } from 'vuex';
+import { GET_CUR_USER } from '../../storage/user';
 
 export default {
   components: {
@@ -100,10 +105,6 @@ export default {
       last: 1,
       next: 2,
       prev: 1,
-      nextPageUrl: "",
-      lastPageUrl: "",
-      firstPageUrl: "",
-      prevPageUrl: "",
       totalPages: 1,
       pageNumToShow: [],
       total: 1,
@@ -112,6 +113,40 @@ export default {
     };
   },
   methods: {
+    ...mapActions('auth', {
+      loginAs(dispatch, groupId) {
+        dispatch(AUTHENTICATE_AS, {
+          type: Roles.GROUP_ADMIN,
+          id: groupId
+        })
+        .then((resp) => {
+          this.getCurUser(resp.data.au).then(resp => {
+            console.log("successfully fetched user");
+            console.log(resp.data);
+
+            this.$router.push({
+              name: "main",
+              params: {
+                account: this.user.account.type
+              }
+            });
+          });
+        })
+        .catch(err => {
+          console.log(err.response||err.config||err);
+        });
+      }
+    }),
+
+    ...mapActions("user", {
+      getCurUser(dispatch) {
+        let payload = atob(this.token.split(".")[1]);
+        let subject = JSON.parse(payload).sub;
+
+        return dispatch(GET_CUR_USER, subject);
+      }
+    }),
+
     fetchPage(num) {
       axios
         .get(`${baseUri}/groups?page=${num}`)
@@ -134,19 +169,13 @@ export default {
       this.groups = data.data;
       this.curPage = data.current_page;
       this.last = data.last_page;
-      this.prev = this.curPage < 1 ? 1 : this.curPage - 1;
-
-      this.nextPageUrl = data.next_page_url;
-      this.lastPageUrl = data.last_page_url;
-      this.firstPageUrl = data.first_page_url;
-      this.prevPageUrl = data.prev_page_url;
       this.perPage = data.per_page;
-
       this.total = data.total;
-      this.totalPages = Math.ceil(this.total / this.perPage);
-
       this.to = data.to;
       this.from = data.from;
+
+      this.totalPages = Math.ceil(this.total / this.perPage);
+      this.prev = this.curPage < 1 ? 1 : this.curPage - 1;
     },
     showPageNumber() {
       this.pageNumToShow = [];
@@ -160,18 +189,18 @@ export default {
           break;
         }
       }
-    },
-    loginAs(groupId) {
-      axios
-        .post(`${baseUri}/login/group`, {
-          group_id: groupId
-        })
-        .then(resp => {
-          console.log(resp.data);
-        })
-        .catch(err => console.log(err));
     }
   },
+
+  computed: {
+    ...mapState("auth", {
+      token: state => state.token
+    }),
+    ...mapState("user", {
+      user: state => state.cur_user
+    })
+  },
+
   mounted() {
     axios
       .get(`${baseUri}/groups`)

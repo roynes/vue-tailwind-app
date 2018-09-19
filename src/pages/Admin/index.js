@@ -7,5 +7,5 @@ export {
   SuperAdminDashboard,
   SuperAdminClientsList,
   SuperAdminGroupsList,
-  SuperAdminUsersList,
-}
+  SuperAdminUsersList
+};

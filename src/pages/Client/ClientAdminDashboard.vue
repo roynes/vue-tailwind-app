@@ -17,6 +17,6 @@
 
 <script>
 export default {
-  name: 'ClientAdminDashboard'
-}
+  name: "ClientAdminDashboard"
+};
 </script>

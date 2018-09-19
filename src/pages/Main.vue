@@ -124,7 +124,7 @@
 
 <script>
 import { AuthConstants as AUTH_CONSTANT } from "../storage";
-import  * as constants from "../helpers";
+import * as constants from "../helpers";
 import { Roles } from "../helpers";
 import { mapActions, mapState } from "vuex";
 import { Error401 } from "@/pages/Error";
@@ -136,11 +136,11 @@ export default {
   data() {
     return {
       showUserNav: false,
-      CONSTANT_ROLES: Roles,
+      CONSTANT_ROLES: Roles
     };
   },
   computed: {
-    ...mapState('user', ['roles'])
+    ...mapState("user", ["roles"])
   },
   components: {
     Dashboard,
