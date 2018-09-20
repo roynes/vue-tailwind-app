@@ -120,30 +120,16 @@ export default {
           id: groupId
         })
         .then((resp) => {
-          this.getCurUser(resp.data.au).then(resp => {
-            console.log("successfully fetched user");
-            console.log(resp.data);
-
-            this.$router.push({
-              name: "main",
-              params: {
-                account: this.user.account.type
-              }
-            });
+          this.$router.push({
+            name: "main",
+            params: {
+              account: this.user.account.type
+            }
           });
         })
         .catch(err => {
           console.log(err.response||err.config||err);
         });
-      }
-    }),
-
-    ...mapActions("user", {
-      getCurUser(dispatch) {
-        let payload = atob(this.token.split(".")[1]);
-        let subject = JSON.parse(payload).sub;
-
-        return dispatch(GET_CUR_USER, subject);
       }
     }),
 

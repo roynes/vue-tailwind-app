@@ -4,14 +4,6 @@ export function setToken(token = "") {
   localStorage.setItem(Default.tokenAlias, token);
 }
 
-export function setLoginAsToken(token = "") {
-  localStorage.setItem(Default.loginAstokenAlias, token);
-}
-
-export function unsetLoginAsToken() {
-  localStorage.removeItem(Default.loginAstokenAlias);
-}
-
 export function unsetToken() {
   localStorage.removeItem(Default.tokenAlias);
 }
@@ -22,7 +14,6 @@ export function setTokenExpiry(expiryDate = 30) {
 
 export function setUser(user = {}) {
   let t = JSON.stringify(user);
-  console.log("parsed user", JSON.parse(t));
 
   localStorage.setItem(Default.userAlias, t);
 }
@@ -43,4 +34,24 @@ export function toCamelCase(val = "", toPascalCase = false) {
         : letter.toUpperCase();
     })
     .replace(/[-\s]/g, "");
+}
+
+export function getToken() {
+  return localStorage.getItem(Default.tokenAlias) || "";
+}
+
+export function getTokenExpiration() {
+  return parseInt(localStorage.getItem(Default.tokenExpAlias)) || 0;
+}
+
+export function getUser() {
+  return JSON.parse(localStorage.getItem(Default.userAlias)) || {};
+}
+
+export function getPermission() {
+  return localStorage.getItem(Default.permissionAlias) || "";
+}
+
+export function getRole() {
+  return localStorage.getItem(Default.roleAlias) || "";
 }

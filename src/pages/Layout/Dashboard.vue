@@ -10,6 +10,7 @@ import { ClientAdminDashboard } from "@/pages/Client";
 import * as constants from "../../helpers";
 
 export default {
+  name: "Dashboard",
   components: {
     SuperAdminDashboard,
     GroupAdminDashboard,

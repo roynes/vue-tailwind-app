@@ -151,7 +151,7 @@ export default {
   },
   mounted() {
     axios
-      .get(`${baseUri}/clients`)
+      .get(`${baseUri}/clients?scope=filter:${this.$store.state.user.cur_user.account.group_id}`)
       .then(resp => {
         let data = resp.data;
 

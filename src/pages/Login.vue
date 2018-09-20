@@ -44,10 +44,10 @@
 import FloatLabelInput from "../components/FloatLabelInput.vue";
 import { Form } from "../utilities";
 import {
-  AuthConstants as AUTH_CONSTANT,
-  UserConstants as USER_CONSTANTS
+  AuthConstants as AUTH_CONSTANT
 } from "../storage";
 import { mapActions, mapMutations, mapState } from "vuex";
+import { UNAUTHENTICATE } from '../storage/auth';
 
 export default {
   name: "Login",
@@ -57,50 +57,25 @@ export default {
     };
   },
   methods: {
-    ...mapMutations("auth", {
-      updateToken(commit) {
-        commit(AUTH_CONSTANT.UPDATE_TOKEN);
-      },
-
-      setCurUser(commit, user = {}) {
-        commit(USER_CONSTANTS.SET_CUR_USER);
-      }
-    }),
-    ...mapActions("auth", {
-      login(dispatch) {
-        dispatch(AUTH_CONSTANT.AUTHENTICATE, {
-          email: this.form.email,
-          password: this.form.password
-        })
-          .then(() => {
-            this.getCurUser().then(resp => {
-              console.log("successfully fetched user");
-              console.log(resp.data);
-
-              this.form.reset();
-              this.$router.push({
-                name: "main",
-                params: {
-                  account: this.user.account.type
-                }
-              });
-            });
-          })
-          .catch(err => {
-            console.log(err);
-            this.updateToken();
-            this.$router.push("/login");
-          });
-      }
-    }),
-    ...mapActions("user", {
-      getCurUser(dispatch) {
-        let payload = atob(this.token.split(".")[1]);
-        let subject = JSON.parse(payload).sub;
-
-        return dispatch(USER_CONSTANTS.GET_CUR_USER, subject);
-      }
-    })
+    login() {
+      this.$store.dispatch(`auth/${AUTH_CONSTANT.AUTHENTICATE}`, { 
+        password: this.form.password,
+        email: this.form.email
+      }).then(res => {
+        this.form.reset();
+        this.$router.push({
+          name: "main",
+          params: {
+            account: this.user.account.type
+          }
+        });
+      }).catch(err => {
+        console.log(err);
+        
+        this.$store.dispatch(`auth/${UNAUTHENTICATE}`);
+        this.$router.push("/login");
+      })
+    }
   },
   computed: {
     fieldHasErrors() {

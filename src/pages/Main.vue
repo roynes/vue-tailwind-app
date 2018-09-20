@@ -147,13 +147,29 @@ export default {
     Error401
   },
   methods: {
-    ...mapActions("auth", {
-      logout(dispatch) {
-        dispatch(AUTH_CONSTANT.UNAUTHENTICATE).then(() => {
-          this.$router.push("/login");
-        });
-      }
-    }),
+    logout() {
+      console.log('mimic logout', this.$store.state.auth.mimic);
+      let mimic = this.$store.state.auth.mimic
+
+      this.$store
+        .dispatch(`auth/${AUTH_CONSTANT.UNAUTHENTICATE}`, !mimic ? true : false)
+        .then(() => {
+          console.log('then promise')
+          console.log('mimic state', this.$store.state.auth.mimic);
+          console.log('mimic', mimic);
+          if(mimic) {
+            console.log('push here');
+            this.$router.push({
+              name: "GroupList",
+              params: {
+                account: this.$store.state.user.cur_user.account.type
+              }
+            });
+          } else {
+            this.$router.push('/login');
+          }
+        })
+    },
     toggleUserNav() {
       this.showUserNav = !this.showUserNav;
     }
