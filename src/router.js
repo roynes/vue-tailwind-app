@@ -47,10 +47,6 @@ let router = new VueRouter({
           component: Dashboard,
           meta: {
             needsAuth: true
-          },
-          beforeEnter(to, from, next) {
-            console.log('beforeEnter main');
-            next();
           }
         },
         {

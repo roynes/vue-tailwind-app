@@ -125,7 +125,7 @@
 <script>
 import { AuthConstants as AUTH_CONSTANT } from "../storage";
 import * as constants from "../helpers";
-import { Roles } from "../helpers";
+import { Roles, toCamelCase } from "../helpers";
 import { mapActions, mapState } from "vuex";
 import { Error401 } from "@/pages/Error";
 
@@ -150,6 +150,7 @@ export default {
     logout() {
       console.log('mimic logout', this.$store.state.auth.mimic);
       let mimic = this.$store.state.auth.mimic
+      let role = this.$store.state.user.roles[0];
 
       this.$store
         .dispatch(`auth/${AUTH_CONSTANT.UNAUTHENTICATE}`, !mimic ? true : false)
@@ -160,7 +161,7 @@ export default {
           if(mimic) {
             console.log('push here');
             this.$router.push({
-              name: "GroupList",
+              name: toCamelCase(`${role.split('-')[0]}-list`, true),
               params: {
                 account: this.$store.state.user.cur_user.account.type
               }

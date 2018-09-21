@@ -179,9 +179,6 @@ export default {
   },
 
   computed: {
-    ...mapState("auth", {
-      token: state => state.token
-    }),
     ...mapState("user", {
       user: state => state.cur_user
     })

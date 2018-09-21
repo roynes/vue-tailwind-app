@@ -31,7 +31,9 @@
         {{JSON.parse(client.settings).address}}
       </div>
       <div class="col-span-2 flex overflow-y-auto items-center justify-around px-1">
-        <a class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
+        <a class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast"
+          @click="loginAs(client.id)"
+        >
           <i class="group fas fa-sign-in-alt cursor-pointer"></i>
         </a>
         <a class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
@@ -84,13 +86,16 @@
 </template>
 
 <script>
-import { baseUri } from "../../helpers";
+import { baseUri, Roles } from "../../helpers";
 import Table from "@/components/Table";
+import { mapActions, mapState } from 'vuex';
+import { AUTHENTICATE_AS } from '../../storage/auth';
 
 export default {
   components: {
     Table
   },
+
   data() {
     return {
       clients: {},
@@ -106,7 +111,34 @@ export default {
       from: 1
     };
   },
+
+  computed: {
+    ...mapState("user", {
+      user: state => state.cur_user
+    })
+  },
+
   methods: {
+    ...mapActions('auth', {
+      loginAs(dispatch, clientId) {
+        dispatch(AUTHENTICATE_AS, {
+          type: Roles.CLIENT_ADMIN,
+          id: clientId
+        })
+        .then((resp) => {
+          this.$router.push({
+            name: "main",
+            params: {
+              account: this.user.account.type
+            }
+          });
+        })
+        .catch(err => {
+          console.log(err.response||err.config||err);
+        });
+      }
+    }),
+
     fetchPage(num) {
       axios
         .get(`${baseUri}/clients?page=${num}`)
@@ -125,6 +157,7 @@ export default {
         })
         .catch(err => console.log(err.response));
     },
+
     assignData(data) {
       this.clients = data.data;
 
@@ -138,6 +171,7 @@ export default {
       this.prev = this.curPage < 1 ? 1 : this.curPage - 1;
       this.totalPages = Math.ceil(this.total / this.perPage);
     },
+
     showPageNumber() {
       this.pageNumToShow = [];
 
@@ -152,6 +186,7 @@ export default {
       }
     }
   },
+  
   mounted() {
     axios
       .get(`${baseUri}/clients`)
