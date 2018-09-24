@@ -14,7 +14,7 @@
       <div class="col-span-3">Type</div>
       <div class="col-span-2 text-center">Actions</div>
     </template>
-    <div slot="contents" v-for="(user, index) in users" 
+    <div slot="contents" v-for="(account, index) in accounts" 
       :key="index" 
       class="w-full grid grid-columns-12 flex h-16 items-center font-light grid-gap-2 mb-4 hover:bg-grey-light hover:rounded hover:shadow hover:font-medium"
     >
@@ -22,13 +22,13 @@
         {{ curPage == 1 ? index + 1 : from + index }}
       </div>
       <div class="col-span-3 break-word overflow-y-auto h-16 flex items-center">
-        {{user.name}}
+        {{account.user.name || 'No name'}} 
       </div>
       <div class="col-span-3 break-word overflow-y-auto h-16 flex items-center">
-        {{user.email}}
+        {{account.user.email || 'No email'}}
       </div>
       <div class="col-span-3 break-word overflow-y-auto h-16 flex items-center">
-        {{user.type}}
+        {{account.type}}
       </div>
       <div class="col-span-2 flex overflow-y-auto items-center justify-around px-1">
         <a class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
@@ -44,12 +44,12 @@
       <div class="flex items-end cursor-pointer">
         <a class="p-2 no-underline text-black transition-fast"
           :class="[curPage == first ? 'cursor-not-allowed hover:bg-grey-lightest hover:text-grey-darkest' : 'hover:bg-purple hover:text-white hover:rounded']"
-          @click="fetchPage(first)"
+          @click="fetchNextPage(first)"
         >
           First
         </a>
         <a class="p-2 no-underline text-black hover:text-white hover:bg-purple hover:rounded transition-fast " 
-          @click="fetchPage(curPage - 1)"
+          @click="fetchNextPage(curPage - 1)"
           v-if="curPage != first"
         >
           Prev
@@ -59,19 +59,19 @@
           :class="[curPage == o.val ? 'bg-purple text-white font-semibold' : '']"
           v-for="o in pageNumToShow" 
           :key="o.in"
-          @click="fetchPage(o.val)"
+          @click="fetchNextPage(o.val)"
         >
           {{ o.val }}
         </a>
         <a class="p-2 no-underline text-black hover:text-white hover:bg-purple hover:rounded transition-fast" 
-          @click="fetchPage(curPage + 1)"
+          @click="fetchNextPage(curPage + 1)"
           v-if="curPage != last"
         >
           Next
         </a>
         <a class="p-2 no-underline text-black transition-fast"
           :class="[curPage == last ? 'cursor-not-allowed hover:bg-grey-lightest hover:text-grey-darkest' : 'hover:bg-purple hover:text-white hover:rounded']"
-          @click="fetchPage(last)"
+          @click="fetchNextPage(last)"
         >
           Last
         </a>
@@ -83,96 +83,41 @@
 <script>
 import { baseUri } from "../../helpers";
 import Table from "@/components/Table";
+import { pagination } from "@/mixins";
 
 export default {
+  mixins: [
+    pagination
+  ],
+
   components: {
     Table
   },
+
   data() {
     return {
-      users: {},
-      first: 1,
-      curPage: 1,
-      last: 1,
-      next: 2,
-      prev: 1,
-      totalPages: 1,
-      pageNumToShow: [],
-      total: 1,
-      to: 1,
-      from: 1
+      accounts: {}
     };
   },
+
   methods: {
-    fetchPage(num) {
-      axios
-        .get(
-          `${baseUri}/users?page=${num}&scope=exceptUser:${
-            this.$store.state.user.cur_user.id
-          },filterGroup:${
-            this.$store.state.user.cur_user.account.group_id
-          }&with=user`
-        )
-        .then(resp => {
-          let data = resp.data;
-
-          this.assignData(data);
-
-          if (
-            !this.pageNumToShow.some(n => {
-              return this.curPage === n.val;
-            })
-          ) {
-            this.showPageNumber();
-          }
-        })
-        .catch(err => console.log(err.response || err));
-    },
-    assignData(data) {
-      this.users = data.data;
-
-      this.curPage = data.meta.current_page;
-      this.from = data.meta.from;
-      this.last = data.meta.last_page;
-      this.perPage = data.meta.per_page;
-      this.to = data.meta.to;
-      this.total = data.meta.total;
-
-      this.prev = this.curPage < 1 ? 1 : this.curPage - 1;
-      this.totalPages = Math.ceil(this.total / this.perPage);
-    },
-    showPageNumber() {
-      this.pageNumToShow = [];
-
-      for (let i = 0; i < 3; i++) {
-        if (this.curPage + i <= this.totalPages) {
-          this.pageNumToShow.push({ in: i, val: this.curPage + i });
-        }
-
-        if (this.curPage == this.totalPages) {
-          break;
-        }
-      }
-    }
-  },
-  mounted() {
-    axios
-      .get(
-        `${baseUri}/users?scope=exceptUser:${
+    fetchNextPage(num) {
+      this.fetchPage('users', num, `scope=exceptUser:${
           this.$store.state.user.cur_user.id
         },filterGroup:${
           this.$store.state.user.cur_user.account.group_id
-        }&with=user`
-      )
-      .then(resp => {
-        let data = resp.data;
-
-        this.assignData(data);
-        this.showPageNumber();
-
-        console.log(this.users);
-      })
-      .catch(err => console.log(err.response));
+        }`,
+        'with=user'
+      ).then(accounts => this.accounts = accounts);
+    }
+  },
+  mounted() {
+    this.fetchPage('users', 1, `scope=exceptUser:${
+          this.$store.state.user.cur_user.id
+      },filterGroup:${
+          this.$store.state.user.cur_user.account.group_id
+      }`,'with=user'
+    ).then(accounts => this.accounts = accounts);
   }
 };
 </script>

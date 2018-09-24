@@ -148,7 +148,7 @@ export default {
   },
   methods: {
     logout() {
-      console.log('mimic logout', this.$store.state.auth.mimic);
+      console.log('mimic logout:', this.$store.state.auth.mimic);
       let mimic = this.$store.state.auth.mimic
       let role = this.$store.state.user.roles[0];
 
@@ -158,8 +158,9 @@ export default {
           console.log('then promise')
           console.log('mimic state', this.$store.state.auth.mimic);
           console.log('mimic', mimic);
+
           if(mimic) {
-            console.log('push here');
+            console.log('mimic here');
             this.$router.push({
               name: toCamelCase(`${role.split('-')[0]}-list`, true),
               params: {

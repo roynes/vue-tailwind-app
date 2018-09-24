@@ -44,12 +44,12 @@
       <div class="flex items-end cursor-pointer">
         <a class="p-2 no-underline text-black transition-fast"
           :class="[curPage == first ? 'cursor-not-allowed hover:bg-grey-lightest hover:text-grey-darkest' : 'hover:bg-purple hover:text-white hover:rounded']"
-          @click="fetchPage(first)"
+          @click="fetchNextPage(first)"
         >
           First
         </a>
         <a class="p-2 no-underline text-black hover:text-white hover:bg-purple hover:rounded transition-fast " 
-          @click="fetchPage(curPage - 1)"
+          @click="fetchNextPage(curPage - 1)"
           v-if="curPage != first"
         >
           Prev
@@ -59,19 +59,19 @@
           :class="[curPage == o.val ? 'bg-purple text-white font-semibold' : '']"
           v-for="o in pageNumToShow" 
           :key="o.in"
-          @click="fetchPage(o.val)"
+          @click="fetchNextPage(o.val)"
         >
           {{ o.val }}
         </a>
         <a class="p-2 no-underline text-black hover:text-white hover:bg-purple hover:rounded transition-fast" 
-          @click="fetchPage(curPage + 1)"
+          @click="fetchNextPage(curPage + 1)"
           v-if="curPage != last"
         >
           Next
         </a>
         <a class="p-2 no-underline text-black transition-fast"
           :class="[curPage == last ? 'cursor-not-allowed hover:bg-grey-lightest hover:text-grey-darkest' : 'hover:bg-purple hover:text-white hover:rounded']"
-          @click="fetchPage(last)"
+          @click="fetchNextPage(last)"
         >
           Last
         </a>
@@ -83,85 +83,33 @@
 <script>
 import { baseUri } from "../../helpers";
 import Table from "@/components/Table";
+import { pagination } from "@/mixins";
 
 export default {
+  mixins: [
+    pagination
+  ],
+
   components: {
     Table
   },
+
   data() {
     return {
-      clients: {},
-      first: 1,
-      curPage: 1,
-      last: 1,
-      next: 2,
-      prev: 1,
-      totalPages: 1,
-      pageNumToShow: [],
-      total: 1,
-      to: 1,
-      from: 1
+      clients: {}
     };
   },
+
   methods: {
-    fetchPage(num) {
-      axios
-        .get(`${baseUri}/clients?page=${num}`)
-        .then(resp => {
-          let data = resp.data;
-
-          this.assignData(data);
-
-          if (
-            !this.pageNumToShow.some(n => {
-              return this.curPage === n.val;
-            })
-          ) {
-            this.showPageNumber();
-          }
-        })
-        .catch(err => console.log(err.response));
-    },
-    assignData(data) {
-      this.clients = data.data;
-
-      this.curPage = data.meta.current_page;
-      this.last = data.meta.last_page;
-      this.perPage = data.meta.per_page;
-      this.total = data.meta.total;
-      this.from = data.meta.from;
-      this.to = data.meta.to;
-
-      this.totalPages = Math.ceil(this.total / this.perPage);
-      this.prev = this.curPage < 1 ? 1 : this.curPage - 1;
-    },
-    showPageNumber() {
-      this.pageNumToShow = [];
-
-      for (let i = 0; i < 3; i++) {
-        if (this.curPage + i <= this.totalPages) {
-          this.pageNumToShow.push({ in: i, val: this.curPage + i });
-        }
-
-        if (this.curPage == this.totalPages) {
-          break;
-        }
-      }
+    fetchNextPage(num) {
+      this.fetchPage('clients', num, `scope=filter:${this.$store.state.user.cur_user.account.group_id}`)
+        .then(clients => this.clients = clients);
     }
   },
+
   mounted() {
-    axios
-      .get(`${baseUri}/clients?scope=filter:${this.$store.state.user.cur_user.account.group_id}`)
-      .then(resp => {
-        let data = resp.data;
-
-        this.assignData(data);
-        this.showPageNumber();
-
-        console.log(data);
-        console.log(this);
-      })
-      .catch(err => console.log(err.response));
+    this.fetchPage('clients', 1, `scope=filter:${this.$store.state.user.cur_user.account.group_id}`)
+      .then(clients => this.clients = clients);
   }
 };
 </script>

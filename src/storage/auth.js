@@ -52,9 +52,9 @@ const actions = {
     return new Promise((resolve, reject) => {
       AuthService.logout(normal)
         .then(resp => {
-          console.log('normal', normal);
-          console.log('response', resp.data);
-          console.log('response user', resp.data.user || false);
+          console.log('normal:', normal);
+          console.log('response:', resp.data);
+          console.log('response user:', resp.data.user || false);
         
           if( resp.data.user || false) {
             commitMutation(commit, resp.data);

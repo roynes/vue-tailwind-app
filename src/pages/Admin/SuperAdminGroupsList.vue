@@ -49,12 +49,12 @@
       <div class="flex items-end cursor-pointer">
         <a class="p-2 no-underline text-black transition-fast"
           :class="[curPage == first ? 'cursor-not-allowed hover:bg-grey-lightest hover:text-grey-darkest' : 'hover:bg-purple hover:text-white hover:rounded']"
-          @click="fetchPage(first)"
+          @click="fetchNextPage(first)"
         >
           First
         </a>
         <a class="p-2 no-underline text-black hover:text-white hover:bg-purple hover:rounded transition-fast " 
-          @click="fetchPage(curPage - 1)"
+          @click="fetchNextPage(curPage - 1)"
           v-if="curPage != first"
         >
           Prev
@@ -64,20 +64,20 @@
           :class="[curPage == o.val ? 'bg-purple text-white font-semibold' : '']"
           v-for="o in pageNumToShow" 
           :key="o.in"
-          @click="fetchPage(o.val)"
+          @click="fetchNextPage(o.val)"
         >
           {{ o.val }}
         </a>
         
         <a class="p-2 no-underline text-black hover:text-white hover:bg-purple hover:rounded transition-fast" 
-          @click="fetchPage(curPage + 1)"
+          @click="fetchNextPage(curPage + 1)"
           v-if="curPage != last"
         >
           Next
         </a>
         <a class="p-2 no-underline text-black transition-fast"
           :class="[curPage == last ? 'cursor-not-allowed hover:bg-grey-lightest hover:text-grey-darkest' : 'hover:bg-purple hover:text-white hover:rounded']"
-          @click="fetchPage(last)"
+          @click="fetchNextPage(last)"
         >
           Last
         </a>
@@ -92,26 +92,23 @@ import Table from "@/components/Table";
 import { AUTHENTICATE_AS } from '../../storage/auth';
 import { mapActions, mapState } from 'vuex';
 import { GET_CUR_USER } from '../../storage/user';
+import { pagination } from "@/mixins";
 
 export default {
+  mixins: [
+    pagination
+  ],
+
   components: {
     Table
   },
+
   data() {
     return {
-      groups: {},
-      first: 1,
-      curPage: 1,
-      last: 1,
-      next: 2,
-      prev: 1,
-      totalPages: 1,
-      pageNumToShow: [],
-      total: 1,
-      to: 1,
-      from: 1
+      groups: {}
     };
   },
+
   methods: {
     ...mapActions('auth', {
       loginAs(dispatch, groupId) {
@@ -133,48 +130,9 @@ export default {
       }
     }),
 
-    fetchPage(num) {
-      axios
-        .get(`${baseUri}/groups?page=${num}`)
-        .then(resp => {
-          let data = resp.data.groups;
-
-          this.assignData(data);
-
-          if (
-            !this.pageNumToShow.some(n => {
-              return this.curPage === n.val;
-            })
-          ) {
-            this.showPageNumber();
-          }
-        })
-        .catch(err => console.log(err.response));
-    },
-    assignData(data) {
-      this.groups = data.data;
-      this.curPage = data.current_page;
-      this.last = data.last_page;
-      this.perPage = data.per_page;
-      this.total = data.total;
-      this.to = data.to;
-      this.from = data.from;
-
-      this.totalPages = Math.ceil(this.total / this.perPage);
-      this.prev = this.curPage < 1 ? 1 : this.curPage - 1;
-    },
-    showPageNumber() {
-      this.pageNumToShow = [];
-
-      for (let i = 0; i < 3; i++) {
-        if (this.curPage + i <= this.totalPages) {
-          this.pageNumToShow.push({ in: i, val: this.curPage + i });
-        }
-
-        if (this.curPage == this.totalPages) {
-          break;
-        }
-      }
+    fetchNextPage(num) {
+      this.fetchPage('groups', num)
+        .then(groups => this.groups = groups);    
     }
   },
 
@@ -185,18 +143,8 @@ export default {
   },
 
   mounted() {
-    axios
-      .get(`${baseUri}/groups`)
-      .then(resp => {
-        let data = resp.data.groups;
-
-        this.assignData(data);
-        this.showPageNumber();
-
-        console.log(data);
-        console.log(this);
-      })
-      .catch(err => console.log(err.response));
+    this.fetchPage('groups')
+      .then(groups => this.groups = groups); 
   }
 };
 </script>

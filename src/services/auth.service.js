@@ -7,7 +7,7 @@ function authenticate(credentials) {
   return axios.post(`${constants.baseUri}/login`, credentials);
 }
 
-function logout(normal = false) {
+function logout(normal = true) {
   let endPoint = normal ? 'logout' : 'relogin-as';
 
   return axios.post(`${constants.baseUri}/${endPoint}`);

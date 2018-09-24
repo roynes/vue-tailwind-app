@@ -70,7 +70,7 @@ export default {
           }
         });
       }).catch(err => {
-        console.log(err);
+        console.log({message});
         
         this.$store.dispatch(`auth/${UNAUTHENTICATE}`);
         this.$router.push("/login");
