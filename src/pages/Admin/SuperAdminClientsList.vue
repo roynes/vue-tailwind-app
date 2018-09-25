@@ -88,14 +88,12 @@
 <script>
 import { baseUri, Roles } from "../../helpers";
 import Table from "@/components/Table";
-import { mapActions, mapState } from 'vuex';
-import { AUTHENTICATE_AS } from '../../storage/auth';
+import { mapActions, mapState } from "vuex";
+import { AUTHENTICATE_AS } from "../../storage/auth";
 import { pagination } from "@/mixins";
 
 export default {
-  mixins: [
-    pagination
-  ],
+  mixins: [pagination],
 
   components: {
     Table
@@ -114,35 +112,33 @@ export default {
   },
 
   methods: {
-    ...mapActions('auth', {
+    ...mapActions("auth", {
       loginAs(dispatch, clientId) {
         dispatch(AUTHENTICATE_AS, {
           type: Roles.CLIENT_ADMIN,
           id: clientId
         })
-        .then((resp) => {
-          this.$router.push({
-            name: "main",
-            params: {
-              account: this.user.account.type
-            }
+          .then(resp => {
+            this.$router.push({
+              name: "main",
+              params: {
+                account: this.user.account.type
+              }
+            });
+          })
+          .catch(err => {
+            console.log(err.response || err.config || err);
           });
-        })
-        .catch(err => {
-          console.log(err.response||err.config||err);
-        });
       }
     }),
 
     fetchNextPage(num) {
-      this.fetchPage('client', num)
-        .then(clients => this.clients = clients);
+      this.fetchPage("client", num).then(clients => (this.clients = clients));
     }
   },
-  
+
   mounted() {
-    this.fetchPage('client')
-      .then(clients => this.clients = clients);
+    this.fetchPage("client").then(clients => (this.clients = clients));
   }
 };
 </script>

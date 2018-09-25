@@ -1,5 +1,4 @@
 import { pagination } from "./pagination";
+import { roles } from "./roles";
 
-export {
-  pagination
-}
+export { pagination, roles };

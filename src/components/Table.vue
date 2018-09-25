@@ -29,11 +29,6 @@
 </template>
 
 <script>
-const header = {
-  title: String,
-  class: String
-};
-
 export default {
   name: "Table"
 };

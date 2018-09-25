@@ -4,7 +4,7 @@
       <input :type="type" 
         :id="inputName" 
         :name="inputName"
-        class="py-3  w-full border-b-2 focus:border-b-2 focus:outline-none"
+        class="py-3  w-full border-b-2 focus:border-b-2 focus:outline-none bg-transparent"
         :class="[ errors.has(scopeFieldName) ? 'border-red' : 'border-blue' ]" 
         placeholder=" "
         :value="value"

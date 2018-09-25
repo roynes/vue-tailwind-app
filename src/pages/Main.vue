@@ -94,6 +94,8 @@
           </router-link>
         </div>
       </div>
+
+
     </nav>
     <div slot="main-contents">
       <router-view></router-view>
@@ -124,54 +126,52 @@
 
 <script>
 import { AuthConstants as AUTH_CONSTANT } from "../storage";
-import * as constants from "../helpers";
+import Dashboard from "../components/Dashboard.vue";
 import { Roles, toCamelCase } from "../helpers";
 import { mapActions, mapState } from "vuex";
 import { Error401 } from "@/pages/Error";
 
-import Dashboard from "../components/Dashboard.vue";
-
 export default {
   name: "DashBoard",
+
   data() {
     return {
       showUserNav: false,
       CONSTANT_ROLES: Roles
     };
   },
+
   computed: {
     ...mapState("user", ["roles"])
   },
+
   components: {
     Dashboard,
     Error401
   },
+
   methods: {
     logout() {
-      console.log('mimic logout:', this.$store.state.auth.mimic);
-      let mimic = this.$store.state.auth.mimic
+      console.log("mimic logout:", this.$store.state.auth.mimic);
+      let mimic = this.$store.state.auth.mimic;
       let role = this.$store.state.user.roles[0];
 
       this.$store
         .dispatch(`auth/${AUTH_CONSTANT.UNAUTHENTICATE}`, !mimic ? true : false)
         .then(() => {
-          console.log('then promise')
-          console.log('mimic state', this.$store.state.auth.mimic);
-          console.log('mimic', mimic);
-
-          if(mimic) {
-            console.log('mimic here');
+          if (mimic) {
             this.$router.push({
-              name: toCamelCase(`${role.split('-')[0]}-list`, true),
+              name: toCamelCase(`${role.split("-")[0]}-list`, true),
               params: {
                 account: this.$store.state.user.cur_user.account.type
               }
             });
           } else {
-            this.$router.push('/login');
+            this.$router.push("/login");
           }
-        })
+        });
     },
+
     toggleUserNav() {
       this.showUserNav = !this.showUserNav;
     }

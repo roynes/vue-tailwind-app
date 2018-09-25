@@ -1,4 +1,4 @@
-import * as constants from '../helpers'
+import * as constants from "../helpers";
 
 /**
  * @param {*} credentials
@@ -8,7 +8,7 @@ function authenticate(credentials) {
 }
 
 function logout(normal = true) {
-  let endPoint = normal ? 'logout' : 'relogin-as';
+  let endPoint = normal ? "logout" : "relogin-as";
 
   return axios.post(`${constants.baseUri}/${endPoint}`);
 }
@@ -21,4 +21,4 @@ export default {
   authenticate,
   logout,
   authAs
-}
+};

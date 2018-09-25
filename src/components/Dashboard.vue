@@ -4,7 +4,7 @@
       <!-- toolbar -->
       <toolbar class="bg-orange-lighter pin-t shadow" ref="toolbarTop">
         <div class="lg:px-6 md:pl-4 lg:w-1/5 md:w-2/9 flex items-center">
-          <div class="text-black lg:pr-6 md:pr-2 flex items-center no-underline py-1" @click="toggleSideBar">
+          <div class="text-black lg:pr-6 md:pr-2 flex items-center no-underline py-1" @click="toggleSideBar" ref="sidebarToggle">
             <i class="fas fa-bars fa-lg no-underline antialiased"></i>
           </div>
           <router-link :to="{name:'main'}" class="no-underline font-semibold text-xl text-grey-darkest hover:text-grey-dark py-1 flex items-center justify-center">

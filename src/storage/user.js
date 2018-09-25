@@ -10,7 +10,7 @@ const state = {
 };
 
 const mutations = {
-  [SET_CUR_USER](state, {userAccount, roles, permissions, sub}) {
+  [SET_CUR_USER](state, { userAccount, roles, permissions, sub }) {
     console.log(userAccount, roles, permissions);
 
     constants.setUser(userAccount);

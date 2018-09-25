@@ -18,7 +18,7 @@ const state = {
 };
 
 const mutations = {
-  [UPDATE_TOKEN]: (state, token ) => {
+  [UPDATE_TOKEN]: (state, token) => {
     constants.setToken(token);
     state.token = constants.getToken();
   },
@@ -37,7 +37,8 @@ const actions = {
       AuthService.authenticate(credentials)
         .then(resp => {
           commitMutation(commit, resp.data, false);
-          axios.defaults.headers.common["Authorization"] = "Bearer " + resp.data.token;
+          axios.defaults.headers.common["Authorization"] =
+            "Bearer " + resp.data.token;
 
           resolve(resp);
         })
@@ -52,15 +53,15 @@ const actions = {
     return new Promise((resolve, reject) => {
       AuthService.logout(normal)
         .then(resp => {
-          console.log('normal:', normal);
-          console.log('response:', resp.data);
-          console.log('response user:', resp.data.user || false);
-        
-          if( resp.data.user || false) {
+          console.log("normal:", normal);
+          console.log("response:", resp.data);
+          console.log("response user:", resp.data.user || false);
+
+          if (resp.data.user || false) {
             commitMutation(commit, resp.data);
-            axios.defaults.headers.common["Authorization"] = "Bearer " + resp.data.token;
-          }
-          else { 
+            axios.defaults.headers.common["Authorization"] =
+              "Bearer " + resp.data.token;
+          } else {
             commitMutation(commit);
             delete axios.defaults.headers.common["Authorization"];
           }
@@ -73,15 +74,17 @@ const actions = {
         });
     });
   },
-  [AUTHENTICATE_AS]: ({ commit }, {id, type}) => {
+  [AUTHENTICATE_AS]: ({ commit }, { id, type }) => {
     return new Promise((resolve, reject) => {
-      authService.authAs(id, type)
+      authService
+        .authAs(id, type)
         .then(resp => {
-          if(resp.data.user || false) {
+          if (resp.data.user || false) {
             commitMutation(commit, resp.data, true);
 
             commit(UPDATE_MIMIC, true);
-            axios.defaults.headers.common["Authorization"] = "Bearer " + resp.data.token;
+            axios.defaults.headers.common["Authorization"] =
+              "Bearer " + resp.data.token;
           }
 
           resolve(resp);
@@ -94,12 +97,14 @@ const actions = {
 };
 
 let commitMutation = (commit, data = {}) => {
-  let {token='', user={}, expires_in=0} = data;
-  let {roles="", permissions="", ...userAccount} = user;
+  let { token = "", user = {}, expires_in = 0 } = data;
+  let { roles = "", permissions = "", ...userAccount } = user;
 
   commit(UPDATE_TOKEN, token || "");
   commit(UPDATE_EXP, expires_in || 0);
-  commit(`user/${SET_CUR_USER}`, {userAccount, roles, permissions} || {}, { root: true });
+  commit(`user/${SET_CUR_USER}`, { userAccount, roles, permissions } || {}, {
+    root: true
+  });
 };
 
 export default {

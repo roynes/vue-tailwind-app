@@ -42,41 +42,45 @@
 
 <script>
 import FloatLabelInput from "../components/FloatLabelInput.vue";
-import { Form } from "../utilities";
-import {
-  AuthConstants as AUTH_CONSTANT
-} from "../storage";
+import { Form } from "@/utilities";
+import { AuthConstants as AUTH_CONSTANT } from "../storage";
 import { mapActions, mapMutations, mapState } from "vuex";
-import { UNAUTHENTICATE } from '../storage/auth';
+import { UNAUTHENTICATE } from "../storage/auth";
 
 export default {
   name: "Login",
+
   data() {
     return {
       form: new Form({ email: "", password: "" })
     };
   },
+
   methods: {
     login() {
-      this.$store.dispatch(`auth/${AUTH_CONSTANT.AUTHENTICATE}`, { 
-        password: this.form.password,
-        email: this.form.email
-      }).then(res => {
-        this.form.reset();
-        this.$router.push({
-          name: "main",
-          params: {
-            account: this.user.account.type
-          }
+      this.$store
+        .dispatch(`auth/${AUTH_CONSTANT.AUTHENTICATE}`, {
+          password: this.form.password,
+          email: this.form.email
+        })
+        .then(res => {
+          this.form.reset();
+          this.$router.push({
+            name: "main",
+            params: {
+              account: this.user.account.type
+            }
+          });
+        })
+        .catch(err => {
+          console.log({ message });
+
+          this.$store.dispatch(`auth/${UNAUTHENTICATE}`);
+          this.$router.push("/login");
         });
-      }).catch(err => {
-        console.log({message});
-        
-        this.$store.dispatch(`auth/${UNAUTHENTICATE}`);
-        this.$router.push("/login");
-      })
     }
   },
+
   computed: {
     fieldHasErrors() {
       return this.errors.items.length >= 1;
@@ -88,6 +92,7 @@ export default {
       user: state => state.cur_user
     })
   },
+  
   components: {
     FloatLabelInput
   }

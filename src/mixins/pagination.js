@@ -13,17 +13,18 @@ export let pagination = {
       total: 1,
       to: 1,
       from: 1
-    }
+    };
   },
   methods: {
     fetchPage(url, pageNum, ...args) {
       return new Promise((resolve, reject) => {
-        axios.get(`${baseUri}/${url}${
-          !!pageNum ? `?page=${pageNum}` : '?page=1'
-        }${
-          args.length == 0 ? '': `&${args.join('&')}`
-        }`)
-          .then((resp) => {
+        axios
+          .get(
+            `${baseUri}/${url}${pageNum ? `?page=${pageNum}` : "?page=1"}${
+              args.length == 0 ? "" : `&${args.join("&")}`
+            }`
+          )
+          .then(resp => {
             let data = resp.data;
 
             this.assignPaginationData(data);
@@ -37,13 +38,13 @@ export let pagination = {
             }
 
             resolve(data.data);
-          }).catch(err => {
+          })
+          .catch(err => {
             console.log(err.response || err);
 
             reject(err);
           });
       });
-
     },
 
     assignPaginationData(data) {
@@ -72,4 +73,4 @@ export let pagination = {
       }
     }
   }
-}
+};

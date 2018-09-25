@@ -3,9 +3,12 @@
     <i class="fas fa-users fa-3x" slot="icon"></i>
     <h1 slot="title">Groups</h1>
     <template slot="title-option">
-      <div class="hover:rounded-full hover:bg-purple hover:text-white hover:shadow-md transition">
+      <router-link 
+        class="hover:rounded-full hover:bg-purple hover:text-white hover:shadow-md transition no-underline text-black"
+        :to="{ name: 'AddsAccount', params: { type: domain.group }}"
+      >
         <i class="fas fa-plus fa p-2"></i>
-      </div>
+      </router-link>
     </template>
     <template slot="headers">
       <div class="col-span-1 text-center">#</div>
@@ -87,17 +90,15 @@
 </template>
 
 <script>
-import { baseUri, Roles } from "../../helpers";
+import { baseUri } from "../../helpers";
 import Table from "@/components/Table";
-import { AUTHENTICATE_AS } from '../../storage/auth';
-import { mapActions, mapState } from 'vuex';
-import { GET_CUR_USER } from '../../storage/user';
-import { pagination } from "@/mixins";
+import { AUTHENTICATE_AS } from "../../storage/auth";
+import { mapActions, mapState } from "vuex";
+import { GET_CUR_USER } from "../../storage/user";
+import { pagination, roles } from "@/mixins";
 
 export default {
-  mixins: [
-    pagination
-  ],
+  mixins: [pagination, roles],
 
   components: {
     Table
@@ -110,29 +111,28 @@ export default {
   },
 
   methods: {
-    ...mapActions('auth', {
+    ...mapActions("auth", {
       loginAs(dispatch, groupId) {
         dispatch(AUTHENTICATE_AS, {
-          type: Roles.GROUP_ADMIN,
+          type: roles.GROUP_ADMIN,
           id: groupId
         })
-        .then((resp) => {
-          this.$router.push({
-            name: "main",
-            params: {
-              account: this.user.account.type
-            }
+          .then(resp => {
+            this.$router.push({
+              name: "main",
+              params: {
+                account: this.user.account.type
+              }
+            });
+          })
+          .catch(err => {
+            console.log(err.response || err.config || err);
           });
-        })
-        .catch(err => {
-          console.log(err.response||err.config||err);
-        });
       }
     }),
 
     fetchNextPage(num) {
-      this.fetchPage('groups', num)
-        .then(groups => this.groups = groups);    
+      this.fetchPage("groups", num).then(groups => (this.groups = groups));
     }
   },
 
@@ -143,8 +143,7 @@ export default {
   },
 
   mounted() {
-    this.fetchPage('groups')
-      .then(groups => this.groups = groups); 
+    this.fetchPage("groups").then(groups => (this.groups = groups));
   }
 };
 </script>

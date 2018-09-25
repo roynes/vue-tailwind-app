@@ -86,9 +86,7 @@ import Table from "@/components/Table";
 import { pagination } from "@/mixins";
 
 export default {
-  mixins: [
-    pagination
-  ],
+  mixins: [pagination],
 
   components: {
     Table
@@ -96,30 +94,32 @@ export default {
 
   data() {
     return {
-      accounts: {},
+      accounts: {}
     };
   },
 
   methods: {
     fetchNextPage(num) {
-      this.fetchPage('users', num, `scope=exceptUser:${
-          this.$store.state.user.cur_user.id
-        },filterClient:${
+      this.fetchPage(
+        "users",
+        num,
+        `scope=exceptUser:${this.$store.state.user.cur_user.id},filterClient:${
           this.$store.state.user.cur_user.account.client_id
         }`,
-        'with=user'
-      ).then(accounts => this.accounts = accounts);
+        "with=user"
+      ).then(accounts => (this.accounts = accounts));
     }
   },
 
   mounted() {
-    this.fetchPage('users', 1, `scope=exceptUser:${
-        this.$store.state.user.cur_user.id
-      },filterClient:${
+    this.fetchPage(
+      "users",
+      1,
+      `scope=exceptUser:${this.$store.state.user.cur_user.id},filterClient:${
         this.$store.state.user.cur_user.account.client_id
       }`,
-      'with=user'
-    ).then(accounts => this.accounts = accounts);
+      "with=user"
+    ).then(accounts => (this.accounts = accounts));
   }
 };
 </script>
