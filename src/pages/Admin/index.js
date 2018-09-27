@@ -3,11 +3,13 @@ import SuperAdminClientsList from "./SuperAdminClientsList.vue";
 import SuperAdminGroupsList from "./SuperAdminGroupsList.vue";
 import SuperAdminUsersList from "./SuperAdminUsersList.vue";
 import AddGroup from "./AddGroup.vue";
+import AddClient from "./AddClient.vue";
 
 export {
   SuperAdminDashboard,
   SuperAdminClientsList,
   SuperAdminGroupsList,
   SuperAdminUsersList,
-  AddGroup
+  AddGroup,
+  AddClient
 };

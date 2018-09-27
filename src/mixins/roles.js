@@ -10,6 +10,7 @@ export const roles = {
       },
       domain: {
         group: "group",
+        client: "client",
         user: "user"
       }
     }

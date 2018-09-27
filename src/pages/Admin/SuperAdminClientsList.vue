@@ -3,9 +3,12 @@
     <i class="fas fa-users fa-3x" slot="icon"></i>
     <h1 slot="title">Clients</h1>
     <template slot="title-option">
-      <div class="hover:rounded-full hover:bg-purple hover:text-white hover:shadow-md transition">
+      <router-link 
+        class="hover:rounded-full hover:bg-purple hover:text-white hover:shadow-md transition no-underline text-black"
+        :to="{ name: 'AddsAccount', params: { type: domain.client }}"
+      >
         <i class="fas fa-plus fa p-2"></i>
-      </div>
+      </router-link>
     </template>
     <template slot="headers">
       <div class="col-span-1 text-center">#</div>
@@ -90,10 +93,10 @@ import { baseUri, Roles } from "../../helpers";
 import Table from "@/components/Table";
 import { mapActions, mapState } from "vuex";
 import { AUTHENTICATE_AS } from "../../storage/auth";
-import { pagination } from "@/mixins";
+import { pagination, roles } from "@/mixins";
 
 export default {
-  mixins: [pagination],
+  mixins: [pagination, roles],
 
   components: {
     Table

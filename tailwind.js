@@ -62,7 +62,7 @@ let colors = {
   // "red-dark": "#cc1f1a",
   red: "#e3342f",
   // "red-light": "#ef5753",
-  // "red-lighter": "#f9acaa",
+  "red-lighter": "#f9acaa",
   // "red-lightest": "#fcebea",
 
   // "orange-darkest": "#462a16",
@@ -612,6 +612,8 @@ module.exports = {
   */
 
   maxHeight: {
+    "48": "12rem",
+    "120": "30rem",
     "168": "42rem",
     full: "100%",
     screen: "100vh"
@@ -891,7 +893,7 @@ module.exports = {
     textColors: ["responsive", "hover", "focus", "group-hover"],
     textSizes: ["responsive"],
     textStyle: ["responsive", "hover", "focus"],
-    tracking: false,
+    tracking: ["responsive"],
     userSelect: ["responsive"],
     verticalAlign: ["responsive"],
     visibility: ["responsive", "group-hover", "hover"],

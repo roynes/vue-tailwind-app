@@ -4,7 +4,7 @@
   <!-- continue editing -->
     <div class="flex flex-col shadow-md border rounded-t bg-white">
       <div class="p-4 py-6 flex items-center">
-        <h2>Add Group</h2>
+        <h2>Add Client</h2>
       </div>
 
       <div class="outline-none px-4 pb-6">
@@ -16,7 +16,7 @@
             class="appearance-none block w-full bg-white text-grey-darker border border-red rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-grey-lighter" 
             id="grid-first-name" 
             type="text" 
-            placeholder="Group name"
+            placeholder="Client name"
             v-model="form.name"
           >
           <p class="text-red text-xs italic">Please fill out this field.</p>
@@ -61,13 +61,18 @@
               State
             </label>
             <div class="relative">
-              <select class="block appearance-none w-full bg-white border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-grey-lighter focus:border-grey" id="grid-state">
+              <select 
+                class="block appearance-none w-full bg-white border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-grey-lighter focus:border-grey" 
+                id="grid-state"
+              >
                 <option>New Mexico</option>
                 <option>Missouri</option>
                 <option>Texas</option>
               </select>
               <div class="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker">
-                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                </svg>
               </div>
             </div>
           </div>

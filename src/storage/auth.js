@@ -35,18 +35,18 @@ const actions = {
   [AUTHENTICATE]: ({ commit }, credentials) => {
     return new Promise((resolve, reject) => {
       AuthService.authenticate(credentials)
-        .then(resp => {
-          commitMutation(commit, resp.data, false);
-          axios.defaults.headers.common["Authorization"] =
-            "Bearer " + resp.data.token;
+      .then(resp => {
+        commitMutation(commit, resp.data, false);
+        axios.defaults.headers.common["Authorization"] =
+          "Bearer " + resp.data.token;
 
-          resolve(resp);
-        })
-        .catch(err => {
-          console.log(err);
-          commitMutation(commit);
-          reject(err);
-        });
+        resolve(resp);
+      })
+      .catch(err => {
+        console.log('catched error');
+        commitMutation(commit);
+        reject(err);
+      })
     });
   },
   [UNAUTHENTICATE]: ({ commit }, normal) => {

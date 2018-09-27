@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { AddGroup } from "@/pages/Admin";
+import { AddGroup, AddClient } from "@/pages/Admin";
 import { toCamelCase } from '../../helpers';
 
 export default {
@@ -15,7 +15,7 @@ export default {
   },
 
   components: {
-    AddGroup
+    AddGroup, AddClient
   },
   
   computed: {

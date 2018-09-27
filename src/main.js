@@ -3,7 +3,6 @@ import App from "./App.vue";
 import router from "./router.js";
 import Axios from "axios";
 import store, { AuthConstants } from "./storage";
-import VeeValidate from "vee-validate";
 import { getToken } from "./helpers";
 
 const axios = Axios.create({
@@ -21,17 +20,18 @@ if (getToken() !== "") {
 axios.interceptors.response.use(undefined, err => {
   console.log("Error response intercepted");
 
-  if (err.response.status === 401) {
+  if (err.response.status === 401 && !!getToken()) {
     store.commit(`auth/${AuthConstants.UPDATE_EXP}`);
     store.commit(`auth/${AuthConstants.UPDATE_TOKEN}`);
 
     router.push("/login");
   }
+
+  return Promise.reject(err)
 });
 
 window.axios = axios;
 
-Vue.use(VeeValidate);
 Vue.config.productionTip = false;
 
 new Vue({

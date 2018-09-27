@@ -4,18 +4,14 @@
       <input :type="type" 
         :id="inputName" 
         :name="inputName"
-        class="py-3  w-full border-b-2 focus:border-b-2 focus:outline-none bg-transparent"
-        :class="[ errors.has(scopeFieldName) ? 'border-red' : 'border-blue' ]" 
+        class="py-3  w-full border-b-2 focus:border-b-2 focus:outline-none bg-transparent border-blue"
         placeholder=" "
         :value="value"
         @input="$emit('input', $event.target.value)"
-        v-validate.continues="validate"
-        :data-vv-scope="inputName"
-        data-vv-delay="180"
       >
       <label :for="inputName" class="w-full py-1">{{ title }}</label>
     </div>
-    <div v-for="(error, index) in errors.all(inputName)" :key="index">
+    <div v-for="(error, index) in errors" :key="index">
       <span class="text-red text-xs font-light">{{ error }}</span>
     </div>
   </div>
@@ -24,6 +20,7 @@
 <script>
 export default {
   name: "FloatLabelInput",
+
   props: {
     inputName: {
       type: String,
@@ -41,14 +38,11 @@ export default {
       type: String,
       default: ""
     },
-    validate: {
-      type: String,
-      default: "required"
-    }
-  },
-  computed: {
-    scopeFieldName() {
-      return `${this.inputName}.${this.inputName}`;
+    errors: {
+      type: Array,
+      default: () => {
+        return [];
+      }
     }
   }
 };
