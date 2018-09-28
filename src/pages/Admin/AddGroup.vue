@@ -61,8 +61,12 @@
               State
             </label>
             <div class="relative">
-              <select class="block appearance-none w-full bg-white border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-grey-lighter focus:border-grey" id="grid-state">
-                <option>New Mexico</option>
+              <select 
+                class="block appearance-none w-full bg-white border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-grey-lighter focus:border-grey" 
+                id="grid-state"
+                v-model="form.state"
+              >
+                <option class="py-3">New Mexico</option>
                 <option>Missouri</option>
                 <option>Texas</option>
               </select>
@@ -75,7 +79,13 @@
             <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-zip">
               Zip
             </label>
-            <input class="appearance-none block w-full bg-white text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-grey-lighter focus:border-grey" id="grid-zip" type="text" placeholder="90210">
+            <input 
+              class="appearance-none block w-full bg-white text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-grey-lighter focus:border-grey" 
+              id="grid-zip" 
+              type="text" 
+              placeholder="90210"
+              v-model="form.zip_code"
+            >
           </div>
         </div>
 
@@ -89,6 +99,7 @@
               id="description" 
               class="focus:outline-none rounded w-full focus:bg-grey-lighter bg-white h-48 p-2 border-grey-lighter border max-h-120" 
               placeholder="Write description here..."
+              v-model="form.description"
             />
           </div>
 
@@ -116,16 +127,28 @@
       </div>
 
       <div class="px-4 py-4 flex items-center">
-        <div class="p-3 w-32 rounded bg-blue text-center text-white mr-4">Add</div>
-        <div class="p-3 w-32 rounded bg-blue text-center text-white">Cancel</div>
+        <div 
+          class="p-3 w-32 rounded bg-blue text-center text-white mr-4 cursor-pointer"
+          @click="add"
+        >
+          Add
+        </div>
+        <router-link 
+          :to="{name: 'GroupList'}" 
+          class="p-3 w-32 rounded bg-blue text-center text-white"
+          tag="div"
+        >
+          Cancel
+        </router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { Form } from '@/utilities';
 import { FloatLabelInput } from "@/components";
+import { GroupService } from "@/services";
+import { Form } from '@/utilities';
 
 export default {
   components: {
@@ -136,8 +159,8 @@ export default {
     return {
       form: new Form({
         logo: '', name: '', street: '',
-        city: '', state: '', zip_code: '',
-        details: ''
+        city: '', state: 'New Mexico', zip_code: '',
+        description: ''
       }),
       logoAvailable: false
     };
@@ -151,10 +174,16 @@ export default {
         this.logoAvailable = true;
         this.$refs.groupLogo.setAttribute('src', e.target.result);
 
-        this.form.logo = event.target.files[0];
+        this.form.logo = e.target.result;
       };
 
       reader.readAsDataURL(event.target.files[0]);
+    },
+
+    add() {
+      GroupService.addGroup(this.form.data()).then(resp => {
+        console.log(resp);
+      }).catch(err => console.log(err.response||err));
     }
   }
 }
