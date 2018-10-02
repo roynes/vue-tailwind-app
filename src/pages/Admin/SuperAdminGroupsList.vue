@@ -28,10 +28,10 @@
         {{group.name}}
       </div>
       <div class="col-span-3 break-word overflow-y-auto h-16 flex items-center">
-        {{JSON.parse(group.settings).email}}
+        {{JSON.parse(group.settings).email || 'No Email'}}
       </div>
       <div class="col-span-3 break-word overflow-y-auto h-16 flex items-center">
-        {{JSON.parse(group.settings).address}}
+        {{JSON.parse(group.settings).address || parseAddress(JSON.parse(group.settings))}}
       </div>
       <div class="col-span-2 flex overflow-y-auto items-center justify-around px-1">
         <a class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast"
@@ -42,7 +42,10 @@
         <a class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
           <i class="group fas fa-edit cursor-pointer"></i>
         </a>
-        <a class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
+        <a 
+          class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast"
+          @click="deleteGroup(group.id)"
+        >
           <i class="group fas fa-trash-alt cursor-pointer"></i>
         </a>
       </div>
@@ -90,12 +93,13 @@
 </template>
 
 <script>
-import { baseUri } from "../../helpers";
-import Table from "@/components/Table";
 import { AUTHENTICATE_AS } from "../../storage/auth";
-import { mapActions, mapState } from "vuex";
 import { GET_CUR_USER } from "../../storage/user";
 import { pagination, roles } from "@/mixins";
+import { GroupService } from "@/services";
+import { mapActions, mapState } from "vuex";
+import { baseUri } from "../../helpers";
+import { Table } from "@/components";
 
 export default {
   mixins: [pagination, roles],
@@ -130,6 +134,22 @@ export default {
           });
       }
     }),
+
+    deleteGroup(id) {
+      GroupService.remove(id)
+        .then(resp => {
+          this.fetchPage("groups")
+            .then(groups => {
+              this.showPageNumber();
+              this.groups = groups;
+            });
+        })
+        .catch(err => console.log(err.response || err));
+    },
+
+    parseAddress(settings) {
+      return `${settings.street},${settings.city},${settings.state},${settings.zip_code}`;
+    },
 
     fetchNextPage(num) {
       this.fetchPage("groups", num).then(groups => (this.groups = groups));

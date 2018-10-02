@@ -2,6 +2,7 @@
 
   <div class="w-4/5 mx-auto">
   <!-- continue editing -->
+  <!-- starting here -->
     <div class="flex flex-col shadow-md border rounded-t bg-white">
       <div class="p-4 py-6 flex items-center">
         <h2>Add Group</h2>
@@ -19,7 +20,9 @@
             placeholder="Group name"
             v-model="form.name"
           >
-          <p class="text-red text-xs italic">Please fill out this field.</p>
+          <div v-if="form.errors.hasAny()">
+            <p class="text-red text-xs italic" v-for="(val, index) in form.errors.name" :key="index">{{ val }}</p>
+          </div>
         </div>
 
         <div class="pb-3">
@@ -36,7 +39,25 @@
             placeholder="Street name"
             v-model="form.street"
           >
-          <p class="text-red text-xs italic">Please fill out this field.</p>
+          <div v-if="form.errors.hasAny()">
+            <p class="text-red text-xs italic" v-for="(val, index) in form.errors.street" :key="index">{{ val }}</p>
+          </div>
+        </div>
+
+        <div class="pb-3">
+          <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-service-email">
+            Service Email
+          </label>
+          <input 
+            class="appearance-none block w-full bg-white text-grey-darker border border-red rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-grey-lighter" 
+            id="grid-service-email" 
+            type="text" 
+            placeholder="Service email / Email  "
+            v-model="form.email"
+          >
+          <div v-if="form.errors.hasAny()">
+            <p class="text-red text-xs italic" v-for="(val, index) in form.errors.email" :key="index">{{ val }}</p>
+          </div>
         </div>
 
         <div class="flex -mx-3 mb-2">
@@ -54,6 +75,9 @@
               placeholder="Sydney"
               v-model="form.city"
             >
+            <div v-if="form.errors.hasAny()">
+              <p class="text-red text-xs italic mt-3" v-for="(val, index) in form.errors.city" :key="index">{{ val }}</p>
+            </div>
           </div>
 
           <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -74,6 +98,9 @@
                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
               </div>
             </div>
+            <div v-if="form.errors.hasAny()">
+              <p class="text-red text-xs italic mt-3" v-for="(val, index) in form.errors.state" :key="index">{{ val }}</p>
+            </div>
           </div>
           <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
             <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-zip">
@@ -86,6 +113,9 @@
               placeholder="90210"
               v-model="form.zip_code"
             >
+            <div v-if="form.errors.hasAny()">
+              <p class="text-red text-xs italic mt-3" v-for="(val, index) in form.errors.zip_code" :key="index">{{ val }}</p>
+            </div>
           </div>
         </div>
 
@@ -160,6 +190,7 @@ export default {
       form: new Form({
         logo: '', name: '', street: '',
         city: '', state: 'New Mexico', zip_code: '',
+        email: '',
         description: ''
       }),
       logoAvailable: false
@@ -181,9 +212,13 @@ export default {
     },
 
     add() {
-      GroupService.addGroup(this.form.data()).then(resp => {
-        console.log(resp);
-      }).catch(err => console.log(err.response||err));
+      GroupService.add(this.form.data()).then(resp => {
+        this.logoAvailable = false;
+        this.$refs.groupLogo.setAttribute('src', null);
+        this.form.reset();
+      }).catch(err => {
+        this.form.setErrors(err.response.data.errors);
+      });
     }
   }
 }

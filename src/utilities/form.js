@@ -1,3 +1,5 @@
+import { Errors } from "./errors";
+
 export class Form {
   /**
    *
@@ -5,6 +7,7 @@ export class Form {
    */
   constructor(prop) {
     this.originalData = prop;
+    this.errors = new Errors();
 
     for (let field in prop) {
       this[field] = prop[field];
@@ -25,5 +28,9 @@ export class Form {
     for (let props in this.originalData) {
       this[props] = "";
     }
+  }
+
+  setErrors(errors) {
+    this.errors = new Errors(errors);
   }
 }

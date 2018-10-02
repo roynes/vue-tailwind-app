@@ -1,9 +1,13 @@
 import * as constants from "../helpers";
 
-function addGroup(details) {
-  return axios.post(`${constants.baseUri}/groups`, details)
+function add(details) {
+  return axios.post(`${constants.baseUri}/groups`, details);
+}
+
+function remove(id) {
+  return axios.delete(`${constants.baseUri}/groups/${id}`);
 }
 
 export default {
-  addGroup
+  add, remove
 }
