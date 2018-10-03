@@ -42,7 +42,10 @@
         <a class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
           <i class="group fas fa-edit cursor-pointer"></i>
         </a>
-        <a class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
+        <a 
+          class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast"
+          @click="deleteClient(client.id)"
+        >
           <i class="group fas fa-trash-alt cursor-pointer"></i>
         </a>
       </div>
@@ -94,6 +97,7 @@ import Table from "@/components/Table";
 import { mapActions, mapState } from "vuex";
 import { AUTHENTICATE_AS } from "../../storage/auth";
 import { pagination, roles } from "@/mixins";
+import { ClientService } from "@/services";
 
 export default {
   mixins: [pagination, roles],
@@ -135,6 +139,17 @@ export default {
       }
     }),
 
+    deleteClient(id) {
+      ClientService.remove(id)
+        .then(resp => {
+          this.fetchPage("clients")
+            .then(clients => {
+              this.showPageNumber();
+              this.clients = clients;
+            });
+        })
+        .catch(err => console.log(err.response || err));
+    },
     parseAddress(settings) {
       return `${settings.street}, ${settings.city}, ${settings.state}, ${settings.zip_code || '2000'}`;
     },
