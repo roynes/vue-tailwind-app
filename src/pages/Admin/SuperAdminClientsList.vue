@@ -31,7 +31,7 @@
         {{JSON.parse(client.settings).email}}
       </div>
       <div class="col-span-3 break-word overflow-y-auto h-16 flex items-center">
-        {{JSON.parse(client.settings).address}}
+        {{JSON.parse(client.settings).address || parseAddress(JSON.parse(client.settings))}}
       </div>
       <div class="col-span-2 flex overflow-y-auto items-center justify-around px-1">
         <a class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast"
@@ -135,13 +135,17 @@ export default {
       }
     }),
 
+    parseAddress(settings) {
+      return `${settings.street}, ${settings.city}, ${settings.state}, ${settings.zip_code || '2000'}`;
+    },
+
     fetchNextPage(num) {
-      this.fetchPage("client", num).then(clients => (this.clients = clients));
+      this.fetchPage("clients", num).then(clients => (this.clients = clients));
     }
   },
 
   mounted() {
-    this.fetchPage("client").then(clients => (this.clients = clients));
+    this.fetchPage("clients").then(clients => (this.clients = clients));
   }
 };
 </script>

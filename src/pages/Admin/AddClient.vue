@@ -1,7 +1,6 @@
 <template>
 
   <div class="w-4/5 mx-auto">
-  <!-- continue editing -->
     <div class="flex flex-col shadow-md border rounded-t bg-white">
       <div class="p-4 py-6 flex items-center">
         <h2>Add Client</h2>
@@ -13,13 +12,16 @@
             Name
           </label>
           <input 
-            class="appearance-none block w-full bg-white text-grey-darker border border-red rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-grey-lighter" 
+            class="appearance-none block w-full bg-white text-grey-darker border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-grey-lighter" 
             id="grid-first-name" 
             type="text" 
             placeholder="Client name"
             v-model="form.name"
+            :class="border"
           >
-          <p class="text-red text-xs italic">Please fill out this field.</p>
+          <div v-if="form.errors.hasAny()">
+            <p class="text-red text-xs italic" v-for="(val, index) in form.errors.name" :key="index">{{ val }}</p>
+          </div>
         </div>
 
         <div class="pb-3">
@@ -30,13 +32,33 @@
             Street
           </label>
           <input 
-            class="appearance-none block w-full bg-white text-grey-darker border border-red rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-grey-lighter" 
+            class="appearance-none block w-full bg-white text-grey-darker border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-grey-lighter" 
             id="grid-first-name" 
             type="text" 
             placeholder="Street name"
             v-model="form.street"
+            :class="border"
           >
-          <p class="text-red text-xs italic">Please fill out this field.</p>
+          <div v-if="form.errors.hasAny()">
+            <p class="text-red text-xs italic" v-for="(val, index) in form.errors.street" :key="index">{{ val }}</p>
+          </div>
+        </div>
+
+        <div class="pb-3">
+          <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-service-email">
+            Service Email
+          </label>
+          <input 
+            class="appearance-none block w-full bg-white text-grey-darker border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-grey-lighter" 
+            id="grid-service-email" 
+            type="text" 
+            placeholder="Service email / Email  "
+            v-model="form.email"
+            :class="border"
+          >
+          <div v-if="form.errors.hasAny()">
+            <p class="text-red text-xs italic" v-for="(val, index) in form.errors.email" :key="index">{{ val }}</p>
+          </div>
         </div>
 
         <div class="flex -mx-3 mb-2">
@@ -48,12 +70,16 @@
               City
             </label>
             <input 
-              class="appearance-none block w-full bg-white text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-grey-lighter focus:border-grey" 
+              class="appearance-none block w-full bg-white text-grey-darker border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-grey-lighter focus:border-grey" 
               id="grid-city" 
               type="text" 
-              placeholder="Sydney"
+              placeholder="City"
               v-model="form.city"
+              :class="border"
             >
+            <div v-if="form.errors.hasAny()">
+              <p class="text-red text-xs italic mt-3" v-for="(val, index) in form.errors.city" :key="index">{{ val }}</p>
+            </div>
           </div>
 
           <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -62,25 +88,35 @@
             </label>
             <div class="relative">
               <select 
-                class="block appearance-none w-full bg-white border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-grey-lighter focus:border-grey" 
+                class="block appearance-none w-full bg-white border border-grey text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-grey-lighter focus:border-grey" 
                 id="grid-state"
+                v-model="form.state"
               >
-                <option>New Mexico</option>
-                <option>Missouri</option>
-                <option>Texas</option>
+                <option :value="state.abbr" v-for="(state, index) in states" :key="index">{{state.name}}</option>
               </select>
               <div class="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker">
-                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-                </svg>
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
               </div>
+            </div>
+            <div v-if="form.errors.hasAny()">
+              <p class="text-red text-xs italic mt-3" v-for="(val, index) in form.errors.state" :key="index">{{ val }}</p>
             </div>
           </div>
           <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
             <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-zip">
               Zip
             </label>
-            <input class="appearance-none block w-full bg-white text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-grey-lighter focus:border-grey" id="grid-zip" type="text" placeholder="90210">
+            <input 
+              class="appearance-none block w-full bg-white text-grey-darker border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-grey-lighter focus:border-grey" 
+              id="grid-zip" 
+              type="text" 
+              placeholder="Zip code"
+              v-model="form.zip_code"
+              :class="border"
+            >
+            <div v-if="form.errors.hasAny()">
+              <p class="text-red text-xs italic mt-3" v-for="(val, index) in form.errors.zip_code" :key="index">{{ val }}</p>
+            </div>
           </div>
         </div>
 
@@ -92,8 +128,9 @@
             <textarea 
               name="description" 
               id="description" 
-              class="focus:outline-none rounded w-full focus:bg-grey-lighter bg-white h-48 p-2 border-grey-lighter border max-h-120" 
+              class="focus:outline-none rounded w-full focus:bg-grey-lighter bg-white h-48 p-2 border max-h-120 border-grey" 
               placeholder="Write description here..."
+              v-model="form.description"
             />
           </div>
 
@@ -101,12 +138,12 @@
             <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
               Logo
             </label>
-            <div class="w-full rounded border border-grey-lighter h-48 max-h-48 flex items-center justify-center bg-grey-light flex-col relative">
+            <div class="w-full rounded border h-48 max-h-48 flex items-center justify-center bg-grey-light flex-col relative border-grey">
               <div v-show="!logoAvailable" class="tracking-wide uppercase absolute">
-                No Logo Available
+                Click to upload logo
               </div>
 
-              <img v-show="logoAvailable" class="absolute" ref="groupLogo">
+              <img v-show="logoAvailable" class="absolute" ref="clientLogo">
 
               <input 
                 type="file" 
@@ -121,16 +158,28 @@
       </div>
 
       <div class="px-4 py-4 flex items-center">
-        <div class="p-3 w-32 rounded bg-blue text-center text-white mr-4">Add</div>
-        <div class="p-3 w-32 rounded bg-blue text-center text-white">Cancel</div>
+        <div 
+          class="p-3 w-32 rounded bg-blue text-center text-white mr-4 cursor-pointer"
+          @click="add"
+        >
+          Add
+        </div>
+        <router-link 
+          :to="{name: 'ClientList'}" 
+          class="p-3 w-32 rounded bg-blue text-center text-white cursor-pointer"
+          tag="div"
+        >
+          Cancel
+        </router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { Form } from '@/utilities';
 import { FloatLabelInput } from "@/components";
+import { ClientService, StateService } from "@/services";
+import { Form } from '@/utilities';
 
 export default {
   components: {
@@ -142,10 +191,21 @@ export default {
       form: new Form({
         logo: '', name: '', street: '',
         city: '', state: '', zip_code: '',
-        details: ''
+        email: '',
+        description: ''
       }),
-      logoAvailable: false
+      logoAvailable: false,
+      states: []
     };
+  },
+
+  computed: {
+    hasAnyError() {
+      return this.form.errors.hasAny();
+    },
+    border() {
+      return this.hasAnyError ? 'border-red' : 'border-grey';
+    }
   },
 
   methods: {
@@ -156,17 +216,32 @@ export default {
         this.logoAvailable = true;
         this.$refs.groupLogo.setAttribute('src', e.target.result);
 
-        this.form.logo = event.target.files[0];
+        this.form.logo = e.target.result;
       };
 
       reader.readAsDataURL(event.target.files[0]);
+    },
+
+    add() {
+      ClientService
+        .add(this.form.data())
+        .then(resp => {
+          this.logoAvailable = false;
+          this.$refs.clientLogo.setAttribute('src', null);
+          this.form.reset();
+        })
+        .catch(err => {
+          this.form.setErrors(err.response.data.errors);
+        });
     }
+  },
+
+  mounted() {
+    StateService.fetchAll()
+      .then(resp => {
+        this.states = resp.data.states;
+        this.form.state = this.states[0].abbr;
+      });
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.shadow-lite {
-  box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, .12), 0 -2px 4px 0 rgba(0, 0, 0, .12);
-}
-</style>

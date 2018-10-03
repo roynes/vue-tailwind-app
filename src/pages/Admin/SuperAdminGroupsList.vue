@@ -148,7 +148,7 @@ export default {
     },
 
     parseAddress(settings) {
-      return `${settings.street},${settings.city},${settings.state},${settings.zip_code}`;
+      return `${settings.street}, ${settings.city}, ${settings.state}, ${settings.zip_code || '2000'}`;
     },
 
     fetchNextPage(num) {
