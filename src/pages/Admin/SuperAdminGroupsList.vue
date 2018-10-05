@@ -116,9 +116,9 @@ export default {
 
   methods: {
     ...mapActions("auth", {
-      loginAs(dispatch, groupId) {
+      loginAs(dispatch, groupId, ) {
         dispatch(AUTHENTICATE_AS, {
-          type: roles.GROUP_ADMIN,
+          type: this.roles.GROUP_ADMIN,
           id: groupId
         })
           .then(resp => {

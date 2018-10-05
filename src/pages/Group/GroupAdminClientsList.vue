@@ -101,18 +101,18 @@ export default {
   methods: {
     fetchNextPage(num) {
       this.fetchPage(
-        "clients",
+        "client",
         num,
-        `scope=filter:${this.$store.state.user.cur_user.account.group_id}`
+        `scope=byGroupOf:${this.$store.state.user.cur_user.account.group_id}`
       ).then(clients => (this.clients = clients));
     }
   },
 
   mounted() {
     this.fetchPage(
-      "clients",
+      "client",
       1,
-      `scope=filter:${this.$store.state.user.cur_user.account.group_id}`
+      `scope=byGroupOf:${this.$store.state.user.cur_user.account.group_id}`
     ).then(clients => (this.clients = clients));
   }
 };

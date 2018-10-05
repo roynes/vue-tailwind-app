@@ -92,7 +92,7 @@
 </template>
 
 <script>
-import { baseUri, Roles } from "../../helpers";
+import { baseUri } from "../../helpers";
 import Table from "@/components/Table";
 import { mapActions, mapState } from "vuex";
 import { AUTHENTICATE_AS } from "../../storage/auth";
@@ -122,7 +122,7 @@ export default {
     ...mapActions("auth", {
       loginAs(dispatch, clientId) {
         dispatch(AUTHENTICATE_AS, {
-          type: Roles.CLIENT_ADMIN,
+          type: this.roles.CLIENT_ADMIN,
           id: clientId
         })
           .then(resp => {
