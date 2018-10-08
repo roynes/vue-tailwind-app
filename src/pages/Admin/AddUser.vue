@@ -28,14 +28,10 @@
           <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">
             Role
           </label>
-          <input 
-            class="appearance-none block w-full bg-white text-grey-darker border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-grey-lighter" 
-            id="grid-first-name" 
-            type="text" 
-            placeholder="User name"
-            v-model="form.name"
-            :class="border"
-          >
+          <div v-for="(role, index) in roles" :key="index">
+            <input type="radio" :id="`rb-${index}`" name="rb-role">
+            <label :for="`rb-${index}`">{{ role.replace(/\W+/g, ' ') }}</label>
+          </div>
           <div v-if="form.errors.hasAny()">
             <p class="text-red text-xs italic" v-for="(val, index) in form.errors.name" :key="index">{{ val }}</p>
           </div>
@@ -175,9 +171,12 @@
 
 <script>
 import { GroupService, StateService } from "@/services";
+import { roles } from "@/mixins";
 import { Form } from '@/utilities';
 
 export default {
+  mixins: [ roles ],
+
   data() {
     return {
       form: new Form({

@@ -6,7 +6,7 @@ export const roles = {
         GROUP_ADMIN : "group-admin",
         CLIENT_ADMIN : "client-admin",
         GROUP_END_USER : "group-end-user",
-        END_USER : "end-user"
+        CLIENT_END_USER : "client-end-user"
       },
       domain: {
         group: "group",
