@@ -8,6 +8,10 @@ function remove(id) {
   return axios.delete(`${constants.baseUri}/clients/${id}`);
 }
 
+function all() {
+  return axios.get(`${constants.baseUri}/clients`)
+}
+
 export default {
-  add, remove
+  add, remove, all
 }
