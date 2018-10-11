@@ -14,29 +14,12 @@
             class="appearance-none block w-full bg-white text-grey-darker border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-grey-lighter" 
             id="grid-first-name" 
             type="text" 
-            placeholder="User name"
+            placeholder="Enter name here.."
             v-model="form.name"
             :class="border"
           >
           <div v-if="form.errors.hasAny()">
             <p class="text-red text-xs italic" v-for="(val, index) in form.errors.name" :key="index">{{ val }}</p>
-          </div>
-        </div>
-
-        <div class="pb-3">
-          <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-service-email">
-            Service Email
-          </label>
-          <input 
-            class="appearance-none block w-full bg-white text-grey-darker border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-grey-lighter" 
-            id="grid-service-email" 
-            type="text" 
-            placeholder="Service email / Email  "
-            v-model="form.email"
-            :class="border"
-          >
-          <div v-if="form.errors.hasAny()">
-            <p class="text-red text-xs italic" v-for="(val, index) in form.errors.email" :key="index">{{ val }}</p>
           </div>
         </div>
 
@@ -52,7 +35,7 @@
               </div>
             </div>
             <div v-if="form.errors.hasAny()">
-              <p class="text-red text-xs italic" v-for="(val, index) in form.errors.name" :key="index">{{ val }}</p>
+              <p class="text-red text-xs italic" v-for="(val, index) in form.errors.role" :key="index">{{ val }}</p>
             </div>
           </div>
 
@@ -189,7 +172,7 @@ input[type='radio'] {
   opacity: 0;
 
   &:checked + label.role-label {
-    @apply text-grey-dark px-2 
+    @apply text-black px-2 
   }
 
   &:checked + label.role-label::before {
