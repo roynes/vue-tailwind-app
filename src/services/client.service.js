@@ -9,7 +9,7 @@ function remove(id) {
 }
 
 function all() {
-  return axios.get(`${constants.baseUri}/clients`)
+  return axios.get(`${constants.baseUri}/clients/all`)
 }
 
 export default {

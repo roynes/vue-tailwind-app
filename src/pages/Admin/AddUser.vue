@@ -8,13 +8,30 @@
       <div class="outline-none px-4 pb-6">
         <div class="pb-3">
           <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">
+            Email
+          </label>
+          <input 
+            class="appearance-none block w-full bg-white text-grey-darker border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-grey-lighter" 
+            id="grid-first-name" 
+            type="text" 
+            placeholder="Service email"
+            v-model="form.email"
+            :class="border"
+          >
+          <div v-if="form.errors.hasAny()">
+            <p class="text-red text-xs italic" v-for="(val, index) in form.errors.email" :key="index">{{ val }}</p>
+          </div>
+        </div>
+
+        <div class="pb-3">
+          <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">
             Name
           </label>
           <input 
             class="appearance-none block w-full bg-white text-grey-darker border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-grey-lighter" 
             id="grid-first-name" 
             type="text" 
-            placeholder="Enter name here.."
+            placeholder="Full name"
             v-model="form.name"
             :class="border"
           >
@@ -40,45 +57,43 @@
           </div>
 
           <div class="w-2/3">
-            <div class="pb-3" v-if="groupDomainChosen">
-              <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-service-email">
-                Group
+            <div 
+              class="pb-3 flex flex-col"
+              v-if="groupDomainChosen"
+            >
+              <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-client">
+                Choose group
               </label>
-              <div class="relative">
-                <select 
-                  class="block appearance-none w-full bg-white border border-grey text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-grey-lighter focus:border-grey"
-                  id="grid-state"
-                  v-model="form.group"
+              <div class="border h-40 rounded p-1 overflow-y-auto text-center">
+                <div 
+                  class="rounded hover:bg-blue-lighter p-1 my-1 hover:font-semibold"
+                  v-for="(group, index) in groups"
+                  :key="index"
+                  @click="assignGroup(group.id)"
+                  :class="[ form.group_id === group.id ? 'bg-blue text-white' : '' ]"
                 >
-                  <option :value="group.id" v-for="(group, index) in groups" :key="index">{{group.name}}</option>
-                </select>
-                <div class="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker">
-                  <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                  {{group.name}}
                 </div>
-              </div>
-              <div v-if="form.errors.hasAny()">
-                <p class="text-red text-xs italic" v-for="(val, index) in form.errors.email" :key="index">{{ val }}</p>
               </div>
             </div>
 
-            <div class="pb-3" v-if="clientDomainChosen">
-              <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-service-email">
-                Client
+            <div 
+              class="pb-3 flex flex-col"
+              v-if="clientDomainChosen"
+            >
+              <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-client">
+                Choose client
               </label>
-              <div class="relative">
-                <select 
-                  class="block appearance-none w-full bg-white border border-grey text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-grey-lighter focus:border-grey"
-                  id="grid-state"
-                  v-model="form.client"
+              <div class="border h-40 rounded p-1 overflow-y-auto text-center">
+                <div 
+                  class="rounded p-1 my-1 hover:font-semibold"
+                  v-for="(client, index) in clients"
+                  :key="index"
+                  @click="assignClient(client.id)"
+                  :class="[ form.client_id === client.id ? 'bg-blue text-white hover:bg-blue' : 'hover:bg-blue-lighter' ]"
                 >
-                  <option :value="client.id" v-for="(client, index) in clients" :key="index">{{client.name}}</option>
-                </select>
-                <div class="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker">
-                  <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                  {{client.name}}
                 </div>
-              </div>
-              <div v-if="form.errors.hasAny()">
-                <p class="text-red text-xs italic" v-for="(val, index) in form.errors.email" :key="index">{{ val }}</p>
               </div>
             </div>
           </div>
@@ -105,7 +120,7 @@
 </template>
 
 <script>
-import { GroupService, ClientService } from "@/services";
+import { GroupService, ClientService, UserService } from "@/services";
 import { roles } from "@/mixins";
 import { Form } from '@/utilities';
 
@@ -115,9 +130,9 @@ export default {
   data() {
     return {
       form: new Form({
-        name: '', role: '', group: 0, client: 0
+        email: '', name: '', role: '', 
+        group_id: null, client_id: null,
       }),
-      logoAvailable: false,
       groups: [],
       clients: []
     };
@@ -131,16 +146,30 @@ export default {
       return this.hasAnyError ? 'border-red' : 'border-grey';
     },
     groupDomainChosen() {
+      this.form.client_id = null;
       return !! (this.form.role == this.roles.GROUP_ADMIN || this.form.role == this.roles.GROUP_END_USER);
     },
     clientDomainChosen() {
+      this.form.group_id = null;
       return !! (this.form.role === this.roles.CLIENT_ADMIN || this.form.role === this.roles.CLIENT_END_USER);
     }
   },
 
   methods: {
     add() {
-      
+      UserService.add(this.form.data())
+        .then(res => console.log(res))
+        .catch(err => {
+          this.form.setErrors(err.response.data.errors);
+        })
+    },
+
+    assignClient(clientId) {
+      this.form.client_id = clientId;
+    },
+
+    assignGroup(groupId) {
+      this.form.group_id = groupId;
     }
   },
 
@@ -148,14 +177,12 @@ export default {
     GroupService.all()
       .then(res => {
         this.groups = res.data.data;
-        this.form.group = this.groups[0].id;
       })
       .catch(err => console.log(err.response || err));
 
     ClientService.all()
       .then(res => {
-        this.clients = res.data.data;
-        this.form.client = this.clients[0].id
+        this.clients = res.data.clients;
       })
       .catch(err => console.log(err.response || err));
   }
