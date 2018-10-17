@@ -158,7 +158,7 @@ export default {
   methods: {
     add() {
       UserService.add(this.form.data())
-        .then(res => console.log(res))
+        .then(res => this.$router.push({name: 'UsersList'}))
         .catch(err => {
           this.form.setErrors(err.response.data.errors);
         })

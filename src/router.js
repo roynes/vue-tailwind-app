@@ -92,7 +92,7 @@ let router = new VueRouter({
     {
       path: "/test",
       name: "test",
-      component: () => import("./components/FloatLabelInput.vue")
+      component: () => import("./components/TextInput.vue")
     },
     {
       path: "*",
