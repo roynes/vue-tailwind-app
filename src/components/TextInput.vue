@@ -10,22 +10,23 @@
       class="appearance-none block w-full bg-white text-grey-darker border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-grey-lighter"
       type="text" 
       :id="title"
-      :placeholder="placeholder"
-      :value="value"
+      :placeholder="$attrs.placeholder"
       :class="border"
+      
+      :value="value"
       @input="$emit('input', $event.target.value)"
     >
-    <div v-if="Object.keys(errors).length > 0">
-      <p class="text-red text-xs italic" v-for="(error, index) in errors[title]" :key="index">{{ error }}</p>
+    <div v-if="hasAnyErrors">
+      <p class="text-red text-xs italic" v-for="(error, index) in errors" :key="index">{{ error }}</p>
     </div>
   </div>
 </template>
 
 
 <script>
-import { Errors } from '@/utilities';
-
 export default {
+  inheritAttrs: false,
+
   props: {
     title: {
       type: String,
@@ -36,7 +37,7 @@ export default {
       default: '' 
     },
     errors: {
-      type: Object,
+      type: Array,
       default() {
         return [];
       }
@@ -45,9 +46,15 @@ export default {
       type: String,
       default: ''
     },
-    placeholder: {
-      type: String,
-      default: ''
+  },
+
+  computed: {
+    hasAnyErrors() {
+      return this.errors.length > 0;
+    },
+
+    border() {
+      return this.hasAnyErrors ? 'border-red' : 'border-grey';
     }
   }
 }

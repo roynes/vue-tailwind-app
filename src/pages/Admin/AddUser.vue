@@ -6,42 +6,25 @@
       </div>
 
       <div class="outline-none px-4 pb-6">
-        <div class="pb-3">
-          <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">
-            Email
-          </label>
-          <input 
-            class="appearance-none block w-full bg-white text-grey-darker border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-grey-lighter" 
-            id="grid-first-name" 
-            type="text" 
-            placeholder="Service email"
-            v-model="form.email"
-            :class="border"
-          >
-          <div v-if="form.errors.hasAny()">
-            <p class="text-red text-xs italic" v-for="(val, index) in form.errors.email" :key="index">{{ val }}</p>
-          </div>
-        </div>
+        <TextInput 
+          title="email" 
+          label="Email" 
+          placeholder="Service Email" 
+          :errors="form.errors.email" 
+          v-model="form.email"
+        ></TextInput>
+        <TextInput 
+          title="name" 
+          label="Name" 
+          placeholder="Full name" 
+          :errors="form.errors.name" 
+          v-model="form.name"
+        ></TextInput>
 
-        <div class="pb-3">
-          <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">
-            Name
-          </label>
-          <input 
-            class="appearance-none block w-full bg-white text-grey-darker border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-grey-lighter" 
-            id="grid-first-name" 
-            type="text" 
-            placeholder="Full name"
-            v-model="form.name"
-            :class="border"
-          >
-          <div v-if="form.errors.hasAny()">
-            <p class="text-red text-xs italic" v-for="(val, index) in form.errors.name" :key="index">{{ val }}</p>
-          </div>
-        </div>
+
 
         <div class="pb-3 flex">
-          <div class="w-1/3">
+          <!-- <div class="w-1/3">
             <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">
               Role
             </label>
@@ -54,7 +37,16 @@
             <div v-if="form.errors.hasAny()">
               <p class="text-red text-xs italic" v-for="(val, index) in form.errors.role" :key="index">{{ val }}</p>
             </div>
-          </div>
+          </div> -->
+          
+          <RadioInput
+            title="role"
+            label="Role"
+            :errors="form.errors.role"
+            :inputs="roles"
+            v-model="form.role"
+            class="w-1/3"
+          ></RadioInput>
 
           <div class="w-2/3">
             <div 
@@ -121,10 +113,16 @@
 
 <script>
 import { GroupService, ClientService, UserService } from "@/services";
-import { roles } from "@/mixins";
+import { TextInput, RadioInput } from "@/components";
 import { Form } from '@/utilities';
+import { roles } from "@/mixins";
 
 export default {
+  components: {
+    TextInput,
+    RadioInput
+  },
+
   mixins: [ roles ],
 
   data() {
@@ -188,39 +186,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-
-@tailwind utilities;
-
-input[type='radio'] {
-  height: 0.1px;
-  width: 0.1px;
-  opacity: 0;
-
-  &:checked + label.role-label {
-    @apply text-black px-2 
-  }
-
-  &:checked + label.role-label::before {
-    @apply w-full h-full mt-0 z-n1
-  }
-}
-
-label.role-label {
-  @apply leading-loose capitalize relative cursor-pointer inline-block px-5 z-top;
-}
-
-label.role-label::before {
-  content: ' ';
-  @apply absolute block rounded-full w-4 h-4  mt-2 pin-l border border-orange-lighter bg-orange-lighter;
-}
-
-label.role-label,
-label.role-label::before {
-  -webkit-transition: .25s all ease;
-  -o-transition: .25s all ease;
-  transition: .25s all ease;
-}
-
-</style>
