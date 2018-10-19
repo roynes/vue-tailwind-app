@@ -6,11 +6,12 @@
     <div class="flex flex-col mb-2 justify-center w-full items-start">
       <div v-for="(input, index) in inputs" :key="index" class="flex items-center">
         <input 
-          type="radio" 
-          :id="`rb-${index}`" 
-          :name="`rb-${title}`" 
-          :value="value"
-          @input="$emit('input', $event.target.value)"
+          type="radio"
+          :id="`rb-${index}`"
+          :name="`rb-${title}`"
+
+          :value="input"
+          @input="$emit('input', input)"
         >
         <label :for="`rb-${index}`" class="input-label">{{ input.replace(/\W+/g, ' ') }}</label>
       </div>
@@ -24,10 +25,6 @@
 <script>
 export default {
   props: {
-    value: {
-      type: String,
-      default: ''
-    },
     title: {
       type: String,
       default: ''
@@ -53,7 +50,7 @@ export default {
   computed: {
     hasAnyErrors() {
       return this.errors.length > 0;
-    },
+    }
   }
 }
 </script>

@@ -7,80 +7,39 @@
       </div>
 
       <div class="outline-none px-4 pb-6">
-        <div class="pb-3">
-          <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">
-            Name
-          </label>
-          <input 
-            class="appearance-none block w-full bg-white text-grey-darker border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-grey-lighter" 
-            id="grid-first-name" 
-            type="text" 
-            placeholder="Client name"
-            v-model="form.name"
-            :class="border"
-          >
-          <div v-if="form.errors.hasAny()">
-            <p class="text-red text-xs italic" v-for="(val, index) in form.errors.name" :key="index">{{ val }}</p>
-          </div>
-        </div>
+        <TextInput 
+          title="name" 
+          label="Name" 
+          placeholder="Full name" 
+          :errors="form.errors.name" 
+          v-model="form.name"
+        ></TextInput>
 
-        <div class="pb-3">
-          <label 
-            class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" 
-            for="grid-first-name"
-          >
-            Street
-          </label>
-          <input 
-            class="appearance-none block w-full bg-white text-grey-darker border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-grey-lighter" 
-            id="grid-first-name" 
-            type="text" 
-            placeholder="Street name"
-            v-model="form.street"
-            :class="border"
-          >
-          <div v-if="form.errors.hasAny()">
-            <p class="text-red text-xs italic" v-for="(val, index) in form.errors.street" :key="index">{{ val }}</p>
-          </div>
-        </div>
+        <TextInput 
+          title="street" 
+          label="Street" 
+          placeholder="Street name" 
+          :errors="form.errors.street" 
+          v-model="form.street"
+        ></TextInput>
 
-        <div class="pb-3">
-          <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-service-email">
-            Service Email
-          </label>
-          <input 
-            class="appearance-none block w-full bg-white text-grey-darker border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-grey-lighter" 
-            id="grid-service-email" 
-            type="text" 
-            placeholder="Service email / Email  "
-            v-model="form.email"
-            :class="border"
-          >
-          <div v-if="form.errors.hasAny()">
-            <p class="text-red text-xs italic" v-for="(val, index) in form.errors.email" :key="index">{{ val }}</p>
-          </div>
-        </div>
+        <TextInput 
+          title="email" 
+          label="Email" 
+          placeholder="Service email / Email" 
+          :errors="form.errors.email" 
+          v-model="form.email"
+        ></TextInput>
 
         <div class="flex -mx-3 mb-2">
-          <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-            <label 
-              class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" 
-              for="grid-city"
-            >
-              City
-            </label>
-            <input 
-              class="appearance-none block w-full bg-white text-grey-darker border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-grey-lighter focus:border-grey" 
-              id="grid-city" 
-              type="text" 
-              placeholder="City"
-              v-model="form.city"
-              :class="border"
-            >
-            <div v-if="form.errors.hasAny()">
-              <p class="text-red text-xs italic mt-3" v-for="(val, index) in form.errors.city" :key="index">{{ val }}</p>
-            </div>
-          </div>
+          <TextInput
+            class="w-full md:w-1/3 px-3 mb-6 md:mb-0"
+            title="city"
+            label="City"
+            placeholder="City"
+            :errors="form.errors.city"
+            v-model="form.city"
+          ></TextInput>
 
           <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
             <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-state">
@@ -102,22 +61,15 @@
               <p class="text-red text-xs italic mt-3" v-for="(val, index) in form.errors.state" :key="index">{{ val }}</p>
             </div>
           </div>
-          <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-            <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-zip">
-              Zip
-            </label>
-            <input 
-              class="appearance-none block w-full bg-white text-grey-darker border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-grey-lighter focus:border-grey" 
-              id="grid-zip" 
-              type="text" 
-              placeholder="Zip code"
-              v-model="form.zip_code"
-              :class="border"
-            >
-            <div v-if="form.errors.hasAny()">
-              <p class="text-red text-xs italic mt-3" v-for="(val, index) in form.errors.zip_code" :key="index">{{ val }}</p>
-            </div>
-          </div>
+
+          <TextInput
+            class="w-full md:w-1/3 px-3 mb-6 md:mb-0"
+            title="zip-code"
+            label="Zip"
+            placeholder="Zip"
+            :errors="form.errors.zip_code"
+            v-model="form.zip_code"
+          ></TextInput>
         </div>
 
         <div class="mt-6 flex">
@@ -177,13 +129,13 @@
 </template>
 
 <script>
-import { FloatLabelInput } from "@/components";
+import { TextInput } from "@/components";
 import { ClientService, StateService } from "@/services";
 import { Form } from '@/utilities';
 
 export default {
   components: {
-    FloatLabelInput
+    TextInput
   },
   
   data() {

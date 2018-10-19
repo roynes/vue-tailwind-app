@@ -13,6 +13,7 @@
           :errors="form.errors.email" 
           v-model="form.email"
         ></TextInput>
+
         <TextInput 
           title="name" 
           label="Name" 
@@ -21,24 +22,7 @@
           v-model="form.name"
         ></TextInput>
 
-
-
         <div class="pb-3 flex">
-          <!-- <div class="w-1/3">
-            <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">
-              Role
-            </label>
-            <div class="flex flex-col mb-2 justify-center w-full items-start">
-              <div v-for="(role, index) in roles" :key="index" class="flex items-center">
-                <input type="radio" :id="`rb-${index}`" name="rb-role" :value="role" v-model="form.role">
-                <label :for="`rb-${index}`" class="role-label">{{ role.replace(/\W+/g, ' ') }}</label>
-              </div>
-            </div>
-            <div v-if="form.errors.hasAny()">
-              <p class="text-red text-xs italic" v-for="(val, index) in form.errors.role" :key="index">{{ val }}</p>
-            </div>
-          </div> -->
-          
           <RadioInput
             title="role"
             label="Role"
@@ -49,45 +33,25 @@
           ></RadioInput>
 
           <div class="w-2/3">
-            <div 
-              class="pb-3 flex flex-col"
+            <ListSingleRow
+              class="pb-3"
               v-if="groupDomainChosen"
-            >
-              <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-client">
-                Choose group
-              </label>
-              <div class="border h-40 rounded p-1 overflow-y-auto text-center">
-                <div 
-                  class="rounded hover:bg-blue-lighter p-1 my-1 hover:font-semibold"
-                  v-for="(group, index) in groups"
-                  :key="index"
-                  @click="assignGroup(group.id)"
-                  :class="[ form.group_id === group.id ? 'bg-blue text-white' : '' ]"
-                >
-                  {{group.name}}
-                </div>
-              </div>
-            </div>
+              label="Choose group"
+              title="choose-group"
+              :lists="groups"
+              @click="assignGroup($event)"
+              :chosen="form.group_id"
+            ></ListSingleRow>
 
-            <div 
-              class="pb-3 flex flex-col"
+            <ListSingleRow
+              class="pb-3"
               v-if="clientDomainChosen"
-            >
-              <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-client">
-                Choose client
-              </label>
-              <div class="border h-40 rounded p-1 overflow-y-auto text-center">
-                <div 
-                  class="rounded p-1 my-1 hover:font-semibold"
-                  v-for="(client, index) in clients"
-                  :key="index"
-                  @click="assignClient(client.id)"
-                  :class="[ form.client_id === client.id ? 'bg-blue text-white hover:bg-blue' : 'hover:bg-blue-lighter' ]"
-                >
-                  {{client.name}}
-                </div>
-              </div>
-            </div>
+              label="Choose client"
+              title="choose-client"
+              :lists="clients"
+              @click="assignClient($event)"
+              :chosen="form.client_id"
+            ></ListSingleRow>
           </div>
         </div>
       </div>
@@ -113,14 +77,15 @@
 
 <script>
 import { GroupService, ClientService, UserService } from "@/services";
-import { TextInput, RadioInput } from "@/components";
+import { TextInput, RadioInput, ListSingleRow} from "@/components";
 import { Form } from '@/utilities';
 import { roles } from "@/mixins";
 
 export default {
   components: {
     TextInput,
-    RadioInput
+    RadioInput,
+    ListSingleRow
   },
 
   mixins: [ roles ],
@@ -156,7 +121,10 @@ export default {
   methods: {
     add() {
       UserService.add(this.form.data())
-        .then(res => this.$router.push({name: 'UsersList'}))
+        .then(res => {
+          this.form.reset();
+          this.$router.push({name: 'UsersList'});
+        })
         .catch(err => {
           this.form.setErrors(err.response.data.errors);
         })
