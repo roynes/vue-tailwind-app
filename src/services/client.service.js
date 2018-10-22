@@ -1,7 +1,7 @@
 import * as constants from "../helpers";
 
 function add(details) {
-  return axios.post(`${constants.baseUri}/clients`, details);
+  return axios.post(`${constants.baseUri}/client`, details);
 }
 
 function remove(id) {

@@ -1,5 +1,4 @@
 <template>
-
   <div class="w-4/5 mx-auto">
     <div class="flex flex-col shadow-md border rounded-t bg-white">
       <div class="p-4 py-6 flex items-center">
@@ -10,7 +9,7 @@
         <TextInput 
           title="name" 
           label="Name" 
-          placeholder="Full name" 
+          placeholder="Client name" 
           :errors="form.errors.name" 
           v-model="form.name"
         ></TextInput>
@@ -41,26 +40,13 @@
             v-model="form.city"
           ></TextInput>
 
-          <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-            <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-state">
-              State
-            </label>
-            <div class="relative">
-              <select 
-                class="block appearance-none w-full bg-white border border-grey text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-grey-lighter focus:border-grey" 
-                id="grid-state"
-                v-model="form.state"
-              >
-                <option :value="state.abbr" v-for="(state, index) in states" :key="index">{{state.name}}</option>
-              </select>
-              <div class="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker">
-                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-              </div>
-            </div>
-            <div v-if="form.errors.hasAny()">
-              <p class="text-red text-xs italic mt-3" v-for="(val, index) in form.errors.state" :key="index">{{ val }}</p>
-            </div>
-          </div>
+          <SelectOption
+            title="state"
+            label="State"
+            :lists="mappedState"
+            v-model="form.state"
+            class="w-full md:w-1/3 px-3 mb-6 md:mb-0"
+          ></SelectOption>
 
           <TextInput
             class="w-full md:w-1/3 px-3 mb-6 md:mb-0"
@@ -73,39 +59,21 @@
         </div>
 
         <div class="mt-6 flex">
-          <div class="w-1/2 mr-1">
-            <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="description">
-              Description
-            </label>
-            <textarea 
-              name="description" 
-              id="description" 
-              class="focus:outline-none rounded w-full focus:bg-grey-lighter bg-white h-48 p-2 border max-h-120 border-grey" 
-              placeholder="Write description here..."
-              v-model="form.description"
-            />
-          </div>
+          <TextAreaInput
+            class="w-1/2 mr-1"
+            title="description"
+            label="Description"
+            v-model="form.description"
+            name="description"
+          ></TextAreaInput>
 
-          <div class="w-1/2 flex flex-col ml-1">
-            <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
-              Logo
-            </label>
-            <div class="w-full rounded border h-48 max-h-48 flex items-center justify-center bg-grey-light flex-col relative border-grey">
-              <div v-show="!logoAvailable" class="tracking-wide uppercase absolute">
-                Click to upload logo
-              </div>
-
-              <img v-show="logoAvailable" class="absolute" ref="clientLogo">
-
-              <input 
-                type="file" 
-                name="logo" 
-                id="logo"
-                class="opacity-0 w-full h-full"
-                @change="readFile"
-              >              
-            </div>
-          </div>
+          <ImageFileInput
+            title="logo"
+            label="Logo"
+            class="w-1/2 ml-1"
+            v-model="form.logo"
+            ref="imgFileInput"
+          ></ImageFileInput>
         </div>
       </div>
 
@@ -129,13 +97,18 @@
 </template>
 
 <script>
-import { TextInput } from "@/components";
+import { 
+  TextInput, SelectOption,
+  TextAreaInput, ImageFileInput 
+} from "@/components";
+
 import { ClientService, StateService } from "@/services";
 import { Form } from '@/utilities';
 
 export default {
   components: {
-    TextInput
+    TextInput, SelectOption, 
+    TextAreaInput, ImageFileInput
   },
   
   data() {
@@ -143,57 +116,44 @@ export default {
       form: new Form({
         logo: '', name: '', street: '',
         city: '', state: '', zip_code: '',
-        email: '',
-        description: ''
+        email: '', description: ''
       }),
-      logoAvailable: false,
       states: []
     };
   },
 
   computed: {
-    hasAnyError() {
-      return this.form.errors.hasAny();
-    },
-    border() {
-      return this.hasAnyError ? 'border-red' : 'border-grey';
+    mappedState() {
+      return this.states.map(state => {
+        return {
+          id : state.abbr,
+          name: state.name
+        };
+      });
     }
   },
 
   methods: {
-    readFile(event) {
-      let reader = new FileReader();
-
-      reader.onload = e => {
-        this.logoAvailable = true;
-        this.$refs.groupLogo.setAttribute('src', e.target.result);
-
-        this.form.logo = e.target.result;
-      };
-
-      reader.readAsDataURL(event.target.files[0]);
-    },
-
     add() {
-      ClientService
-        .add(this.form.data())
-        .then(resp => {
-          this.logoAvailable = false;
-          this.$refs.clientLogo.setAttribute('src', null);
-          this.form.reset();
-        })
-        .catch(err => {
-          this.form.setErrors(err.response.data.errors);
+      ClientService.add(this.form.data())
+      .then(resp => {
+        this.$refs.imgFileInput.reset()
+        this.form.reset();
+        this.$router.push({
+          name: "ClientList",
         });
+      }).catch(err => {
+        this.form.setErrors(err.response.data.errors);
+      });
     }
   },
 
   mounted() {
     StateService.fetchAll()
-      .then(resp => {
-        this.states = resp.data.states;
-        this.form.state = this.states[0].abbr;
-      });
+    .then(resp => {
+      this.states = resp.data.states;
+      this.form.state = this.states[0].abbr;
+    });
   }
 }
 </script>

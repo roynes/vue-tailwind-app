@@ -1,15 +1,13 @@
 <template>
   <div class="pb-3">
-    <label
-      class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
-      :for="title"
-    >
-      {{ label }}
-    </label>
+    <LabelInput
+      :label="$attrs.label"
+      :title="$attrs.title"
+    ></LabelInput>
     <input 
       class="appearance-none block w-full bg-white text-grey-darker border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-grey-lighter"
       type="text" 
-      :id="title"
+      :id="$attrs.title"
       :placeholder="$attrs.placeholder"
       :class="border"
       
@@ -24,18 +22,16 @@
 
 
 <script>
+import LabelInput from "./LabelInput.vue";
+
 export default {
   inheritAttrs: false,
 
+  components: {
+    LabelInput
+  },
+
   props: {
-    title: {
-      type: String,
-      default: ''
-    },
-    label: {
-      type: String,
-      default: '' 
-    },
     errors: {
       type: Array,
       default() {
