@@ -1,105 +1,100 @@
 <template>
-  <div class="w-4/5 mx-auto">
-    <div class="flex flex-col shadow-md border rounded-t bg-white">
-      <div class="p-4 py-6 flex items-center">
-        <h2>Add Client</h2>
-      </div>
+  <CustomForm 
+    class="w-4/5 mx-auto"
+    @first-button-click="add"
+    @second-button-click="redirectToList"
+  >
+    <template slot="header">
+      <h2>Add Client</h2>
+    </template>
 
-      <div class="outline-none px-4 pb-6">
-        <TextInput 
-          title="name" 
-          label="Name" 
-          placeholder="Client name" 
-          :errors="form.errors.name" 
-          v-model="form.name"
+    <template slot="contents">
+      <TextInput 
+        title="name" 
+        label="Name" 
+        placeholder="Client name" 
+        :errors="form.errors.name" 
+        v-model="form.name"
+      ></TextInput>
+
+      <TextInput 
+        title="street" 
+        label="Street" 
+        placeholder="Street name" 
+        :errors="form.errors.street" 
+        v-model="form.street"
+      ></TextInput>
+
+      <TextInput 
+        title="email" 
+        label="Email" 
+        placeholder="Service email / Email" 
+        :errors="form.errors.email" 
+        v-model="form.email"
+      ></TextInput>
+
+      <div class="flex -mx-3 mb-2">
+        <TextInput
+          class="w-full md:w-1/3 px-3 mb-6 md:mb-0"
+          title="city"
+          label="City"
+          placeholder="City"
+          :errors="form.errors.city"
+          v-model="form.city"
         ></TextInput>
 
-        <TextInput 
-          title="street" 
-          label="Street" 
-          placeholder="Street name" 
-          :errors="form.errors.street" 
-          v-model="form.street"
+        <SelectOption
+          title="state"
+          label="State"
+          :lists="mappedState"
+          v-model="form.state"
+          class="w-full md:w-1/3 px-3 mb-6 md:mb-0"
+        ></SelectOption>
+
+        <TextInput
+          class="w-full md:w-1/3 px-3 mb-6 md:mb-0"
+          title="zip-code"
+          label="Zip"
+          placeholder="Zip"
+          :errors="form.errors.zip_code"
+          v-model="form.zip_code"
         ></TextInput>
-
-        <TextInput 
-          title="email" 
-          label="Email" 
-          placeholder="Service email / Email" 
-          :errors="form.errors.email" 
-          v-model="form.email"
-        ></TextInput>
-
-        <div class="flex -mx-3 mb-2">
-          <TextInput
-            class="w-full md:w-1/3 px-3 mb-6 md:mb-0"
-            title="city"
-            label="City"
-            placeholder="City"
-            :errors="form.errors.city"
-            v-model="form.city"
-          ></TextInput>
-
-          <SelectOption
-            title="state"
-            label="State"
-            :lists="mappedState"
-            v-model="form.state"
-            class="w-full md:w-1/3 px-3 mb-6 md:mb-0"
-          ></SelectOption>
-
-          <TextInput
-            class="w-full md:w-1/3 px-3 mb-6 md:mb-0"
-            title="zip-code"
-            label="Zip"
-            placeholder="Zip"
-            :errors="form.errors.zip_code"
-            v-model="form.zip_code"
-          ></TextInput>
-        </div>
-
-        <div class="mt-6 flex">
-          <TextAreaInput
-            class="w-1/2 mr-1"
-            title="description"
-            label="Description"
-            v-model="form.description"
-            name="description"
-          ></TextAreaInput>
-
-          <ImageFileInput
-            title="logo"
-            label="Logo"
-            class="w-1/2 ml-1"
-            v-model="form.logo"
-            ref="imgFileInput"
-          ></ImageFileInput>
-        </div>
       </div>
 
-      <div class="px-4 py-4 flex items-center">
-        <div 
-          class="p-3 w-32 rounded bg-blue text-center text-white mr-4 cursor-pointer"
-          @click="add"
-        >
-          Add
-        </div>
-        <router-link 
-          :to="{name: 'ClientList'}" 
-          class="p-3 w-32 rounded bg-blue text-center text-white cursor-pointer"
-          tag="div"
-        >
-          Cancel
-        </router-link>
+      <div class="mt-6 flex">
+        <TextAreaInput
+          class="w-1/2 mr-1"
+          title="description"
+          label="Description"
+          v-model="form.description"
+          name="description"
+        ></TextAreaInput>
+
+        <ImageFileInput
+          title="logo"
+          label="Logo"
+          class="w-1/2 ml-1"
+          v-model="form.logo"
+          ref="imgFileInput"
+        ></ImageFileInput>
       </div>
-    </div>
-  </div>
+    </template>
+
+    <template slot="first-button">
+      Add
+    </template>
+
+    <template slot="second-button">
+      Cancel
+    </template>
+  </CustomForm>
 </template>
 
 <script>
 import { 
   TextInput, SelectOption,
-  TextAreaInput, ImageFileInput 
+  TextAreaInput, ImageFileInput,
+  CustomForm
 } from "@/components";
 
 import { ClientService, StateService } from "@/services";
@@ -108,7 +103,8 @@ import { Form } from '@/utilities';
 export default {
   components: {
     TextInput, SelectOption, 
-    TextAreaInput, ImageFileInput
+    TextAreaInput, ImageFileInput,
+    CustomForm
   },
   
   data() {
@@ -144,6 +140,11 @@ export default {
         });
       }).catch(err => {
         this.form.setErrors(err.response.data.errors);
+      });
+    },
+    redirectToList() {
+      this.$router.push({
+        name: 'ClientList'
       });
     }
   },

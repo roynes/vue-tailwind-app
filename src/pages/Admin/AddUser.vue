@@ -1,83 +1,85 @@
 <template>
-  <div class="w-4/5 mx-auto">
-    <div class="flex flex-col shadow-md border rounded-t bg-white">
-      <div class="p-4 py-6 flex items-center">
-        <h2>Add User</h2>
-      </div>
+  <CustomForm 
+    class="w-4/5 mx-auto"
+    @first-button-click="add"
+    @second-button-click="redirectToList"
+  >
+    <template slot="header">
+      <h2>Add User</h2>
+    </template>
 
-      <div class="outline-none px-4 pb-6">
-        <TextInput 
-          title="email" 
-          label="Email" 
-          placeholder="Service Email" 
-          :errors="form.errors.email" 
-          v-model="form.email"
-        ></TextInput>
+    <template slot="contents">
+      <TextInput 
+        title="email" 
+        label="Email" 
+        placeholder="Service Email" 
+        :errors="form.errors.email" 
+        v-model="form.email"
+      ></TextInput>
 
-        <TextInput 
-          title="name" 
-          label="Name" 
-          placeholder="Full name" 
-          :errors="form.errors.name" 
-          v-model="form.name"
-        ></TextInput>
+      <TextInput 
+        title="name" 
+        label="Name" 
+        placeholder="Full name" 
+        :errors="form.errors.name" 
+        v-model="form.name"
+      ></TextInput>
 
-        <div class="pb-3 flex">
-          <RadioInput
-            title="role"
-            label="Role"
-            :errors="form.errors.role"
-            :inputs="roles"
-            v-model="form.role"
-            class="w-1/3"
-          ></RadioInput>
+      <div class="pb-3 flex">
+        <RadioInput
+          title="role"
+          label="Role"
+          :errors="form.errors.role"
+          :inputs="roles"
+          v-model="form.role"
+          class="w-1/3"
+        ></RadioInput>
 
-          <div class="w-2/3">
-            <ListSingleRow
-              class="pb-3"
-              v-if="groupDomainChosen"
-              label="Choose group"
-              title="choose-group"
-              :lists="groups"
-              @click="assignGroup($event)"
-              :chosen="form.group_id"
-            ></ListSingleRow>
+        <div class="w-2/3">
+          <ListSingleRow
+            class="pb-3"
+            v-if="groupDomainChosen"
+            label="Choose group"
+            title="choose-group"
+            :lists="groups"
+            @click="assignGroup($event)"
+            :chosen="form.group_id"
+          ></ListSingleRow>
 
-            <ListSingleRow
-              class="pb-3"
-              v-if="clientDomainChosen"
-              label="Choose client"
-              title="choose-client"
-              :lists="clients"
-              @click="assignClient($event)"
-              :chosen="form.client_id"
-            ></ListSingleRow>
-          </div>
+          <ListSingleRow
+            class="pb-3"
+            v-if="clientDomainChosen"
+            label="Choose client"
+            title="choose-client"
+            :lists="clients"
+            @click="assignClient($event)"
+            :chosen="form.client_id"
+          ></ListSingleRow>
         </div>
       </div>
+    </template>
 
-      <div class="px-4 py-4 flex items-center">
-        <div 
-          class="p-3 w-32 rounded bg-blue text-center text-white mr-4 cursor-pointer"
-          @click="add"
-        >
-          Add
-        </div>
-        <router-link 
-          :to="{name: 'UsersList'}" 
-          class="p-3 w-32 rounded bg-red text-center text-white cursor-pointer"
-          tag="div"
-        >
-          Cancel
-        </router-link>
-      </div>
-    </div>
-  </div>
+    <template slot="first-button">
+      Add
+    </template>
+
+    <template slot="second-button">
+      Cancel
+    </template>
+  </CustomForm>
 </template>
 
 <script>
-import { GroupService, ClientService, UserService } from "@/services";
-import { TextInput, RadioInput, ListSingleRow} from "@/components";
+import { 
+  GroupService, ClientService,
+  UserService
+} from "@/services";
+
+import { 
+  TextInput, RadioInput,
+  ListSingleRow, CustomForm
+} from "@/components";
+
 import { Form } from '@/utilities';
 import { roles } from "@/mixins";
 
@@ -85,7 +87,8 @@ export default {
   components: {
     TextInput,
     RadioInput,
-    ListSingleRow
+    ListSingleRow,
+    CustomForm
   },
 
   mixins: [ roles ],
@@ -128,6 +131,12 @@ export default {
         .catch(err => {
           this.form.setErrors(err.response.data.errors);
         })
+    },
+
+    redirectToList() {
+      this.$router.push({
+        name: 'UsersList'
+      });
     },
 
     assignClient(clientId) {

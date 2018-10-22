@@ -17,10 +17,10 @@
     "@vue/cli-plugin-babel": "^3.0.5",
     "@vue/cli-plugin-eslint": "^3.0.5",
     "@vue/cli-service": "^3.0.5",
-    "@vue/eslint-config-prettier": "^3.0.3",
+    "@vue/eslint-config-prettier": "^3.0.5",
     "glhd-tailwindcss-transitions": "^0.3.0",
     "lodash": "^4.17.11",
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.9.4",
     "sass-loader": "^7.0.1",
     "tailwindcss": "^0.6.6",
     "vue-template-compiler": "^2.5.17"

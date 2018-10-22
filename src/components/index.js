@@ -11,6 +11,7 @@ import SelectOption from "./SelectOption.vue";
 import LabelInput from "./LabelInput.vue";
 import TextAreaInput from "./TextAreaInput.vue";
 import ImageFileInput from "./ImageFileInput.vue";
+import CustomForm from "./CustomForm.vue";
 
 export {
   Dashboard,
@@ -25,5 +26,6 @@ export {
   SelectOption,
   LabelInput,
   TextAreaInput,
-  ImageFileInput
+  ImageFileInput,
+  CustomForm
 }
