@@ -1,7 +1,15 @@
-import Dashboard from "./Dashboard.vue";
-import GroupsList from "./GroupsList.vue";
+import UpdateDomainAndAccount from "./UpdateDomainAndAccount.vue";
+import AddDomainAndAccount from "./AddDomainAndAccount.vue";
 import ClientsList from "./ClientsList.vue";
+import GroupsList from "./GroupsList.vue";
+import Dashboard from "./Dashboard.vue";
 import UsersList from "./UsersList.vue";
-import AddAccount from "./AddAccount.vue";
 
-export { Dashboard, GroupsList, ClientsList, UsersList, AddAccount };
+export { 
+  UpdateDomainAndAccount,
+  AddDomainAndAccount,
+  ClientsList,
+  GroupsList,
+  Dashboard,
+  UsersList,
+};

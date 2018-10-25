@@ -3,6 +3,7 @@
     <label 
       class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" 
       :for="title"
+      v-if="!!title"
     >
       {{label}}
     </label>
@@ -46,8 +47,6 @@ export default {
       }
     },
     chosen: {
-      type: Number,
-      default: -1
     }
   },
 }

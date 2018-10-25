@@ -9,7 +9,7 @@
         Click to upload logo
       </div>
 
-      <img v-show="logoAvailable" class="absolute" ref="imgRef">
+      <img v-show="logoAvailable" class="absolute" ref="imgRef" :src="imgSrc">
 
       <input 
         type="file" 
@@ -32,17 +32,24 @@ export default {
     LabelInput
   },
 
-  data() {
-    return {
-      logoAvailable: false
-    }
-  },
-
   props: {
     value: {
       type: String,
       default: ''
     },
+
+    logoUrl: {
+      type: String,
+      default: ''
+    },
+
+    imgSrc: {}
+  },
+
+  data() {
+    return {
+      logoAvailable: false
+    }
   },
 
   model: {
@@ -51,7 +58,6 @@ export default {
 
   methods:{
     readFile(event) {
-      console.log('readfile triggered');
       let reader = new FileReader();
 
       reader.onload = e => {
@@ -68,6 +74,11 @@ export default {
       this.logoAvailable = false;
       this.$refs.imgRef.setAttribute('src', null);
     }
+  },
+
+  mounted() {
+    if(!! this.imgSrc)
+      this.logoAvailable = true;
   }
 }
 </script>

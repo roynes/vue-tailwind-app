@@ -39,7 +39,9 @@
         >
           <i class="group fas fa-sign-in-alt cursor-pointer"></i>
         </a>
-        <a class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
+        <a class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast"
+          @click="update(client)"
+        >
           <i class="group fas fa-edit cursor-pointer"></i>
         </a>
         <a 
@@ -150,6 +152,28 @@ export default {
         })
         .catch(err => console.log(err.response || err));
     },
+
+    update({id, name, settings}) {
+      console.log(JSON.parse(settings));
+      this.$router.push({
+        name: "UpdateDomainAndAccount",
+        params: {
+          type: this.domain.client,
+          id: id,
+          input: {
+            id, name,
+            email: JSON.parse(settings).email,
+            city: JSON.parse(settings).city,
+            state: JSON.parse(settings).state,
+            street: JSON.parse(settings).street,
+            description: JSON.parse(settings).description,
+            zip_code: JSON.parse(settings).zip_code || ' ',
+            logo: JSON.parse(settings).logo || ''
+          }
+        }
+      })
+    },
+
     parseAddress(settings) {
       return `${settings.street}, ${settings.city}, ${settings.state}, ${settings.zip_code || '2000'}`;
     },

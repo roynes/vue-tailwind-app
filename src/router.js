@@ -8,7 +8,7 @@ import Vue from "vue";
 
 import { 
   GroupsList, Dashboard, ClientsList, 
-  UsersList, AddAccount 
+  UsersList, AddDomainAndAccount, UpdateDomainAndAccount
 } from "@/pages/Layout";
 
 Vue.use(VueRouter);
@@ -81,11 +81,20 @@ let router = new VueRouter({
         {
           path: "add/:type",
           name: "AddsAccount",
-          component: AddAccount,
+          component: AddDomainAndAccount,
           meta: {
             needsAuth: true
           },
-          props: true
+          props:true
+        },
+        {
+          path: "update/:type",
+          name: "UpdateDomainAndAccount",
+          component: UpdateDomainAndAccount,
+          meta: {
+            needsAuth: true
+          },
+          props:true
         }
       ]
     },

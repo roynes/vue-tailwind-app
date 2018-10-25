@@ -38,22 +38,12 @@
         <div class="w-2/3">
           <ListSingleRow
             class="pb-3"
-            v-if="groupDomainChosen"
-            label="Choose group"
-            title="choose-group"
-            :lists="groups"
-            @click="assignGroup($event)"
-            :chosen="form.group_id"
-          ></ListSingleRow>
-
-          <ListSingleRow
-            class="pb-3"
-            v-if="clientDomainChosen"
-            label="Choose client"
-            title="choose-client"
-            :lists="clients"
-            @click="assignClient($event)"
-            :chosen="form.client_id"
+            v-if="groupDomainChosen || clientDomainChosen"
+            :label="groupDomainChosen ? 'Choose Group' : 'Choose Client'"
+            :title="groupDomainChosen ? 'choose-group' : 'choose-group'"
+            :lists="groupDomainChosen ? groups : clients"
+            :chosen="groupDomainChosen ? form.group_id : form.client_id"
+            @click="assign($event)"
           ></ListSingleRow>
         </div>
       </div>
@@ -143,8 +133,8 @@ export default {
       this.form.client_id = clientId;
     },
 
-    assignGroup(groupId) {
-      this.form.group_id = groupId;
+    assign(id) {
+      this.groupDomainChosen ? this.form.group_id = id : this.form.client_id = id;
     }
   },
 

@@ -5,34 +5,45 @@
       :label="$attrs.label"
     ></LabelInput>
     <div class="relative">
-      <select 
-        class="block appearance-none w-full bg-white border text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-grey-lighter focus:border-grey" 
-        :id="$attrs.title"
-        :class="border"
-
-        :value="value"
-        @input="$emit('input', $event.target.value)"
+      <div 
+        class="bg-grey-light p-3 rounded shadow-inner w-full flex item-center justify-between"
+        :name="$attrs.title"
+        @click="toggle = !toggle"
       >
-        <option :value="item.id" v-for="(item, index) in lists" :key="index">{{ item.name }}</option>
-      </select>
-      <div class="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker">
-        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+        <span class="w-4/5 text-left truncate">
+          {{ chosen || $attrs.placeholder || 'Choose option' }}
+        </span>
+
+        <svg class="h-4 w-1/5" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 129 129">
+          <g>
+            <path d="m121.3,34.6c-1.6-1.6-4.2-1.6-5.8,0l-51,51.1-51.1-51.1c-1.6-1.6-4.2-1.6-5.8,0-1.6,1.6-1.6,4.2 0,5.8l53.9,53.9c0.8,0.8 1.8,1.2 2.9,1.2 1,0 2.1-0.4 2.9-1.2l53.9-53.9c1.7-1.6 1.7-4.2 0.1-5.8z"/>
+          </g>
+        </svg>
       </div>
-    </div>
-    <div v-if="hasAnyErrors">
-      <p class="text-red text-xs italic" v-for="(error, index) in errors" :key="index">{{ error }}</p>
+      <div 
+        class="rounded shadow-md mt-2 absolute mt-12 pin-t pin-l min-w-full z-top bg-white"
+        v-show="toggle"
+      >
+        <ListSingleRow
+          :lists="lists"
+          :chosen="chosenId"
+          @click="chosenData($event)"
+        ></ListSingleRow>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import ListSingleRow from "./ListSingleRow.vue";
 import LabelInput from "./LabelInput.vue";
 
 export default {
   inheritAttrs: false,
 
   components: {
-    LabelInput
+    LabelInput,
+    ListSingleRow
   },
 
   props: {
@@ -54,6 +65,14 @@ export default {
     },
   },
 
+  data() {
+    return {
+      chosen: '',
+      chosenId: '',
+      toggle: false
+    }
+  },
+
   computed: {
     hasAnyErrors() {
       return this.errors.length > 0;
@@ -61,6 +80,20 @@ export default {
 
     border() {
       return this.hasAnyErrors ? 'border-red' : 'border-grey';
+    }
+  },
+
+  methods: {
+    chosenData(value) {
+      console.log('chosenData Called', value);
+
+      this.chosen = this.lists.find((el) => {
+        return el.id === value;
+      }).name;
+      
+      this.chosenId = value;
+
+      this.$emit('click', this.chosenId);
     }
   }
 }

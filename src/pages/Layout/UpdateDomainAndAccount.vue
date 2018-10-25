@@ -1,9 +1,9 @@
 <template>
-  <component :is="componentName"></component>
+  <component :is="componentName" :input="input"></component>
 </template>
 
 <script>
-import { AddGroup, AddClient, AddUser } from "@/pages/Admin";
+import { UpdateGroup, UpdateClient } from "@/pages/Admin";
 import { toCamelCase } from '../../helpers';
 
 export default {
@@ -11,18 +11,20 @@ export default {
     type: {
       type: String,
       default: ""
+    },
+    input: {
     }
   },
 
   components: {
-    AddGroup, AddClient, AddUser
+    UpdateGroup,
+    UpdateClient
   },
   
   computed: {
     componentName() {
-      return toCamelCase(`add-${this.type}`, true);
+      return toCamelCase(`update-${this.type}`, true);
     } 
   }
 }
 </script>
-
