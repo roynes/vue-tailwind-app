@@ -30,15 +30,15 @@ export default {
   props: {
     title: {
       type: String,
-      default: ''
+      default: ""
     },
     label: {
       type: String,
-      default: ''
+      default: ""
     },
     height: {
       type: String,
-      default: 'h-40'
+      default: "h-40"
     },
     lists: {
       type: Array,
@@ -46,8 +46,7 @@ export default {
         return [];
       }
     },
-    chosen: {
-    }
-  },
-}
+    chosen: {}
+  }
+};
 </script>

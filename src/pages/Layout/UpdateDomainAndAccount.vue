@@ -4,7 +4,7 @@
 
 <script>
 import { UpdateGroup, UpdateClient } from "@/pages/Admin";
-import { toCamelCase } from '../../helpers';
+import { toCamelCase } from "../../helpers";
 
 export default {
   props: {
@@ -12,19 +12,18 @@ export default {
       type: String,
       default: ""
     },
-    input: {
-    }
+    input: {}
   },
 
   components: {
     UpdateGroup,
     UpdateClient
   },
-  
+
   computed: {
     componentName() {
       return toCamelCase(`update-${this.type}`, true);
-    } 
+    }
   }
-}
+};
 </script>

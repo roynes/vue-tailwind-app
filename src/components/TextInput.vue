@@ -40,8 +40,8 @@ export default {
     },
     value: {
       type: String,
-      default: ''
-    },
+      default: ""
+    }
   },
 
   computed: {
@@ -50,8 +50,8 @@ export default {
     },
 
     border() {
-      return this.hasAnyErrors ? 'border-red' : 'border-grey';
+      return this.hasAnyErrors ? "border-red" : "border-grey";
     }
   }
-}
+};
 </script>

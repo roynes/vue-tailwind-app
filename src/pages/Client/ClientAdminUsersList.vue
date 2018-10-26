@@ -81,7 +81,6 @@
 </template>
 
 <script>
-import { baseUri } from "../../helpers";
 import Table from "@/components/Table";
 import { pagination } from "@/mixins";
 

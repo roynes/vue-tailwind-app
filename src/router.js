@@ -6,10 +6,7 @@ import VueRouter from "vue-router";
 import store from "./storage";
 import Vue from "vue";
 
-import { 
-  GroupsList, Dashboard, ClientsList, 
-  UsersList, AddDomainAndAccount, UpdateDomainAndAccount
-} from "@/pages/Layout";
+import { Dashboard } from "@/pages/Layout";
 
 Vue.use(VueRouter);
 
@@ -57,7 +54,8 @@ let router = new VueRouter({
         {
           path: "group-list",
           name: "GroupList",
-          component: GroupsList,
+          component: () =>
+            import(/* webpackChunkName: "list-[request]" */ `@/pages/Layout/GroupsList`),
           meta: {
             needsAuth: true
           }
@@ -65,7 +63,8 @@ let router = new VueRouter({
         {
           path: "client-list",
           name: "ClientList",
-          component: ClientsList,
+          component: () =>
+            import(/* webpackChunkName: "list-[request]" */ `@/pages/Layout/ClientsList`),
           meta: {
             needsAuth: true
           }
@@ -73,7 +72,8 @@ let router = new VueRouter({
         {
           path: "users-list",
           name: "UsersList",
-          component: UsersList,
+          component: () =>
+            import(/* webpackChunkName: "list-[request]" */ `@/pages/Layout/UsersList`),
           meta: {
             needsAuth: true
           }
@@ -81,27 +81,29 @@ let router = new VueRouter({
         {
           path: "add/:type",
           name: "AddsAccount",
-          component: AddDomainAndAccount,
+          component: () =>
+            import(/* webpackChunkName: "list-[request]" */ `@/pages/Layout/AddDomainAndAccount`),
           meta: {
             needsAuth: true
           },
-          props:true
+          props: true
         },
         {
           path: "update/:type",
           name: "UpdateDomainAndAccount",
-          component: UpdateDomainAndAccount,
+          component: () =>
+            import(/* webpackChunkName: "update-view" */ `@/pages/Layout/UpdateDomainAndAccount`),
           meta: {
             needsAuth: true
           },
-          props:true
+          props: true
         }
       ]
     },
     {
       path: "/test",
       name: "test",
-      component: () => import("./components/TextInput.vue")
+      component: () => import("@/components/TextInput")
     },
     {
       path: "*",

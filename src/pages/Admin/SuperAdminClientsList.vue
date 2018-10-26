@@ -94,12 +94,11 @@
 </template>
 
 <script>
-import { baseUri } from "../../helpers";
-import Table from "@/components/Table";
-import { mapActions, mapState } from "vuex";
 import { AUTHENTICATE_AS } from "../../storage/auth";
 import { pagination, roles } from "@/mixins";
+import { mapActions, mapState } from "vuex";
 import { ClientService } from "@/services";
+import Table from "@/components/Table";
 
 export default {
   mixins: [pagination, roles],
@@ -144,16 +143,15 @@ export default {
     deleteClient(id) {
       ClientService.remove(id)
         .then(resp => {
-          this.fetchPage("clients")
-            .then(clients => {
-              this.showPageNumber();
-              this.clients = clients;
-            });
+          this.fetchPage("clients").then(clients => {
+            this.showPageNumber();
+            this.clients = clients;
+          });
         })
         .catch(err => console.log(err.response || err));
     },
 
-    update({id, name, settings}) {
+    update({ id, name, settings }) {
       console.log(JSON.parse(settings));
       this.$router.push({
         name: "UpdateDomainAndAccount",
@@ -161,21 +159,24 @@ export default {
           type: this.domain.client,
           id: id,
           input: {
-            id, name,
+            id,
+            name,
             email: JSON.parse(settings).email,
             city: JSON.parse(settings).city,
             state: JSON.parse(settings).state,
             street: JSON.parse(settings).street,
             description: JSON.parse(settings).description,
-            zip_code: JSON.parse(settings).zip_code || ' ',
-            logo: JSON.parse(settings).logo || ''
+            zip_code: JSON.parse(settings).zip_code || " ",
+            logo: JSON.parse(settings).logo || ""
           }
         }
-      })
+      });
     },
 
     parseAddress(settings) {
-      return `${settings.street}, ${settings.city}, ${settings.state}, ${settings.zip_code || '2000'}`;
+      return `${settings.street}, ${settings.city}, ${
+        settings.state
+      }, ${settings.zip_code || "2000"}`;
     },
 
     fetchNextPage(num) {

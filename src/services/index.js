@@ -4,8 +4,4 @@ import StateService from "./state.service";
 import ClientService from "./client.service";
 import UserService from "./user.service";
 
-export {
-  AuthService, GroupService, 
-  StateService, ClientService,
-  UserService
-}
+export { AuthService, GroupService, StateService, ClientService, UserService };

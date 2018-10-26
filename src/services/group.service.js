@@ -13,5 +13,7 @@ function remove(id) {
 }
 
 export default {
-  add, remove, all
-}
+  add,
+  remove,
+  all
+};

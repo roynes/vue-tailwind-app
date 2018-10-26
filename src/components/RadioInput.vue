@@ -27,11 +27,11 @@ export default {
   props: {
     title: {
       type: String,
-      default: ''
+      default: ""
     },
     label: {
       type: String,
-      default: ''
+      default: ""
     },
     errors: {
       type: Array,
@@ -52,24 +52,23 @@ export default {
       return this.errors.length > 0;
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-
 @tailwind utilities;
 
-input[type='radio'] {
+input[type="radio"] {
   height: 0.1px;
   width: 0.1px;
   opacity: 0;
 
   &:checked + label.input-label {
-    @apply text-black px-2 
+    @apply text-black px-2;
   }
 
   &:checked + label.input-label::before {
-    @apply w-full h-full mt-0 z-n1
+    @apply w-full h-full mt-0 z-n1;
   }
 }
 
@@ -78,15 +77,14 @@ label.input-label {
 }
 
 label.input-label::before {
-  content: ' ';
+  content: " ";
   @apply absolute block rounded-full w-4 h-4  mt-2 pin-l border border-orange-lighter bg-orange-lighter;
 }
 
 label.input-label,
 label.input-label::before {
-  -webkit-transition: .25s all ease;
-  -o-transition: .25s all ease;
-  transition: .25s all ease;
+  -webkit-transition: 0.25s all ease;
+  -o-transition: 0.25s all ease;
+  transition: 0.25s all ease;
 }
-
 </style>

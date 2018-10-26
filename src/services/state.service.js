@@ -6,4 +6,4 @@ function fetchAll() {
 
 export default {
   fetchAll
-}
+};

@@ -84,9 +84,8 @@
 </template>
 
 <script>
-import { baseUri } from "../../helpers";
-import Table from "@/components/Table";
 import { pagination, roles } from "@/mixins";
+import Table from "@/components/Table";
 
 export default {
   mixins: [pagination, roles],

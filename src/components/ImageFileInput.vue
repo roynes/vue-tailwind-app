@@ -35,12 +35,7 @@ export default {
   props: {
     value: {
       type: String,
-      default: ''
-    },
-
-    logoUrl: {
-      type: String,
-      default: ''
+      default: ""
     },
 
     imgSrc: {}
@@ -49,22 +44,22 @@ export default {
   data() {
     return {
       logoAvailable: false
-    }
+    };
   },
 
   model: {
-    event:  'change'
+    event: "change"
   },
 
-  methods:{
+  methods: {
     readFile(event) {
       let reader = new FileReader();
 
       reader.onload = e => {
         this.logoAvailable = true;
-        this.$refs.imgRef.setAttribute('src', e.target.result);
+        this.$refs.imgRef.setAttribute("src", e.target.result);
 
-        this.$emit('change', e.target.result);
+        this.$emit("change", e.target.result);
       };
 
       reader.readAsDataURL(event.target.files[0]);
@@ -72,13 +67,12 @@ export default {
 
     reset() {
       this.logoAvailable = false;
-      this.$refs.imgRef.setAttribute('src', null);
+      this.$refs.imgRef.setAttribute("src", null);
     }
   },
 
   mounted() {
-    if(!! this.imgSrc)
-      this.logoAvailable = true;
+    if (this.imgSrc) this.logoAvailable = true;
   }
-}
+};
 </script>

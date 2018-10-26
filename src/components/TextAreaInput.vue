@@ -29,8 +29,8 @@ export default {
   props: {
     value: {
       type: String,
-      default: ''
-    },
+      default: ""
+    }
   }
-}
+};
 </script>

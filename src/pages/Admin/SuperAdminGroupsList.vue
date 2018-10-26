@@ -98,7 +98,6 @@ import { GET_CUR_USER } from "../../storage/user";
 import { pagination, roles } from "@/mixins";
 import { GroupService } from "@/services";
 import { mapActions, mapState } from "vuex";
-import { baseUri } from "../../helpers";
 import { Table } from "@/components";
 
 export default {
@@ -116,7 +115,7 @@ export default {
 
   methods: {
     ...mapActions("auth", {
-      loginAs(dispatch, groupId, ) {
+      loginAs(dispatch, groupId) {
         dispatch(AUTHENTICATE_AS, {
           type: this.roles.GROUP_ADMIN,
           id: groupId
@@ -138,17 +137,18 @@ export default {
     deleteGroup(id) {
       GroupService.remove(id)
         .then(resp => {
-          this.fetchPage("groups")
-            .then(groups => {
-              this.showPageNumber();
-              this.groups = groups;
-            });
+          this.fetchPage("groups").then(groups => {
+            this.showPageNumber();
+            this.groups = groups;
+          });
         })
         .catch(err => console.log(err.response || err));
     },
 
     parseAddress(settings) {
-      return `${settings.street}, ${settings.city}, ${settings.state}, ${settings.zip_code || '2000'}`;
+      return `${settings.street}, ${settings.city}, ${
+        settings.state
+      }, ${settings.zip_code || "2000"}`;
     },
 
     fetchNextPage(num) {

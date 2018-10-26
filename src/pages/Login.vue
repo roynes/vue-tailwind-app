@@ -59,7 +59,7 @@
 import FloatLabelInput from "../components/FloatLabelInput.vue";
 
 import { AuthConstants as AUTH_CONSTANT } from "../storage";
-import { mapActions, mapMutations, mapState } from "vuex";
+import { mapState } from "vuex";
 import { UNAUTHENTICATE } from "../storage/auth";
 import { Form } from "@/utilities";
 
@@ -93,7 +93,7 @@ export default {
           let errors = err.response.data.errors;
           let temp = [];
 
-          for(let error in errors) {
+          for (let error in errors) {
             errors[error].forEach(element => {
               temp.push(element);
             });
@@ -107,7 +107,7 @@ export default {
 
   computed: {
     fieldHasErrors() {
-      return !! this.errors.length > 0 || !! Object.keys(this.errors).length > 0;
+      return !!this.errors.length > 0 || !!Object.keys(this.errors).length > 0;
     },
     ...mapState("auth", {
       token: state => state.token
@@ -116,7 +116,7 @@ export default {
       user: state => state.cur_user
     })
   },
-  
+
   components: {
     FloatLabelInput
   }

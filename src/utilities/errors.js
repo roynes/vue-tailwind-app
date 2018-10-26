@@ -18,6 +18,6 @@ export class Errors {
   }
 
   hasAny() {
-    return !! Object.keys(this.originalData).length > 0;
+    return !!Object.keys(this.originalData).length > 0;
   }
 }

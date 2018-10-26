@@ -19,22 +19,24 @@
 </template>
 
 <script>
-import { Form } from '@/utilities';
+import { Form } from "@/utilities";
 
-import { 
-  TextInput, SelectOption,
-  TextAreaInput, ImageFileInput,
+import {
+  TextInput,
+  SelectOption,
+  TextAreaInput,
+  ImageFileInput,
   CustomForm
 } from "@/components";
 
-import { 
-  GroupService, StateService
-} from "@/services";
+import { GroupService, StateService } from "@/services";
 
 export default {
   components: {
-    TextInput, SelectOption, 
-    TextAreaInput, ImageFileInput,
+    TextInput,
+    SelectOption,
+    TextAreaInput,
+    ImageFileInput,
     CustomForm
   },
 
@@ -51,13 +53,11 @@ export default {
     return {
       form: new Form(this.input),
       states: []
-    }
+    };
   },
 
   methods: {
-    update() {
-
-    }
+    update() {}
   }
-}
+};
 </script>

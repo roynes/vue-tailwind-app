@@ -9,12 +9,12 @@ export default {
   props: {
     title: {
       type: String,
-      default: ''
+      default: ""
     },
     label: {
       type: String,
-      default: ''
-    },
+      default: ""
+    }
   }
-}
+};
 </script>

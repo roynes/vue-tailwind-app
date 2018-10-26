@@ -56,9 +56,6 @@ import Toolbar from "./Toolbar.vue";
 import Sidebar from "./Sidebar.vue";
 import Container from "./Container.vue";
 
-import { AuthConstants as AUTH_CONSTANT } from "../storage";
-import { mapActions } from "vuex";
-
 export default {
   name: "Home",
   data: () => {

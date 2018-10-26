@@ -60,17 +60,11 @@
 </template>
 
 <script>
-import { 
-  GroupService, ClientService,
-  UserService
-} from "@/services";
+import { GroupService, ClientService, UserService } from "@/services";
 
-import { 
-  TextInput, RadioInput,
-  ListSingleRow, CustomForm
-} from "@/components";
+import { TextInput, RadioInput, ListSingleRow, CustomForm } from "@/components";
 
-import { Form } from '@/utilities';
+import { Form } from "@/utilities";
 import { roles } from "@/mixins";
 
 export default {
@@ -81,13 +75,16 @@ export default {
     CustomForm
   },
 
-  mixins: [ roles ],
+  mixins: [roles],
 
   data() {
     return {
       form: new Form({
-        email: '', name: '', role: '', 
-        group_id: null, client_id: null,
+        email: "",
+        name: "",
+        role: "",
+        group_id: null,
+        client_id: null
       }),
       groups: [],
       clients: []
@@ -99,15 +96,21 @@ export default {
       return this.form.errors.hasAny();
     },
     border() {
-      return this.hasAnyError ? 'border-red' : 'border-grey';
+      return this.hasAnyError ? "border-red" : "border-grey";
     },
     groupDomainChosen() {
       this.form.client_id = null;
-      return !! (this.form.role == this.roles.GROUP_ADMIN || this.form.role == this.roles.GROUP_END_USER);
+      return !!(
+        this.form.role == this.roles.GROUP_ADMIN ||
+        this.form.role == this.roles.GROUP_END_USER
+      );
     },
     clientDomainChosen() {
       this.form.group_id = null;
-      return !! (this.form.role === this.roles.CLIENT_ADMIN || this.form.role === this.roles.CLIENT_END_USER);
+      return !!(
+        this.form.role === this.roles.CLIENT_ADMIN ||
+        this.form.role === this.roles.CLIENT_END_USER
+      );
     }
   },
 
@@ -116,16 +119,16 @@ export default {
       UserService.add(this.form.data())
         .then(res => {
           this.form.reset();
-          this.$router.push({name: 'UsersList'});
+          this.$router.push({ name: "UsersList" });
         })
         .catch(err => {
           this.form.setErrors(err.response.data.errors);
-        })
+        });
     },
 
     redirectToList() {
       this.$router.push({
-        name: 'UsersList'
+        name: "UsersList"
       });
     },
 
@@ -134,7 +137,9 @@ export default {
     },
 
     assign(id) {
-      this.groupDomainChosen ? this.form.group_id = id : this.form.client_id = id;
+      this.groupDomainChosen
+        ? (this.form.group_id = id)
+        : (this.form.client_id = id);
     }
   },
 
@@ -151,5 +156,5 @@ export default {
       })
       .catch(err => console.log(err.response || err));
   }
-}
+};
 </script>

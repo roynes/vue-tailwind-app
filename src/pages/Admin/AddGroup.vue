@@ -91,28 +91,37 @@
 </template>
 
 <script>
-import { 
-  TextInput, SelectOption,
-  TextAreaInput, ImageFileInput,
+import {
+  TextInput,
+  SelectOption,
+  TextAreaInput,
+  ImageFileInput,
   CustomForm
 } from "@/components";
 
 import { GroupService, StateService } from "@/services";
-import { Form } from '@/utilities';
+import { Form } from "@/utilities";
 
 export default {
   components: {
-    TextInput, SelectOption, 
-    TextAreaInput, ImageFileInput,
+    TextInput,
+    SelectOption,
+    TextAreaInput,
+    ImageFileInput,
     CustomForm
   },
-  
+
   data() {
     return {
       form: new Form({
-        logo: '', name: '', street: '',
-        city: '', state: '', zip_code: '',
-        email: '', description: ''
+        logo: "",
+        name: "",
+        street: "",
+        city: "",
+        state: "",
+        zip_code: "",
+        email: "",
+        description: ""
       }),
       states: []
     };
@@ -122,7 +131,7 @@ export default {
     mappedState() {
       return this.states.map(state => {
         return {
-          id : state.abbr,
+          id: state.abbr,
           name: state.name
         };
       });
@@ -132,29 +141,29 @@ export default {
   methods: {
     add() {
       GroupService.add(this.form.data())
-      .then(resp => {
-        this.$refs.imgFileInput.reset();
-        this.form.reset();
-        this.$router.push({
-          name: "GroupList",
+        .then(resp => {
+          this.$refs.imgFileInput.reset();
+          this.form.reset();
+          this.$router.push({
+            name: "GroupList"
+          });
+        })
+        .catch(err => {
+          this.form.setErrors(err.response.data.errors);
         });
-      }).catch(err => {
-        this.form.setErrors(err.response.data.errors);
-      });
     },
     redirectToList() {
       this.$router.push({
-        name: 'GroupList'
+        name: "GroupList"
       });
     }
   },
 
   mounted() {
-    StateService.fetchAll()
-      .then(resp => {
-        this.states = resp.data.states;
-        this.form.state = this.states[0].abbr;
-      });
+    StateService.fetchAll().then(resp => {
+      this.states = resp.data.states;
+      this.form.state = this.states[0].abbr;
+    });
   }
-}
+};
 </script>

@@ -5,11 +5,11 @@ import GroupsList from "./GroupsList.vue";
 import Dashboard from "./Dashboard.vue";
 import UsersList from "./UsersList.vue";
 
-export { 
+export {
   UpdateDomainAndAccount,
   AddDomainAndAccount,
   ClientsList,
   GroupsList,
   Dashboard,
-  UsersList,
+  UsersList
 };

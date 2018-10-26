@@ -9,9 +9,11 @@ function remove(id) {
 }
 
 function all() {
-  return axios.get(`${constants.baseUri}/clients/all`)
+  return axios.get(`${constants.baseUri}/clients/all`);
 }
 
 export default {
-  add, remove, all
-}
+  add,
+  remove,
+  all
+};

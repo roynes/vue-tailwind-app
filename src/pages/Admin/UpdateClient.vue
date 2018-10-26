@@ -48,7 +48,7 @@
           label="State"
           placeholder="Choose option deez nuts what the heck is this deeez?"
           :lists="mappedState"
-          :chosen="input.state"
+          :chosen="chosenState"
           @click="setState($event)"
           class="w-full md:w-1/3 px-3 mb-6 md:mb-0"
         ></SelectOption>
@@ -94,22 +94,24 @@
 </template>
 
 <script>
-import { Form } from '@/utilities';
+import { Form } from "@/utilities";
 
-import { 
-  TextInput, SelectOption,
-  TextAreaInput, ImageFileInput,
+import {
+  TextInput,
+  SelectOption,
+  TextAreaInput,
+  ImageFileInput,
   CustomForm
 } from "@/components";
 
-import { 
-  GroupService, StateService
-} from "@/services";
+import { GroupService, StateService } from "@/services";
 
 export default {
   components: {
-    TextInput, SelectOption, 
-    TextAreaInput, ImageFileInput,
+    TextInput,
+    SelectOption,
+    TextAreaInput,
+    ImageFileInput,
     CustomForm
   },
 
@@ -125,48 +127,55 @@ export default {
   data() {
     return {
       form: new Form({
-        logo: '', name: '', street: '',
-        city: '', state: '', zip_code: '',
-        email: '', description: ''
+        logo: "",
+        name: "",
+        street: "",
+        city: "",
+        state: "",
+        zip_code: "",
+        email: "",
+        description: ""
       }),
       states: []
-    }
+    };
   },
 
   methods: {
-    update() {
-
-    },
+    update() {},
 
     redirectToList() {
       this.$router.push({
         name: "ClientList"
-      })
+      });
     },
 
     setState(value) {
       this.form.state = value;
-    } 
+    }
   },
 
   computed: {
     mappedState() {
       return this.states.map(state => {
         return {
-          id : state.abbr,
+          id: state.abbr,
           name: state.name
         };
+      });
+    },
+    chosenState() {
+      return this.states.find(el => {
+        return el.abbr === this.input.state;
       });
     }
   },
 
   mounted() {
-    StateService.fetchAll()
-      .then(resp => {
-        this.states = resp.data.states;
-      });
+    StateService.fetchAll().then(resp => {
+      this.states = resp.data.states;
+    });
 
-    console.log(this.input, this.form);  
+    console.log(this.input, this.form);
   }
-}
+};
 </script>

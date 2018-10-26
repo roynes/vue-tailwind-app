@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import { Roles as ROLE } from "../helpers";
 import { Error401 } from "@/pages/Error";
 
 export default {

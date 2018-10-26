@@ -11,7 +11,7 @@
         @click="toggle = !toggle"
       >
         <span class="w-4/5 text-left truncate">
-          {{ chosen || $attrs.placeholder || 'Choose option' }}
+          {{ chosenName || $attrs.placeholder || 'Choose options' }}
         </span>
 
         <svg class="h-4 w-1/5" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 129 129">
@@ -55,7 +55,7 @@ export default {
     },
     value: {
       type: String,
-      default: ''
+      default: ""
     },
     errors: {
       type: Array,
@@ -63,14 +63,15 @@ export default {
         return [];
       }
     },
+    chosen: {}
   },
 
   data() {
     return {
-      chosen: '',
-      chosenId: '',
+      chosenName: "",
+      chosenId: "",
       toggle: false
-    }
+    };
   },
 
   computed: {
@@ -79,23 +80,24 @@ export default {
     },
 
     border() {
-      return this.hasAnyErrors ? 'border-red' : 'border-grey';
+      return this.hasAnyErrors ? "border-red" : "border-grey";
     }
+  },
+
+  mounted() {
+    // Todo: Find a way to make a default here <-------
   },
 
   methods: {
     chosenData(value) {
-      console.log('chosenData Called', value);
-
-      this.chosen = this.lists.find((el) => {
+      this.chosenName = this.lists.find(el => {
         return el.id === value;
       }).name;
-      
+
       this.chosenId = value;
 
-      this.$emit('click', this.chosenId);
+      this.$emit("click", this.chosenId);
     }
   }
-}
+};
 </script>
-

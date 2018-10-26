@@ -4,7 +4,7 @@
 
 <script>
 import { AddGroup, AddClient, AddUser } from "@/pages/Admin";
-import { toCamelCase } from '@/helpers';
+import { toCamelCase } from "@/helpers";
 
 export default {
   props: {
@@ -15,13 +15,15 @@ export default {
   },
 
   components: {
-    AddGroup, AddClient, AddUser
+    AddGroup,
+    AddClient,
+    AddUser
   },
-  
+
   computed: {
     componentName() {
       return toCamelCase(`add-${this.type}`, true);
-    } 
+    }
   }
-}
+};
 </script>
