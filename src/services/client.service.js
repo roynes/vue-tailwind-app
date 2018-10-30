@@ -8,6 +8,10 @@ function remove(id) {
   return axios.delete(`${constants.baseUri}/clients/${id}`);
 }
 
+function update(details, id) {
+  return axios.patch(`${constants.baseUri}/client/${id}`, details);
+}
+
 function all() {
   return axios.get(`${constants.baseUri}/clients/all`);
 }
@@ -15,5 +19,6 @@ function all() {
 export default {
   add,
   remove,
-  all
+  all,
+  update
 };

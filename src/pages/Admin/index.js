@@ -5,6 +5,7 @@ import SuperAdminUsersList from "./SuperAdminUsersList.vue";
 
 import UpdateClient from "./UpdateClient.vue";
 import UpdateGroup from "./UpdateGroup.vue";
+import UpdateUser from "./UpdateUser.vue";
 
 import AddGroup from "./AddGroup.vue";
 import AddClient from "./AddClient.vue";
@@ -17,6 +18,7 @@ export {
   SuperAdminDashboard,
   UpdateClient,
   UpdateGroup,
+  UpdateUser,
   AddClient,
   AddGroup,
   AddUser

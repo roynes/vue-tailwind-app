@@ -34,7 +34,9 @@
         {{account.type}}
       </div>
       <div class="col-span-2 flex overflow-y-auto items-center justify-around px-1">
-        <a class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
+        <a class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast"
+          @click="update(account)"
+        >
           <i class="group fas fa-edit cursor-pointer"></i>
         </a>
         <a class="p-1 no-underline text-black hover:text-white hover:rounded-full hover:bg-purple transition-fast">
@@ -108,7 +110,27 @@ export default {
         `scope=exceptUser:${this.$store.state.user.cur_user.id}`,
         "with=user"
       ).then(accounts => (this.accounts = accounts));
-    }
+    },
+
+    update({ user, client_id, group_id, settings, type }) {
+      // todo: continue here
+      console.log(JSON.parse(settings));
+      this.$router.push({
+        name: "UpdateDomainAndAccount",
+        params: {
+          type: this.domain.user,
+          id: user.id,
+          input: {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            client_id,
+            group_id,
+            role: type
+          }
+        }
+      });
+    },
   },
   mounted() {
     this.fetchPage(

@@ -48,7 +48,7 @@
           label="State"
           placeholder="Choose option deez nuts what the heck is this deeez?"
           :lists="mappedState"
-          :chosen="chosenState"
+          :chosenOption="chosenState"
           @click="setState($event)"
           class="w-full md:w-1/3 px-3 mb-6 md:mb-0"
         ></SelectOption>
@@ -68,6 +68,7 @@
           class="w-1/2 mr-1"
           title="description"
           label="Description"
+          :placeholder="input.description"
           v-model="form.description"
           name="description"
         ></TextAreaInput>
@@ -141,7 +142,16 @@ export default {
   },
 
   methods: {
-    update() {},
+    update() {
+      GroupService
+      .update(this.form.data(), this.input.id)
+      .then(res => {
+        this.$router.push({
+          name: 'GroupList'
+        })
+      })
+      .catch(err => console.log(err.response || err));
+    },
 
     redirectToList() {
       this.$router.push({
@@ -163,9 +173,10 @@ export default {
         };
       });
     },
+    
     chosenState() {
-      return this.states.find(el => {
-        return el.abbr === this.input.state;
+      return this.mappedState.find(el => {
+        return el.id == this.form.state || el.id === this.input.state;
       });
     }
   },

@@ -5,7 +5,7 @@
     </label>
     <textarea 
       class="focus:outline-none rounded w-full focus:bg-grey-lighter bg-white h-48 p-2 border max-h-120 border-grey" 
-      placeholder="Write description here..."
+      :placeholder="$attrs.placeholder || 'Write description here...'"
 
       :id="$attrs.title" 
       :name="$attrs.name" 

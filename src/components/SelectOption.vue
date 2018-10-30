@@ -4,9 +4,9 @@
       :title="$attrs.title"
       :label="$attrs.label"
     ></LabelInput>
-    <div class="relative">
+    <div class="relative border rounded shadow-inner leading-tight bg-grey-light p-3 cursor-pointer">
       <div 
-        class="bg-grey-light p-3 rounded shadow-inner w-full flex item-center justify-between"
+        class="w-full flex item-center justify-between"
         :name="$attrs.title"
         @click="toggle = !toggle"
       >
@@ -20,7 +20,7 @@
           </g>
         </svg>
       </div>
-      <div 
+      <div
         class="rounded shadow-md mt-2 absolute mt-12 pin-t pin-l min-w-full z-top bg-white"
         v-show="toggle"
       >
@@ -63,13 +63,19 @@ export default {
         return [];
       }
     },
-    chosen: {}
+    chosenOption: {
+      type: Object,
+      default() {
+        return {
+          id: '',
+          name: ''
+        }
+      }
+    }
   },
 
   data() {
     return {
-      chosenName: "",
-      chosenId: "",
       toggle: false
     };
   },
@@ -81,22 +87,21 @@ export default {
 
     border() {
       return this.hasAnyErrors ? "border-red" : "border-grey";
-    }
-  },
+    },
 
-  mounted() {
-    // Todo: Find a way to make a default here <-------
+    chosenName(){
+        return this.chosenOption.name;
+    },
+
+    chosenId() {
+        return this.chosenOption.id;
+    }
   },
 
   methods: {
     chosenData(value) {
-      this.chosenName = this.lists.find(el => {
-        return el.id === value;
-      }).name;
-
-      this.chosenId = value;
-
-      this.$emit("click", this.chosenId);
+      this.toggle = false;
+      this.$emit("click", value);
     }
   }
 };

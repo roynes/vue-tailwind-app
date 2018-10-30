@@ -3,7 +3,12 @@
 </template>
 
 <script>
-import { UpdateGroup, UpdateClient } from "@/pages/Admin";
+import {
+  UpdateGroup,
+  UpdateClient,
+  UpdateUser
+} from "@/pages/Admin";
+
 import { toCamelCase } from "../../helpers";
 
 export default {
@@ -17,7 +22,8 @@ export default {
 
   components: {
     UpdateGroup,
-    UpdateClient
+    UpdateClient,
+    UpdateUser
   },
 
   computed: {
