@@ -153,6 +153,7 @@ export default {
   methods: {
     logout() {
       console.log("mimic logout:", this.$store.state.auth.mimic);
+      
       let mimic = this.$store.state.auth.mimic;
       let role = this.$store.state.user.roles[0];
 

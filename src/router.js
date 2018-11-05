@@ -55,7 +55,7 @@ let router = new VueRouter({
           path: "group-list",
           name: "GroupList",
           component: () =>
-            import(/* webpackChunkName: "list-[request]" */ `@/pages/Layout/GroupsList`),
+            import('@/pages/Layout/GroupsList'),
           meta: {
             needsAuth: true
           }
@@ -64,7 +64,7 @@ let router = new VueRouter({
           path: "client-list",
           name: "ClientList",
           component: () =>
-            import(/* webpackChunkName: "list-[request]" */ `@/pages/Layout/ClientsList`),
+            import('@/pages/Layout/ClientsList'),
           meta: {
             needsAuth: true
           }
@@ -73,7 +73,7 @@ let router = new VueRouter({
           path: "users-list",
           name: "UsersList",
           component: () =>
-            import(/* webpackChunkName: "list-[request]" */ `@/pages/Layout/UsersList`),
+            import('@/pages/Layout/UsersList'),
           meta: {
             needsAuth: true
           }
@@ -82,7 +82,7 @@ let router = new VueRouter({
           path: "add/:type",
           name: "AddsAccount",
           component: () =>
-            import(/* webpackChunkName: "list-[request]" */ `@/pages/Layout/AddDomainAndAccount`),
+            import('@/pages/Layout/AddDomainAndAccount'),
           meta: {
             needsAuth: true
           },
@@ -92,7 +92,7 @@ let router = new VueRouter({
           path: "update/:type",
           name: "UpdateDomainAndAccount",
           component: () =>
-            import(/* webpackChunkName: "update-view" */ `@/pages/Layout/UpdateDomainAndAccount`),
+            import('@/pages/Layout/UpdateDomainAndAccount'),
           meta: {
             needsAuth: true
           },

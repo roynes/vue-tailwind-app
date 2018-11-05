@@ -6,7 +6,6 @@
 import {
   UpdateGroup,
   UpdateClient,
-  UpdateUser
 } from "@/pages/Admin";
 
 import { toCamelCase } from "../../helpers";
@@ -23,7 +22,6 @@ export default {
   components: {
     UpdateGroup,
     UpdateClient,
-    UpdateUser
   },
 
   computed: {
