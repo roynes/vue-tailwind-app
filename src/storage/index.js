@@ -2,6 +2,7 @@ import Vuex from "vuex";
 import Vue from "vue";
 import AuthModule, * as AuthConstants from "./auth";
 import UserModule, * as UserConstants from "./user";
+import Cookie from "js-cookie";
 
 Vue.use(Vuex);
 
